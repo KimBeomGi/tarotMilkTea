@@ -4,6 +4,9 @@ import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import NotFound from './components/pages/NotFound';
 import Navbar from './components/layout/Navbar';
+import Board from './components/pages/Board';
+import CardExplain from './components/pages/CardExplain';
+import FortuenRead from './components/pages/FortuenRead';
 
 function App() {
 
@@ -11,8 +14,11 @@ function App() {
     <Routes>
       <Route element={<Navbar/>}>
         <Route path='/' element={<Home />} />
-        <Route path='/Login' element={<Login />} />
+        <Route path='/explain' element={<CardExplain />} />
+        <Route path='/fortune' element={<FortuenRead />} />
+        <Route path='/board' element={<Board />} />
       </Route>
+      <Route path='/login' element={<Login />} />
       <Route path='*' element={<NotFound />} />
     </Routes>
   );
