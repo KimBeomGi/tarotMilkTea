@@ -39,10 +39,10 @@ function Home() {
 
   return (
     <div className="Home">
-      {/* <div style={{width:`${browserWidth}px`, height:`${browserHeight}px`}} className='HomeImage1' /> */}
+      <div style={{width:`${browserWidth}px`, height:`${browserHeight}px`}} className='HomeImage1'>
+        <h1>차 한잔과 함께 미래를 읽어볼까요?</h1>
+      </div>
       {/* <div style={{width:`${browserWidth}px`, height:`${browserHeight}px`}} className='HomeImage2' /> */}
-      <div><h1>차 한잔과 함께 미래를 읽어볼까요?</h1></div>
-      <div><h1>미래에 어떤 일이 있을지 궁금하지 않으신가요?</h1></div>
       <div><h1>미래에 어떤 일이 있을지 궁금하지 않으신가요?</h1></div>
       <div><h1>지금 생각 하는 일은 어떻게 될까요?</h1></div>
       <div className='kinds-fortune'>
@@ -66,7 +66,7 @@ function Home() {
       <div><h1>당신이 생각 하는 모든 것을 이곳에서</h1></div>
       <div><h1>차 한 잔의 여유와 함께</h1></div>
       <div><h1>타로밀크티에서 여러분의 걱정을 덜어드릴게요</h1></div>
-      <span><TMT_Logo height={500/5} width={3773/5}/></span>
+      {/* <span><TMT_Logo height={500/5} width={3773/5}/></span> */}
 
       
 
