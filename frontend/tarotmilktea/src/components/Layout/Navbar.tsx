@@ -7,14 +7,24 @@ import { FaBars } from "react-icons/fa6";
 
 function Navbar() {
   const [clickHamburger, setClickHamburger] = useState<boolean>(false)
+  const [isSPhone, setIsSPhone] = useState<boolean>(false)
+
+  function treatSPhoneNavbar():void {
+    if(isSPhone){
+      setClickHamburger(!clickHamburger)
+    }
+  }
 
   useEffect(() => {
     const handleResize = () => {
       const currentWindowWidth = window.innerWidth;
+      
       if (currentWindowWidth > 480) {
         setClickHamburger(true);
+        setIsSPhone(false)
       } else {
         setClickHamburger(false);
+        setIsSPhone(true)
       }
     };
 
@@ -43,14 +53,30 @@ function Navbar() {
             <FaBars />
           </div>
         </div>
-        <div className={`nav-bar ${clickHamburger ? 'active' : ''}`} >
-          <Link to="/">홈</Link>
-          <Link to="/explain">카드설명</Link>
-          <Link to="/fortune">운세보기</Link>
-          <Link to="/board">게시판</Link>
-          <Link to="/login" className='nav-bar-login'>로그인</Link>
+        <div 
+          className={`
+          nav-bar ${clickHamburger ? 'nav-bar-active' : ''}
+          `}
+        >
+          <Link to="/" className={`nav-bar1 ${clickHamburger ? 'nav-bar-link-active' : ''}`} onClick={() => {
+            treatSPhoneNavbar()
+          }}>홈</Link>
+          <Link to="/explain" className={`nav-bar2 ${clickHamburger ? 'nav-bar-link-active' : ''}`} onClick={() => {
+            treatSPhoneNavbar()
+          }}>카드설명</Link>
+          <Link to="/fortune" className={`nav-bar3 ${clickHamburger ? 'nav-bar-link-active' : ''}`} onClick={() => {
+            treatSPhoneNavbar()
+          }}>운세보기</Link>
+          <Link to="/board" className={`nav-bar4 ${clickHamburger ? 'nav-bar-link-active' : ''}`} onClick={() => {
+            treatSPhoneNavbar()
+          }}>게시판</Link>
+          <Link to="/login" className={`nav-bar5 nav-bar-login ${clickHamburger ? 'nav-bar-link-active' : ''}`} onClick={() => {
+            treatSPhoneNavbar()
+          }}>로그인</Link>
         </div>
+        
       </nav>
+      <div className='test'></div>
 
       <Outlet/>
 
