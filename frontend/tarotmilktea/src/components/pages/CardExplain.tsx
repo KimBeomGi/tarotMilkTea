@@ -3,6 +3,8 @@ import React, {useState} from 'react';
 import { Outlet, Link } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 
+import "./CardExplain.css"
+
 
 
 function CardExplain() {
