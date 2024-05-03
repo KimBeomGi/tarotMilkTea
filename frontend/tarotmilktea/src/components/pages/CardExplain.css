@@ -1,0 +1,16 @@
+.CardExplain{
+
+}
+
+
+/*  */
+/* 태블릿 이상 노트북 이하 */
+@media all and (min-width:481px) and (max-width:1023px) {
+
+}
+
+/*  */
+/* 스마트폰 세로 (해상도 ~ 479px)*/ 
+@media all and (max-width:480px) {
+
+}

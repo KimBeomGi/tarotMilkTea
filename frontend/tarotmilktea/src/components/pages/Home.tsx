@@ -125,7 +125,7 @@ function Home() {
         <div className='HomeImage2'></div>
         
         <div className='HomeText2-contain'>
-          <h2 className={`HomeText2`} style={{ opacity: calculateOpacityFortuneFig(-1.5) }}>미래에 어떤 일이 있을지 궁금하지 않으신가요?</h2>
+          <h2 className={`HomeText2`} style={{ opacity: calculateOpacityFortuneFig(-1.8) }}>미래에 어떤 일이 있을지 궁금하지 않으신가요?</h2>
         </div>
         
         <div className='kinds-contain'>
@@ -173,7 +173,6 @@ function Home() {
         </div>
         <span><TMT_Logo className={`TMT-logo ${isVisibleLogo ? 'text-appear-ani2' : ''}`} ref={taliLogoRef}/></span>
       </div>
-
     </div>
   );
 }

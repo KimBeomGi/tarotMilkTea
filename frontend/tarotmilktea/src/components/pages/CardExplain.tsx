@@ -13,7 +13,10 @@ function CardExplain() {
 
   return (
     <div className="CardExplain">
-      <h1>CardExplain</h1>
+      {/* 선택부분 */}
+      <div className="card-category"></div>
+      {/* 카드 표현 부분 */}
+      <div className="card-explain-body"></div>
     </div>
   );
 }

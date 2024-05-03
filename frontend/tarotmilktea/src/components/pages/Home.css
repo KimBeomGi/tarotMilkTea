@@ -3,11 +3,11 @@
 }
 .Home h1{
   margin: 0rem;
-  font-size: calc(3rem + 1vmin);
+  font-size: calc(3rem + 1vw);
 }
 .Home h2{
   margin: 0rem;
-  font-size: calc(2.5rem + 1vmin);
+  font-size: calc(2.25rem + 1vw);
 }
 
 .HomeImage1 {
@@ -114,6 +114,7 @@
 .HomeText3{}
 .fortune-ex-contain{
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
   opacity: 1;
@@ -168,8 +169,12 @@
 .TMT-logo{
   /* height: calc(500/20px); */
   /* width: calc(3773/20px); */
-  height: 6.25rem;
-  width: 47.1625rem;
+  /* height: 6.25rem; */
+  /* width: 47.1625rem; */
+  /* height: calc(500/20px); */
+  /* width: calc(3773/20px); */
+  height: calc(5.208125rem + 5vw);
+  width: calc(39.301875rem + 30vw);
 }
 
 /*  */
@@ -177,9 +182,12 @@
 @media all and (min-width:481px) and (max-width:1023px) {
   .Home {}
   .Home h1{
-    
+    margin: 0rem;
+    font-size: calc(0.375rem + 3vw);
   }
   .Home h2{
+    margin: 0rem;
+    font-size: calc(0.25rem + 3vw);
   }
   
   .HomeImage1 {
@@ -212,6 +220,7 @@
     
   }
   .fortune-ex{
+    margin: 1rem 3rem;
   }
   .fortune-ex > p{
   }
@@ -226,7 +235,10 @@
   .HomeText6-contain{}
   .HomeText6{}
   .TMT-logo{
-    
+    /* height: calc(500/20px); */
+    /* width: calc(3773/20px); */
+    height: calc(1.041875rem + 6vw);
+    width: calc(7.860625rem + 42vw);
   }
 }
 
@@ -272,10 +284,9 @@
   .HomeText3-contain{}
   .HomeText3{}
   .fortune-ex-contain{
-    flex-wrap: wrap;
   }
   .fortune-ex{
-    margin: 0rem 1rem;
+    margin: 3rem 3rem;
   }
   .fortune-ex > p{
     font-size: calc(0.25rem + 2vw);
@@ -283,8 +294,8 @@
     margin-bottom: 0.5rem;
   }
   .fortune-ex-fig{
-    height: calc(1.5rem + 2vw);
-    width: calc(1.5rem + 2vw);
+    height: calc(3rem + 2vw);
+    width: calc(3rem + 2vw);
   }
   .HomeText4-contain{}
   .HomeText4{}
@@ -297,7 +308,7 @@
   .TMT-logo{
     /* height: calc(500/20px); */
     /* width: calc(3773/20px); */
-    height: 1.041875rem;
-    width: 7.860625rem;
+    height: calc(1.041875rem + 5vw)  ;
+    width: calc(7.860625rem + 35vw);
   }
 }
