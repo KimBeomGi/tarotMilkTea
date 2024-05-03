@@ -1,16 +1,136 @@
 .CardExplain{
-
+  /* display: flex; */
+  /* flex-direction: row; */
+}
+.CardExplain  h1, h2, h3{
+  margin: 0rem;
+  padding: 0rem;
+  text-wrap: nowrap;
+}
+.card-category h1{
+  font-size: 1.75rem;
+}
+.card-category h2{
+  font-size: 1.375rem;
+}
+.card-category h3{
+  font-size: 1.125rem;
+}
+.card-category-contain{
+  position: absolute;
+  /* left: -300px; */
+  left: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  background: #ffffff;
+  transition: 0.25s ease-in;
+  min-height: calc(100vh - 145.13px);
 }
 
+.card-category-active{
+  left: 0px;
+  transition: 0.5s;
+}
+.card-explain-body{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.card-certi1{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #000000;
+  box-sizing: border-box;
+}
+.card-certi2{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  display: none;
+}
+.card-certi2 > h1, h2, h3{
+  width: 100%;
+  text-align: center;
+}
+.card-certi3{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  display: none;
+}
+.CgContain{
+  width: 100%;
+}
+
+.test-active{
+  position: static; 
+}
 
 /*  */
 /* 태블릿 이상 노트북 이하 */
 @media all and (min-width:481px) and (max-width:1023px) {
-
+  .CardExplain{
+  }
+  .CardExplain  h1, h2, h3{
+  }
+  .card-category h1{
+    font-size: px;
+  }
+  .card-category h2{
+  }
+  .card-category h3{
+  }
+  .card-category{
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    box-sizing: border-box;
+    padding: 0rem 1rem; */
+  }
+  .card-explain-body{
+  }
+  .card-certi1{
+  }
+  .card-certi2{
+  }
+  .card-certi3{
+  }
 }
 
 /*  */
 /* 스마트폰 세로 (해상도 ~ 479px)*/ 
 @media all and (max-width:480px) {
-
+  .CardExplain{
+  }
+  .CardExplain  h1, h2, h3{
+  }
+  .card-category h1{
+  }
+  .card-category h2{
+  }
+  .card-category h3{
+  }
+  .card-category{
+  }
+  .card-explain-body{
+  }
+  .card-certi1{
+  }
+  .card-certi2{
+  }
+  .card-certi3{
+  }
 }
