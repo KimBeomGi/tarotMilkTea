@@ -39,7 +39,7 @@ function Navbar() {
 
   return (
     <div className="Navbar">
-      <nav>
+      <nav className='navbar-Contain'>
         <div className='nav-logo'>
           <div className="nav-logo1">
             <Link to="/"><img src="images/tarotMilkTea_logo.png" alt="" className='main-logo' /></Link>

@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import { Outlet, Link } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 
 import "./CardExplain.css"
-import { AiOutlineClose } from "react-icons/ai";
+import { IoIosArrowDroprightCircle } from "react-icons/io";
 
 interface CardCgType {
   "majorCg": {"id":number, "cardName":string}[];
@@ -104,12 +104,77 @@ function CardExplain() {
   const [test1, setTest1] = useState()
   const [isSidebar, setIsSidebar] = useState<boolean>(false)
   // onClick={() => {setIsSidebar(false)}}
+
+  const [browserWidth, setBrowserWidth] = useState<number>(window.innerWidth)
+  const [browserHeight, setBrowserHeight] = useState<number>(window.innerHeight)
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+  // const [isCategoryHA,setIsCategoryHA] = useState<boolean>(false);
+  const [bh, setBh] = useState<number>(0)
+  const [cgPosition, setCgPosition] = useState<number>(0)
+
+  function categoryHeight(cu_posit:number) {
+    if(browserWidth >= 1024){
+      let tmpBh = browserHeight - (145.13 - cu_posit)
+      let tmpCgposiont = 145.13 - cu_posit
+      if(cu_posit >= 145.13){
+        tmpBh = browserHeight
+        tmpCgposiont = 0
+      }
+      setBh(tmpBh)
+      setCgPosition(tmpCgposiont)
+    }else if(browserWidth >= 481){
+      let tmpBh = browserHeight - (115.41 - cu_posit)
+      let tmpCgposiont = 115.41 - cu_posit
+      if(cu_posit >= 115.41){
+        tmpBh = browserHeight
+        tmpCgposiont = 0
+      }
+      setBh(tmpBh)
+      setCgPosition(tmpCgposiont)
+    }
+  }
+
+  const handleScroll = () => {
+    const position = window.scrollY;
+    setScrollPosition(position);
+    categoryHeight(position)
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setBrowserWidth(window.innerWidth);
+      setBrowserHeight(window.innerHeight);
+      categoryHeight(scrollPosition)
+    }
+
+    window.addEventListener('resize', handleResize);
+  
+    handleResize();
+  
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  
+
+
   return (
     <div className="CardExplain">
       {/* 선택부분 */}
       <div 
         onMouseLeave={()=>{setIsSidebar(false)}}
-        className={`card-category-contain ${isSidebar ? "card-category-active" : ""}`}>
+        style={{height: `${bh}px`, 
+        top:`${cgPosition}px`
+      }}
+        className={`card-category-contain
+          ${isSidebar ? "card-category-active" : ""}
+        `}
+      >
         {/* 큰거 1 */}
         <div className="card-certi1">
           <h1>타로에대해서</h1>
@@ -121,7 +186,7 @@ function CardExplain() {
         {/* 메이저 아르카나 카드 */}
         <div className='CgContain'>
           {cardCg.majorCg.map((v1, i1) => (
-            <div className="card-certi2">
+            <div className="card-certi2" key={i1}>
               <h3>{v1.cardName}</h3>
             </div>
           ))}
@@ -132,22 +197,33 @@ function CardExplain() {
         </div>
         {/* 마이너 아르카나 카드 */}
           {minorCategories.map((v2, i2) => (
-            <div className='CgContain'>
+            <div className='CgContain' key={i2}>
               <div className="card-certi2">
                 <h2>{v2}</h2>
               </div>
               {cardCg.minorCg[v2].map((v3, i3) => (
-                <div className="card-certi3">
+                <div className="card-certi3" key={i3}>
                   <h3>{v3.cardName}</h3>
                 </div>
               ))}
             </div>
           ))}
       </div>
-      <div className={`testing ${isSidebar ? "test-active" : ""}`} onMouseOver={()=>{setIsSidebar(!isSidebar)}}></div>
+      
       {/* 카드 표현 부분 */}
       <div className={`card-explain-body`}>
-        <div><h1>카드설명</h1></div>
+        
+        <div className={`card-explain-cateogry-open ${isSidebar ? "card-explain-cateogry-open-none": ""}`}
+          onClick={() => {
+            setIsSidebar(!isSidebar)
+          }}
+        >
+          <IoIosArrowDroprightCircle className='card-explain-cateogry-open-icon'/>
+        </div>
+        <div><p>{scrollPosition} {browserHeight}</p></div>
+        <div><p>{bh}</p></div>
+        <div><h1 style={{margin:"600px 0px 0px 0px"}}>{scrollPosition}</h1></div>
+        <div><h1 style={{margin:"0px 0px 600px 0px"}}>{bh}</h1></div>
       </div>
     </div>
   );

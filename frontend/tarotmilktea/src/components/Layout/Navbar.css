@@ -1,5 +1,6 @@
 /*  */
 /* 데스크탑 */
+
 .nav-logo{
   display: flex;
   flex-direction: row;
@@ -166,7 +167,8 @@
     transform: translateY(-400%);
   }
   .nav-bar-link-active{
-    transition: 0.35s;
+    /* transition: 0.35s; */
+    transition: 0.2s;
     transform: translateY(0%);
   }
 }
