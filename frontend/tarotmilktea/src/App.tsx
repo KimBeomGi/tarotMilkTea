@@ -7,6 +7,8 @@ import Navbar from './components/layout/Navbar';
 import Board from './components/pages/Board';
 import CardExplain from './components/pages/CardExplain';
 import FortuenRead from './components/pages/FortuenRead';
+import CardExplainBody1 from './components/layout/CardExplainBody1';
+import CardExplainBody2 from './components/layout/CardExplainBody2';
 
 function App() {
 
@@ -14,7 +16,10 @@ function App() {
     <Routes>
       <Route element={<Navbar/>}>
         <Route path='/' element={<Home />} />
-        <Route path='/explain' element={<CardExplain />} />
+        <Route path='/explain' element={<CardExplain />} >
+          <Route path='' element={<CardExplainBody1 />} />
+          <Route path=':cardId' element={<CardExplainBody2 />} />
+        </Route>
         <Route path='/fortune' element={<FortuenRead />} />
         <Route path='/board' element={<Board />} />
       </Route>

@@ -99,6 +99,9 @@ const cardCg:CardCgType = {
 }
 
 function CardExplain() {
+  interface IsClickMinorCerti2Type{
+    [key: string]: boolean;
+  } 
   // const count = useAppSelector((state) => state.counter.value)
   const dispatch = useAppDispatch()
   const [test1, setTest1] = useState()
@@ -108,58 +111,124 @@ function CardExplain() {
   const [browserWidth, setBrowserWidth] = useState<number>(window.innerWidth)
   const [browserHeight, setBrowserHeight] = useState<number>(window.innerHeight)
   const [scrollPosition, setScrollPosition] = useState<number>(0);
-  // const [isCategoryHA,setIsCategoryHA] = useState<boolean>(false);
-  const [bh, setBh] = useState<number>(0)
-  const [cgPosition, setCgPosition] = useState<number>(0)
+  const [sidebarH, setSidebarH] = useState<number>(window.innerHeight)
+  const [cgTopPosition, setCgTopPosition] = useState<number>(0)
+  const [isSmartPhone, setIsSmartPhone] = useState<boolean>(false)
 
-  function categoryHeight(cu_posit:number) {
-    if(browserWidth >= 1024){
-      let tmpBh = browserHeight - (145.13 - cu_posit)
-      let tmpCgposiont = 145.13 - cu_posit
-      if(cu_posit >= 145.13){
-        tmpBh = browserHeight
-        tmpCgposiont = 0
-      }
-      setBh(tmpBh)
-      setCgPosition(tmpCgposiont)
-    }else if(browserWidth >= 481){
-      let tmpBh = browserHeight - (115.41 - cu_posit)
-      let tmpCgposiont = 115.41 - cu_posit
-      if(cu_posit >= 115.41){
-        tmpBh = browserHeight
-        tmpCgposiont = 0
-      }
-      setBh(tmpBh)
-      setCgPosition(tmpCgposiont)
-    }
-  }
+  // 카드 카테고리와 관련된 변수
+  const [isClickMajorCerti1, setIsClickMajorCerti1] = useState<boolean>(false)
+  const [isClickMinorCerti1, setIsClickMinorCerti1] = useState<boolean>(false)
+  const [isClickMinorCerti2, setIsClickMinorCerti2] = useState<IsClickMinorCerti2Type>({})
 
   const handleScroll = () => {
     const position = window.scrollY;
     setScrollPosition(position);
-    categoryHeight(position)
   };
+  // 사이드바 닫기 함수
+  const closeSidebar = () => {
+    setIsSidebar(false)
+    setIsClickMajorCerti1(false)
+    setIsClickMinorCerti1(false)
+    setIsClickMinorCerti2(prev => {
+      const tmpDict = Object.keys(prev).reduce<IsClickMinorCerti2Type>((dict, key) => {
+        dict[key] = false
+        return dict
+      }, {})
+      return tmpDict
+    })
+  }
+  // 마이너아르카나 탭 함수
+  const handleMinorCardTab = () => {
+    // isClickMinorCerti1 아래 모두 닫기
+    if(isClickMinorCerti1){
+      setIsClickMinorCerti2(prev => {
+        const tmpDict = Object.keys(prev).reduce<IsClickMinorCerti2Type>((dict, key) => {
+          dict[key] = false
+          return dict
+        }, {})
+        return tmpDict
+      })
+    }
+    setIsClickMinorCerti1(!isClickMinorCerti1)
+  }
 
+  // 사이즈에 따른 사이드바 조정 함수
+  const handleSidebarTopPosition = () => {
+    let tmpTopPosi
+    let tmpSidebarH
+    if(1024 <= browserWidth){
+      // 스마트폰
+      setIsSmartPhone(false)
+      // 사이드바 위치 잡기
+      tmpTopPosi = 145.13 - scrollPosition
+      if(tmpTopPosi <= 0){
+        tmpTopPosi = 0
+      }
+      setCgTopPosition(tmpTopPosi)
+      // 사이드바 길이 조정
+      tmpSidebarH = browserHeight - (145.13 - scrollPosition)
+      if(tmpSidebarH >= browserHeight){
+        tmpSidebarH = browserHeight
+      }
+      setSidebarH(tmpSidebarH)
+    }else if(481 <= browserWidth){
+      // 스마트폰
+      setIsSmartPhone(false)
+      // 사이드바 위치 잡기
+      tmpTopPosi = 115.41 - scrollPosition
+      if(tmpTopPosi <= 0){
+        tmpTopPosi = 0
+      }
+      setCgTopPosition(tmpTopPosi)
+      // 사이드바 길이 조정
+      tmpSidebarH = browserHeight - (115.41 - scrollPosition)
+      if(tmpSidebarH >= browserHeight){
+        tmpSidebarH = browserHeight
+      }
+      setSidebarH(tmpSidebarH)
+    }else{
+      // 스마트폰
+      setIsSmartPhone(true)
+      // 사이드바 위치 잡기
+      tmpTopPosi = 49.36 - scrollPosition
+      if(tmpTopPosi <= 0){
+        tmpTopPosi = 0
+      }
+      setCgTopPosition(tmpTopPosi)
+      // 사이드바 길이 조정
+      tmpSidebarH = browserHeight - (49.36 - scrollPosition)
+      if(tmpSidebarH >= browserHeight){
+        tmpSidebarH = browserHeight
+      }
+      setSidebarH(tmpSidebarH)
+    }
+  }
+
+  
+
+  //  브라우저 사이즈 변경시
   useEffect(() => {
     const handleResize = () => {
       setBrowserWidth(window.innerWidth);
       setBrowserHeight(window.innerHeight);
-      categoryHeight(scrollPosition)
-    }
-
+    };
     window.addEventListener('resize', handleResize);
-  
-    handleResize();
-  
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
+  // scroll 작동시
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    handleSidebarTopPosition()
+  }, [browserWidth, browserHeight, scrollPosition])
   
 
 
@@ -167,63 +236,109 @@ function CardExplain() {
     <div className="CardExplain">
       {/* 선택부분 */}
       <div 
-        onMouseLeave={()=>{setIsSidebar(false)}}
-        style={{height: `${bh}px`, 
-        top:`${cgPosition}px`
-      }}
+        onMouseLeave={()=>{
+          closeSidebar()
+        }}
+        style={{
+          height: `${sidebarH}px`, 
+          top:`${cgTopPosition}px`
+        }}
         className={`card-category-contain
           ${isSidebar ? "card-category-active" : ""}
         `}
       >
+        <div 
+          onClick={() => {
+            closeSidebar()
+          }
+          }
+          className={`card-category-closeTag ${isSmartPhone ? "card-category-closeTag-active" : ""}`}>
+          <h1>카테고리 닫기</h1>
+        </div>
         {/* 큰거 1 */}
-        <div className="card-certi1">
+        <div 
+          tabIndex={0}
+          onClick={()  => {}}
+          className="card-certi1">
           <h1>타로에대해서</h1>
         </div>
         {/* 큰거 2 */}
-        <div className="card-certi1">
+        <div 
+          tabIndex={0}
+          onClick={()  => {
+            // 이걸누르면 메이저 아르카나의 카드 display : flex
+            setIsClickMajorCerti1(!isClickMajorCerti1)
+          }}
+          className="card-certi1">
           <h1>메이저 아르카나</h1>
         </div>
         {/* 메이저 아르카나 카드 */}
-        <div className='CgContain'>
+        <div className='CgContain' >
           {cardCg.majorCg.map((v1, i1) => (
-            <div className="card-certi2" key={i1}>
+            <div 
+              tabIndex={0}
+              onClick={() => {
+                // 
+              }}
+              style={{display: isClickMajorCerti1 ? "flex" : "none"}}
+              className="card-certi2" key={i1}>
               <h3>{v1.cardName}</h3>
             </div>
           ))}
         </div>
         {/* 큰거 3 */}
-        <div className="card-certi1">
+        <div 
+          tabIndex={0}
+          onClick={()  => {
+            // 이걸누르면 마이너 아르카나의 카테고리  display : flex
+            handleMinorCardTab()
+          }}
+          className="card-certi1">
           <h1>마이너 아르카나</h1>
         </div>
         {/* 마이너 아르카나 카드 */}
-          {minorCategories.map((v2, i2) => (
-            <div className='CgContain' key={i2}>
-              <div className="card-certi2">
-                <h2>{v2}</h2>
-              </div>
-              {cardCg.minorCg[v2].map((v3, i3) => (
-                <div className="card-certi3" key={i3}>
-                  <h3>{v3.cardName}</h3>
-                </div>
-              ))}
+        {minorCategories.map((v2, i2) => (
+          <div className='CgContain' key={i2}>
+            <div 
+              tabIndex={0}
+              onClick={() => {
+                // 이걸누르면 마이너 아르카나의 카드 display : flex
+                setIsClickMinorCerti2(prev => ({
+                  ...prev,
+                  [v2]: !prev[v2] // 현재 상태를 반전시킴
+                }));
+              }}
+              // style={{display: isClickMinorCerti1[v2] ? "flex" : "none"}}
+              style={{display: isClickMinorCerti1 ? "flex" : "none"}}
+              className="card-certi2"
+            >
+              <h2>{v2}</h2>
             </div>
-          ))}
+            {cardCg.minorCg[v2].map((v3, i3) => (
+              <div 
+                tabIndex={0}
+                onClick={() => {
+              
+                }}
+                style={{display: isClickMinorCerti2[v2] ? "flex" : "none"}}
+                className="card-certi3" key={i3}
+              >
+                <h3>{v3.cardName}</h3>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
-      
+      <div className={`card-explain-cateogry-open ${isSidebar ? "card-explain-cateogry-open-none": ""}`}
+        onClick={() => {
+          setIsSidebar(!isSidebar)
+        }}
+      >
+        <IoIosArrowDroprightCircle className='card-explain-cateogry-open-icon'/>
+      </div>
       {/* 카드 표현 부분 */}
       <div className={`card-explain-body`}>
-        
-        <div className={`card-explain-cateogry-open ${isSidebar ? "card-explain-cateogry-open-none": ""}`}
-          onClick={() => {
-            setIsSidebar(!isSidebar)
-          }}
-        >
-          <IoIosArrowDroprightCircle className='card-explain-cateogry-open-icon'/>
-        </div>
-        <div><p>{scrollPosition} {browserHeight}</p></div>
-        <div><p>{bh}</p></div>
-        <div><h1 style={{margin:"600px 0px 0px 0px"}}>{scrollPosition}</h1></div>
-        <div><h1 style={{margin:"0px 0px 600px 0px"}}>{bh}</h1></div>
+        <Outlet/>
       </div>
     </div>
   );
