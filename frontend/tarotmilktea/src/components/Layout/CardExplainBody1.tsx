@@ -13,6 +13,9 @@ function CardExplainBody1() {
   return (
     <div className="CardExplainBody1">
       <h1>타로에대해서</h1>
+      <h1>타로 구성</h1>
+      <h1>타로 역사</h1>
+      <h1>타로 스프레드</h1>
     </div>
   );
 }

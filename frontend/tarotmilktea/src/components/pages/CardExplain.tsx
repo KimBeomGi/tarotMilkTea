@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 
 import "./CardExplain.css"
@@ -104,6 +104,7 @@ function CardExplain() {
   } 
   // const count = useAppSelector((state) => state.counter.value)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const [test1, setTest1] = useState()
   const [isSidebar, setIsSidebar] = useState<boolean>(false)
   // onClick={() => {setIsSidebar(false)}}
@@ -258,7 +259,9 @@ function CardExplain() {
         {/* 큰거 1 */}
         <div 
           tabIndex={0}
-          onClick={()  => {}}
+          onClick={()  => {
+            navigate("/explain")
+          }}
           className="card-certi1">
           <h1>타로에대해서</h1>
         </div>
@@ -278,7 +281,7 @@ function CardExplain() {
             <div 
               tabIndex={0}
               onClick={() => {
-                // 
+                navigate("/explain/1")
               }}
               style={{display: isClickMajorCerti1 ? "flex" : "none"}}
               className="card-certi2" key={i1}>
@@ -318,7 +321,7 @@ function CardExplain() {
               <div 
                 tabIndex={0}
                 onClick={() => {
-              
+                  navigate("/explain/2")
                 }}
                 style={{display: isClickMinorCerti2[v2] ? "flex" : "none"}}
                 className="card-certi3" key={i3}
