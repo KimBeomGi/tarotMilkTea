@@ -1,0 +1,131 @@
+.CardExplainBody2{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+/* 왼쪽 */
+.cardExplainBody2-left{
+  position: sticky;
+  top: 0;
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: -1;
+}
+.CEB2-left-cardImage{
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.CEB2-left-cardImage > h1{
+  font-size: 2rem;
+  padding: 0rem;
+}
+.CEB2-left-cardImage img{
+  width: 50%;
+  height: 70%;
+  object-fit: contain;
+}
+
+/* 오른쪽 */
+.cardExplainBody2-right{
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.cEB2-right-card-title{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cEB2-right-card-width100{
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cEB2-right-card-width100 > h2{
+  margin: 0.25rem 0px;
+  width: 90%;
+  text-align: start;
+}
+.cEB2-right-card-width100 > p{
+  margin: 1.5rem 0rem;
+}
+.cEB2-right-card-gradient-bg{
+  background: linear-gradient(to right, #D1D3FC, #6469F3);
+}
+
+
+.cEB2-right-explain-symbol{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+.cEB2-right-explain-symbol p{
+  font-size: 1rem;
+}
+
+
+/* navbar에 의한 사이즈 조정 */
+@media all and (max-width:1023px) {
+  .cardExplainBody2-left{
+    
+  }
+  .CEB2-left-cardImage > h1{
+    font-size: 1.25rem;
+  }
+}
+/* 카드설명부분은  0~768, 769~ 2가지로 */
+@media all and (max-width:768px) {
+  .CardExplainBody2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cardExplainBody2-left{
+    position: static;
+    top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+  }
+  .CEB2-left-cardImage > h1{
+
+  }
+  .cardExplainBody2-right{
+    width: 100%;
+  }
+  .cEB2-right-explain-symbol{
+  }
+  .cEB2-right-explain-symbol p{
+    font-size: 1rem;
+  }
+}
+
+/* 스마트폰 세로 (해상도 ~ 479px)*/ 
+@media all and (max-width:479px) {
+  .cardExplainBody2-left{
+    
+  }
+  .CEB2-left-cardImage > h1{
+    font-size: 1rem;
+  }
+  
+}

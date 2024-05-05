@@ -121,10 +121,7 @@ function CardExplain() {
   const [isClickMinorCerti1, setIsClickMinorCerti1] = useState<boolean>(false)
   const [isClickMinorCerti2, setIsClickMinorCerti2] = useState<IsClickMinorCerti2Type>({})
 
-  const handleScroll = () => {
-    const position = window.scrollY;
-    setScrollPosition(position);
-  };
+  
   // 사이드바 닫기 함수
   const closeSidebar = () => {
     setIsSidebar(false)
@@ -220,6 +217,10 @@ function CardExplain() {
   }, []);
 
   // scroll 작동시
+  const handleScroll = () => {
+    const position = window.scrollY;
+    setScrollPosition(position);
+  };
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
@@ -257,80 +258,86 @@ function CardExplain() {
           <h1>카테고리 닫기</h1>
         </div>
         {/* 큰거 1 */}
-        <div 
-          tabIndex={0}
-          onClick={()  => {
-            navigate("/explain")
-          }}
-          className="card-certi1">
-          <h1>타로에대해서</h1>
+        <div className={`category-certi-div ${isSidebar ? "" : "category-certi-div-deactivate"}`}>
+          <div 
+            tabIndex={0}
+            onClick={()  => {
+              navigate("/explain")
+            }}
+            className="card-certi1">
+            <h1>타로에대해서</h1>
+          </div>
         </div>
         {/* 큰거 2 */}
-        <div 
-          tabIndex={0}
-          onClick={()  => {
-            // 이걸누르면 메이저 아르카나의 카드 display : flex
-            setIsClickMajorCerti1(!isClickMajorCerti1)
-          }}
-          className="card-certi1">
-          <h1>메이저 아르카나</h1>
-        </div>
-        {/* 메이저 아르카나 카드 */}
-        <div className='CgContain' >
-          {cardCg.majorCg.map((v1, i1) => (
-            <div 
-              tabIndex={0}
-              onClick={() => {
-                navigate("/explain/1")
-              }}
-              style={{display: isClickMajorCerti1 ? "flex" : "none"}}
-              className="card-certi2" key={i1}>
-              <h3>{v1.cardName}</h3>
-            </div>
-          ))}
-        </div>
-        {/* 큰거 3 */}
-        <div 
-          tabIndex={0}
-          onClick={()  => {
-            // 이걸누르면 마이너 아르카나의 카테고리  display : flex
-            handleMinorCardTab()
-          }}
-          className="card-certi1">
-          <h1>마이너 아르카나</h1>
-        </div>
-        {/* 마이너 아르카나 카드 */}
-        {minorCategories.map((v2, i2) => (
-          <div className='CgContain' key={i2}>
-            <div 
-              tabIndex={0}
-              onClick={() => {
-                // 이걸누르면 마이너 아르카나의 카드 display : flex
-                setIsClickMinorCerti2(prev => ({
-                  ...prev,
-                  [v2]: !prev[v2] // 현재 상태를 반전시킴
-                }));
-              }}
-              // style={{display: isClickMinorCerti1[v2] ? "flex" : "none"}}
-              style={{display: isClickMinorCerti1 ? "flex" : "none"}}
-              className="card-certi2"
-            >
-              <h2>{v2}</h2>
-            </div>
-            {cardCg.minorCg[v2].map((v3, i3) => (
+        <div className={`category-certi-div ${isSidebar ? "" : "category-certi-div-deactivate"}`}>
+          <div 
+            tabIndex={0}
+            onClick={()  => {
+              // 이걸누르면 메이저 아르카나의 카드 display : flex
+              setIsClickMajorCerti1(!isClickMajorCerti1)
+            }}
+            className="card-certi1">
+            <h1>메이저 아르카나</h1>
+          </div>
+          {/* 메이저 아르카나 카드 */}
+          <div className='CgContain' >
+            {cardCg.majorCg.map((v1, i1) => (
               <div 
                 tabIndex={0}
                 onClick={() => {
-                  navigate("/explain/2")
+                  navigate("/explain/1")
                 }}
-                style={{display: isClickMinorCerti2[v2] ? "flex" : "none"}}
-                className="card-certi3" key={i3}
-              >
-                <h3>{v3.cardName}</h3>
+                style={{display: isClickMajorCerti1 ? "flex" : "none"}}
+                className="card-certi2" key={i1}>
+                <h3>{v1.cardName}</h3>
               </div>
             ))}
           </div>
-        ))}
+        </div>
+        {/* 큰거 3 */}
+        <div className={`category-certi-div ${isSidebar ? "" : "category-certi-div-deactivate"}`}>
+          <div 
+            tabIndex={0}
+            onClick={()  => {
+              // 이걸누르면 마이너 아르카나의 카테고리  display : flex
+              handleMinorCardTab()
+            }}
+            className="card-certi1">
+            <h1>마이너 아르카나</h1>
+          </div>
+          {/* 마이너 아르카나 카드 */}
+          {minorCategories.map((v2, i2) => (
+            <div className='CgContain' key={i2}>
+              <div 
+                tabIndex={0}
+                onClick={() => {
+                  // 이걸누르면 마이너 아르카나의 카드 display : flex
+                  setIsClickMinorCerti2(prev => ({
+                    ...prev,
+                    [v2]: !prev[v2] // 현재 상태를 반전시킴
+                  }));
+                }}
+                // style={{display: isClickMinorCerti1[v2] ? "flex" : "none"}}
+                style={{display: isClickMinorCerti1 ? "flex" : "none"}}
+                className="card-certi2"
+              >
+                <h2>{v2}</h2>
+              </div>
+              {cardCg.minorCg[v2].map((v3, i3) => (
+                <div 
+                  tabIndex={0}
+                  onClick={() => {
+                    navigate("/explain/2")
+                  }}
+                  style={{display: isClickMinorCerti2[v2] ? "flex" : "none"}}
+                  className="card-certi3" key={i3}
+                >
+                  <h3>{v3.cardName}</h3>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
       <div className={`card-explain-cateogry-open ${isSidebar ? "card-explain-cateogry-open-none": ""}`}
         onClick={() => {

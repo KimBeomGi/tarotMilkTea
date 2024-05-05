@@ -1,27 +1,29 @@
-.CardExplain{
-  /* display: flex; */
-  /* flex-direction: row; */
-}
-.CardExplain  h1, h2, h3{
-  margin: 0rem;
-  padding: 0rem;
-  text-wrap: nowrap;
-}
+.CardExplain{}
 .card-category-contain h1{
   font-size: 1.75rem;
   font-weight: 900;
+  margin: 0rem;
+  padding: 0rem;
+  text-wrap: nowrap;
+  z-index: 1;
 }
 .card-category-contain h2{
   font-size: 1.5rem;
   font-weight: 700;
+  margin: 0rem;
+  padding: 0rem;
+  text-wrap: nowrap;
 }
 .card-category-contain h3{
   font-size: 1.25rem;
   font-weight: 500;
+  margin: 0rem;
+  padding: 0rem;
+  text-wrap: nowrap;
 }
 .card-category-contain {
   position: fixed;
-  left: -300px;
+  left: calc(100vw * 0.33 * -1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,7 +31,7 @@
   border-right: 1px solid #000000;
   box-sizing: border-box;
   background: #ffffff;
-  transition: opacity 0.1s, left 0.1s;
+  transition: opacity 20s, left 0.1s;
   /* height: calc(100vh - 145.13px); */
   overflow:scroll;
   width: calc(100vw * 0.33);
@@ -39,7 +41,7 @@
 .card-category-active {
   left: 0px;
   opacity: 1;
-  transition: opacity 0.25s, left 0.25s;
+  transition: opacity 0.2s, left 0.5s;
 }
 .card-category-closeTag{
   display: none;
@@ -54,6 +56,12 @@
 }
 .card-category-closeTag-active{
   display: block;
+}
+.category-certi-div{
+  width: 100%;
+}
+.category-certi-div-deactivate{
+  display: none;
 }
 .card-certi1{
   display: flex;
@@ -143,7 +151,7 @@
   top: calc(50vh - 1rem - 1vmin);
   left: 0rem;
   opacity: 1;
-  z-index: 0;
+  z-index: 1;
 }
 .card-explain-cateogry-open-none{
   transition-duration: 0s;
@@ -164,7 +172,7 @@
 
 /*  */
 /* 태블릿 이상 노트북 이하 */
-@media all and (min-width:481px) and (max-width:1023px) {
+@media all and (min-width:480px) and (max-width:1023px) {
   .CardExplain{
   }
   .CardExplain  h1, h2, h3{
@@ -188,6 +196,12 @@
   .card-category-contain{
     height: calc(100vh - 115.41px);
     width: 18.75rem;
+    left: calc(18.75rem * -1);
+  }
+  .card-category-active {
+    left: 0px;
+    /* opacity: 1; */
+    /* transition: opacity 0.2s, left 0.5s; */
   }
   .card-explain-body{
   }
@@ -201,7 +215,7 @@
 
 /*  */
 /* 스마트폰 세로 (해상도 ~ 479px)*/ 
-@media all and (max-width:480px) {
+@media all and (max-width:479px) {
   .CardExplain{
   }
   .CardExplain  h1, h2, h3{
@@ -217,7 +231,14 @@
   .card-category-contain{
     height: calc(100vh - 49.36px);
     width: 100vw;
+    left: -100vw;
   }
+  .card-category-active {
+    left: 0px;
+    /* opacity: 1; */
+    /* transition: opacity 0.2s, left 0.5s; */
+  }
+
   .card-explain-cateogry-open{
     height: calc(2rem + 2vmin);
     width: calc(2rem + 2vmin);
@@ -227,6 +248,7 @@
     /* opacity: 1; */
     /* z-index: 0; */
   }
+  
   .card-explain-body{
   }
   .card-certi1{

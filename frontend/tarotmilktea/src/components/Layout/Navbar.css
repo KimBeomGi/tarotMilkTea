@@ -80,7 +80,7 @@
 
 /*  */
 /* 태블릿 이상 노트북 이하 */
-@media all and (min-width:481px) and (max-width:1023px) { 
+@media all and (min-width:480px) and (max-width:1023px) { 
   .main-logo{
     width: 20rem;
   }
@@ -104,7 +104,7 @@
 
 /*  */
 /* 스마트폰 세로 (해상도 ~ 479px)*/ 
-@media all and (max-width:480px) {
+@media all and (max-width:479px) {
   .main-logo{
     width: 8rem;
   }
