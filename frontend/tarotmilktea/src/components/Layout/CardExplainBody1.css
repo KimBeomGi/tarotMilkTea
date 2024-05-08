@@ -7,21 +7,137 @@
 
 .cEB1-shape{
   width: 85%;
+  object-fit: contain;
 }
 
+.cEB1-shape-history-content{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
 
+.cEB1-shape-history-content-imgdiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cEB1-shape-history-content-img{
+  max-width: 100vw;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cEB1-shape-history-content-paragraphdiv{
+  /* width: 70%; */
+}
+.cEB1-shape-history-content-paragraphdiv > p{
+  margin: 0rem;
+  padding: 0.5rem
+}
+
+.majorTarot-table-div{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2em;
+}
+.majorTarot-table-div > table {
+  width: 80%;
+  border-collapse: collapse;
+  border: 1px solid #ddd
+}
+
+.majorTarot-table-div th, td{
+  border-bottom: 1px solid #ddd
+}
+.majorTarot-table-div th{
+  background-color: #008BEC;
+  color: #FFFFFF;
+  padding: 0.375em 0em;
+}
+
+.majorTarot-table-div tbody tr:hover {
+  background-color: #F9F871;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.minorTarot-table-div{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2em;
+}
+.minorTarot-table-div > table{
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd
+}
+
+.minorTarot-table-div th, td{
+  border-bottom: 1px solid #ddd
+}
+.minorTarot-table-div th{
+  background-color: #508072;
+  color: #FFFFFF;
+  padding: 0.375em 0em;
+}
+
+.minorTarot-table-div tbody tr:hover {
+  background-color: #F3ECFF;
+  opacity: 0.9;
+  cursor: pointer;
+}
 
 /* navbar에 의한 사이즈 조정 */
 @media all and (max-width:1023px) {
-  
+  .cEB1-shape-history-content{
+    flex-direction: column;
+  }
 }
 /* 카드설명부분은  0~768, 769~ 2가지로 */
 @media all and (max-width:768px) {
-  
+  .cEB1-shape h1{
+    font-size: 1.625rem;
+  }
+  .cEB1-shape h2{
+    font-size: 1.25rem;
+  }
+  .cEB1-shape p {
+    font-size : 0.75rem
+  }
+
+  .majorTarot-table-div > table {
+    width: 100%;
+    font-size: 0.625rem;
+  } 
+  .minorTarot-table-div > table{
+    font-size: 0.625rem;
+  }
+  .cEB1-shape-history-content-img{
+    width: 100%;
+  }
 }
 
 /* 스마트폰 세로 (해상도 ~ 479px)*/ 
 @media all and (max-width:479px) {
+  .cEB1-shape h1{
+    font-size: 1.25rem;
+  }
+  .cEB1-shape h2{
+    font-size: 1rem;
+  }
+  .cEB1-shape p {
+    font-size : 0.5rem
+  }
 
-  
+  .majorTarot-table-div > table {
+    width: 100%;
+    font-size: 0.5rem;
+  } 
+  .minorTarot-table-div > table{
+    font-size: 0.5rem;
+  }
 }
