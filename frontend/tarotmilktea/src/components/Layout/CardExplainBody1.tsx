@@ -94,7 +94,7 @@ function CardExplainBody1() {
             <tbody>
               {aboutTarot[0].majorTarotMeaning.map((v3, i3) => (
                 <tr key={i3}
-                  onClick={() => {console.log(v3.number)}}
+                  onClick={() => {console.log(v3.card_id)}}
                 >
                   <td>{v3.number}</td>
                   <td>{v3.name}</td>
@@ -128,22 +128,34 @@ function CardExplainBody1() {
             </thead>
             <tbody>
               {aboutTarot[0].minorTarotMeaning.map((v4, i4) => (
-                <tr key={i4}
-                  onClick={() => {
-                    console.log(v4.number)
-                  }}
-                >
+                <tr key={i4}>
                   <td>{v4.number}</td>
-                  <td>
+                  <td className='minorTarot-table-element'
+                    onClick={() => {
+                      console.log(v4.number, v4.wands)
+                    }}
+                  >
                     {v4.wands.join(", ")}
                   </td>
-                  <td>
+                  <td className='minorTarot-table-element'
+                    onClick={() => {
+                      console.log(v4.number, v4.cups)
+                    }}
+                  >
                     {v4.cups.join(", ")}
                   </td>
-                  <td>
+                  <td className='minorTarot-table-element'
+                    onClick={() => {
+                      console.log(v4.number, v4.swords)
+                    }}
+                  >
                     {v4.swords.join(", ")}
                   </td>
-                  <td>
+                  <td className='minorTarot-table-element'
+                    onClick={() => {
+                      console.log(v4.number, v4.pentacles)
+                    }}
+                  >
                     {v4.pentacles.join(", ")}
                   </td>
                 </tr>

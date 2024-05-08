@@ -57,6 +57,9 @@
   color: #FFFFFF;
   padding: 0.375em 0em;
 }
+.majorTarot-table-div td{
+  padding: 0.125em 0em;
+}
 
 .majorTarot-table-div tbody tr:hover {
   background-color: #F9F871;
@@ -77,17 +80,25 @@
 }
 
 .minorTarot-table-div th, td{
-  border-bottom: 1px solid #ddd
+  border: 1px solid #ddd
 }
 .minorTarot-table-div th{
   background-color: #508072;
   color: #FFFFFF;
   padding: 0.375em 0em;
 }
+.minorTarot-table-div td{
+  padding: 0.125em 0em;
+}
 
 .minorTarot-table-div tbody tr:hover {
   background-color: #F3ECFF;
   opacity: 0.9;
+  cursor: pointer;
+}
+.minorTarot-table-element:hover {
+  /* font-weight: bold; */
+  background: #d0b5ff;
   cursor: pointer;
 }
 
