@@ -1,16 +1,12 @@
-.divCOntain{
-  height: 600px;
-  width: 600px;
+.fR-cg-contain{
+  width: calc(100vw * 0.33);
+  position: fixed;
+  left: calc(100vw * 0.33 * -1);
+  border: 1px solid #000000;
+  height: 500px;
+  transition: all 1s;
 }
-.divTesting{
-  border: 1px solid black; 
-}
-.divTesting1{
-  width: 100%;
-  height: 100%;
-  background: orange;
-}
-.divTesting1 > h1{
-  margin: 0px;
-  
+
+.fR-cg-contain-active{
+  left: 0;
 }

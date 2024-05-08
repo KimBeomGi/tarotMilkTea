@@ -29,6 +29,7 @@
   align-items: center;
   border-bottom: 1px solid #000000;
   border-right: 1px solid #000000;
+  border-collapse: collapse;
   box-sizing: border-box;
   background: #ffffff;
   transition: opacity 20s, left 0.1s;
@@ -72,6 +73,7 @@
   border-top: 1px solid #000000;
   border-bottom: 1px solid #000000;
   box-sizing: border-box;
+  border-collapse: collapse;
 }
 .card-certi2{
   display: flex;

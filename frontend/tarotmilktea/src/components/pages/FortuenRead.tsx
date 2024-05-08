@@ -9,23 +9,16 @@ import "./FortuenRead.css"
 function FortuenRead() {
   // const count = useAppSelector((state) => state.counter.value)
   const dispatch = useAppDispatch()
+  const [istest, setIstest] = useState<boolean>(false)
 
   return (
     <div className="FortuenRead">
-      <h1>FortuenRead</h1>
-
-      <div className='divCOntain'>
-        <div className="divTesting">
-          <div className='divTesting1'>
-            <h1>태그하나</h1>
-          </div>
-          <div className='divTesting1'>
-            <h1>태그둘</h1>
-          </div>
-          <div className='divTesting1'>
-            <h1>태그셋</h1>
-          </div>
-        </div>
+      <div className={`fR-cg-contain ${istest? "fR-cg-contain-active" : ""}`}>
+      </div>
+      <div>
+        <h1 onClick={() => {
+          setIstest(!istest)
+        }}>누르면 등장</h1>
       </div>
     </div>
   );

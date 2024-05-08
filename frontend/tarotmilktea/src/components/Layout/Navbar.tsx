@@ -77,8 +77,9 @@ function Navbar() {
         
       </nav>
       {/* <div className='test'></div> */}
-
-      <Outlet/>
+      <div>
+        <Outlet/>
+      </div>
 
     </div>
   );
