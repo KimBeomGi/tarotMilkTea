@@ -36,19 +36,19 @@
     {"card_id" : 21, "number" : 21, "name": "The World", "forward" : ["완성", "완전"], "reverse": ["미완성", "어중간함"]}
   ],
   "minorTarotMeaning" : [
-    {"number":1, "wands":["창조력", "출발"], "cups" : ["기쁨", "만족"], "swords": ["힘의 승리", "권력"], "pentacles" : ["완전한 만족", "돈"]},
-    {"number":2, "wands":["재산", "장엄함"], "cups" : ["사랑", "우정"], "swords": ["균형", "조건부의 조화"], "pentacles" : ["명량함", "문서에 의한 뉴스·메세지"]},
-    {"number":3, "wands":["확림된 힘", "교역"], "cups" : ["풍족함", "행복"], "swords": ["후퇴", "단절"], "pentacles" : ["기예", "거래"]},
-    {"number":4, "wands":["작업의 완성", "휴식"], "cups" : ["권태", "포식"], "swords": ["은둔", "회복"], "pentacles" : ["소유의 보정", "집착"]},
-    {"number":5, "wands":["치열한 경쟁", "스포츠"], "cups" : ["손실", "별거 아닌 유산"], "swords": ["타락", "폐지"], "pentacles" : ["물질적인 트러블"]},
-    {"number":6, "wands":["승리자", "대뉴스의 도달"], "cups" : ["과거를 돌이켜봄", "행복"], "swords": ["작업을 끝마침", "중개자"], "pentacles" : ["성공", "선물"]},
-    {"number":7, "wands":["용기", "토론"], "cups" : ["환상", "약간의 성공(영구적이진 않음)"], "swords": ["기획", "계획"], "pentacles" : ["금전", "사업"]},
-    {"number":8, "wands":["활동성", "재빠름"], "cups" : ["성공의 방치", "겸손"], "swords": ["구속된 힘", "비난"], "pentacles" : ["장인 기질", "준비"]},
-    {"number":9, "wands":["억압된 상황에서의 강함"], "cups" : ["물질적 안녕", "만족"], "swords": ["실망", "환멸"], "pentacles" : ["물질적인 풍요", "달성"]},
-    {"number":10, "wands":["억압", "너무 많은 재산"], "cups" : ["만족", "가정"], "swords": ["황폐", "고통"], "pentacles" : ["이익", "재산"]},
-    {"number":"Page", "wands":["젊은 남성", "충실"], "cups" : ["공부에 힘쓰는 젊은이", "숙고"], "swords": ["감시", "경계"], "pentacles" : ["근면", "학생"]},
-    {"number":"Knight", "wands":["출발", "친숙한 젊은이"], "cups" : ["도착", "발전"], "swords": ["용감함", "격노"], "pentacles" : ["유용", "재산"]},
-    {"number":"Queen", "wands":["친숙한", "정적"], "cups" : ["선량한", "행복"], "swords": ["결단력 있는", "미망인"], "pentacles" : ["부", "관대"]},
-    {"number":"King", "wands":["정직", "양심적"], "cups" : ["공정한", "창조적 지성"], "swords": ["재판관", "정의"], "pentacles" : ["실제적인 지성", "사업"]}
+    {"number":1, "pentacles" : {"card_id" : 22, "means": ["완전한 만족", "돈"]}, "wands" : {"card_id" : 36, "means": ["창조력", "출발"]}, "cups" : {"card_id" : 50, "means": ["기쁨", "만족"]} , "swords": {"card_id" : 64, "means": ["힘의 승리", "권력"]} },
+    {"number":2, "pentacles" : {"card_id" : 23, "means": ["명량함", "문서에 의한 뉴스·메세지"]}, "wands" : {"card_id" : 37, "means": ["재산", "장엄함"]}, "cups" : {"card_id" : 51, "means": ["사랑", "우정"]} , "swords": {"card_id" : 65, "means": ["균형", "조건부의 조화"]} },
+    {"number":3, "pentacles" : {"card_id" : 24, "means": ["기예", "거래"]}, "wands" : {"card_id" : 38, "means": ["확림된 힘", "교역"]}, "cups" : {"card_id" : 52, "means": ["풍족함", "행복"]} , "swords": {"card_id" : 66, "means": ["후퇴", "단절"]} },
+    {"number":4, "pentacles" : {"card_id" : 25, "means": ["소유의 보정", "집착"]}, "wands" : {"card_id" : 39, "means": ["작업의 완성", "휴식"]}, "cups" : {"card_id" : 53, "means": ["권태", "포식"]} , "swords": {"card_id" : 67, "means": ["은둔", "회복"]} },
+    {"number":5, "pentacles" : {"card_id" : 26, "means": ["물질적인 트러블"]}, "wands" : {"card_id" : 40, "means": ["치열한 경쟁", "스포츠"]}, "cups" : {"card_id" : 54, "means": ["손실", "별거 아닌 유산"]} , "swords": {"card_id" : 68, "means": ["타락", "폐지"]} },
+    {"number":6, "pentacles" : {"card_id" : 27, "means": ["성공", "선물"]}, "wands" : {"card_id" : 41, "means": ["승리자", "대뉴스의 도달"]}, "cups" : {"card_id" : 55, "means": ["과거를 돌이켜봄", "행복"]} , "swords": {"card_id" : 69, "means": ["작업을 끝마침", "중개자"]} },
+    {"number":7, "pentacles" : {"card_id" : 28, "means": ["금전", "사업"]}, "wands" : {"card_id" : 42, "means": ["용기", "토론"]}, "cups" : {"card_id" : 56, "means": ["환상", "약간의 성공(영구적이진 않음)"]}, "swords": {"card_id" : 70, "means": ["기획", "계획"]} },
+    {"number":8, "pentacles" : {"card_id" : 29, "means": ["장인 기질", "준비"]}, "wands" : {"card_id" : 43, "means": ["활동성", "재빠름"]}, "cups" : {"card_id" : 57, "means": ["성공의 방치", "겸손"]}, "swords": {"card_id" : 71, "means": ["구속된 힘", "비난"]} },
+    {"number":9, "pentacles" : {"card_id" : 30, "means": ["물질적인 풍요", "달성"]}, "wands" : {"card_id" : 44, "means": ["억압된 상황에서의 강함"]}, "cups" : {"card_id" : 58, "means": ["물질적 안녕", "만족"]}, "swords": {"card_id" : 72, "means": ["실망", "환멸"]} },
+    {"number":10, "pentacles" : {"card_id" : 31, "means": ["이익", "재산"]}, "wands" : {"card_id" : 45, "means": ["억압", "너무 많은 재산"]}, "cups" : {"card_id" : 59, "means": ["만족", "가정"]} , "swords": {"card_id" : 73, "means": ["황폐", "고통"]} },
+    {"number":"Page", "pentacles" : {"card_id" : 32, "means": ["근면", "학생"]}, "wands" : {"card_id" : 46, "means": ["젊은 남성", "충실"]}, "cups" : {"card_id" : 60, "means": ["공부에 힘쓰는 젊은이", "숙고"]}, "swords": {"card_id" : 74, "means": ["감시", "경계"]} },
+    {"number":"Knight", "pentacles" : {"card_id" : 33, "means": ["유용", "재산"]}, "wands" : {"card_id" : 47, "means": ["출발", "친숙한 젊은이"]}, "cups" : {"card_id" : 61, "means": ["도착", "발전"]} , "swords": {"card_id" : 75, "means": ["용감함", "격노"]} },
+    {"number":"Queen", "pentacles" : {"card_id" : 34, "means": ["부", "관대"]}, "wands" : {"card_id" : 48, "means": ["친숙한", "정적"]}, "cups" : {"card_id" : 62, "means": ["선량한", "행복"]} , "swords": {"card_id" : 76, "means": ["결단력 있는", "미망인"]} },
+    {"number":"King", "pentacles" : {"card_id" : 35, "means": ["실제적인 지성", "사업"]}, "wands" : {"card_id" : 49, "means": ["정직", "양심적"]}, "cups" : {"card_id" : 63, "means": ["공정한", "창조적 지성"]} , "swords": {"card_id" : 77, "means": ["재판관", "정의"]} }
   ]
 }

@@ -120,10 +120,10 @@ function CardExplainBody1() {
             <thead>
               <tr>
                 <th>번호</th>
+                <th>PENTACLES</th>
                 <th>WANDS</th>
                 <th>CUPS</th>
                 <th>SWORDS</th>
-                <th>PENTACLES</th>
               </tr>
             </thead>
             <tbody>
@@ -132,31 +132,31 @@ function CardExplainBody1() {
                   <td>{v4.number}</td>
                   <td className='minorTarot-table-element'
                     onClick={() => {
-                      console.log(v4.number, v4.wands)
+                      console.log(v4.number, v4.pentacles.card_id)
                     }}
                   >
-                    {v4.wands.join(", ")}
+                    {v4.pentacles.means.join(", ")}
                   </td>
                   <td className='minorTarot-table-element'
                     onClick={() => {
-                      console.log(v4.number, v4.cups)
+                      console.log(v4.number, v4.wands.card_id)
                     }}
                   >
-                    {v4.cups.join(", ")}
+                    {v4.wands.means.join(", ")}
                   </td>
                   <td className='minorTarot-table-element'
                     onClick={() => {
-                      console.log(v4.number, v4.swords)
+                      console.log(v4.number, v4.cups.card_id)
                     }}
                   >
-                    {v4.swords.join(", ")}
+                    {v4.cups.means.join(", ")}
                   </td>
                   <td className='minorTarot-table-element'
                     onClick={() => {
-                      console.log(v4.number, v4.pentacles)
+                      console.log(v4.number, v4.swords.card_id)
                     }}
                   >
-                    {v4.pentacles.join(", ")}
+                    {v4.swords.means.join(", ")}
                   </td>
                 </tr>
               ))}
