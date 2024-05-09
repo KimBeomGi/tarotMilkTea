@@ -1,0 +1,45 @@
+.fR-cg-contain{
+  width: calc(100vw * 0.33);
+  position: fixed;
+  left: calc(100vw * 0.33 * -1);
+  border: 1px solid #000000;
+  border-top: 0px;
+  border-collapse: collapse;
+  transition: all 0.1s;
+  max-height: 90vh;
+  overflow: scroll;
+}
+
+.fR-cg-contain-active{
+  left: 0;
+}
+.fR-cg{
+  
+}
+.fR-cg-largeCg{
+  border: 1px solid #000000;
+  border-right: 0px;
+  box-sizing: border-box;
+  border-collapse: collapse;
+}
+
+
+.fR-cateogry-open{
+  height: calc(2rem + 2vmin);
+  width: calc(2rem + 2vmin);
+  position: fixed;
+  top: calc(50vh - 1rem - 1vmin);
+  left: 0rem;
+  opacity: 1;
+  z-index: 1;
+  transition-duration: 0.1s;
+}
+.fR-cateogry-open-none{
+  transition-duration: 0s;
+  opacity: 0;
+  z-index: -1;
+}
+.fR-cateogry-open-icon{
+  height: 100%;
+  width: 100%;
+}

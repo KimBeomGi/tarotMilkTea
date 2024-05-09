@@ -6,7 +6,7 @@ import NotFound from './components/pages/NotFound';
 import Navbar from './components/layout/Navbar';
 import Board from './components/pages/Board';
 import CardExplain from './components/pages/CardExplain';
-import FortuenRead from './components/pages/FortuenRead';
+import FortuneRead from './components/pages/FortuneRead';
 import CardExplainBody1 from './components/layout/CardExplainBody1';
 import CardExplainBody2 from './components/layout/CardExplainBody2';
 
@@ -20,7 +20,9 @@ function App() {
           <Route path='' element={<CardExplainBody1 />} />
           <Route path=':cardId' element={<CardExplainBody2 />} />
         </Route>
-        <Route path='/fortune' element={<FortuenRead />} />
+        <Route path='/fortune' element={<FortuneRead />}>
+          
+        </Route>
         <Route path='/board' element={<Board />} />
       </Route>
       <Route path='/login' element={<Login />} />
