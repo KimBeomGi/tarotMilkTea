@@ -52,3 +52,4 @@
     {"number":"King", "pentacles" : {"card_id" : 35, "means": ["실제적인 지성", "사업"]}, "wands" : {"card_id" : 49, "means": ["정직", "양심적"]}, "cups" : {"card_id" : 63, "means": ["공정한", "창조적 지성"]} , "swords": {"card_id" : 77, "means": ["재판관", "정의"]} }
   ]
 }
+

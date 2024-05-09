@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import AboutTarot from "./AboutTarot.json"
 import aboutTarotImg1 from "../../assets/images/aboutTarotImg1.png"
@@ -9,6 +9,7 @@ import "./CardExplainBody1.css"
 
 function CardExplainBody1() {
   // const count = useAppSelector((state) => state.counter.value)
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const aboutTarot = useState(AboutTarot)
   const historyPDiv = useRef<HTMLDivElement>(null)
@@ -94,7 +95,11 @@ function CardExplainBody1() {
             <tbody>
               {aboutTarot[0].majorTarotMeaning.map((v3, i3) => (
                 <tr key={i3}
-                  onClick={() => {console.log(v3.card_id)}}
+                  onClick={() => {
+                    console.log(v3.card_id)
+                    navigate(`/explain/${v3.card_id}`)
+                  }}
+                  
                 >
                   <td>{v3.number}</td>
                   <td>{v3.name}</td>
@@ -133,6 +138,7 @@ function CardExplainBody1() {
                   <td className='minorTarot-table-element'
                     onClick={() => {
                       console.log(v4.number, v4.pentacles.card_id)
+                      navigate(`/explain/${v4.pentacles.card_id}`)
                     }}
                   >
                     {v4.pentacles.means.join(", ")}
@@ -140,6 +146,7 @@ function CardExplainBody1() {
                   <td className='minorTarot-table-element'
                     onClick={() => {
                       console.log(v4.number, v4.wands.card_id)
+                      navigate(`/explain/${v4.wands.card_id}`)
                     }}
                   >
                     {v4.wands.means.join(", ")}
@@ -147,6 +154,7 @@ function CardExplainBody1() {
                   <td className='minorTarot-table-element'
                     onClick={() => {
                       console.log(v4.number, v4.cups.card_id)
+                      navigate(`/explain/${v4.cups.card_id}`)
                     }}
                   >
                     {v4.cups.means.join(", ")}
@@ -154,6 +162,7 @@ function CardExplainBody1() {
                   <td className='minorTarot-table-element'
                     onClick={() => {
                       console.log(v4.number, v4.swords.card_id)
+                      navigate(`/explain/${v4.swords.card_id}`)
                     }}
                   >
                     {v4.swords.means.join(", ")}

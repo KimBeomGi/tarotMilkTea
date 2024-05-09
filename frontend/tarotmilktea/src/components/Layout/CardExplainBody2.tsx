@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 
-import tarotCard0 from '../../assets/images/tarot/tarotCard0.png'
+// import tarotCard0 from '../../assets/images/tarot/tarotCard0.png'
 
 import "./CardExplainBody2.css"
 
@@ -39,6 +39,7 @@ const data2 = [
 // ```
 
 function CardExplainBody2() {
+  const { cardId } = useParams()
   // const count = useAppSelector((state) => state.counter.value)
   const dispatch = useAppDispatch()
   const [browerWidth, setBrowerWidth] = useState<number>(window.innerWidth)
@@ -118,9 +119,9 @@ function CardExplainBody2() {
         className="cardExplainBody2-left"
       >
         <div className='CEB2-left-cardImage'>
-          <img src={tarotCard0} alt="타로카드"/>
+          <img src={`/images/tarotCardImg/tarotCard${cardId}.jpg`} alt={`타로카드${cardId}`}/>
           {/* <h1>The Fool</h1> */}
-          <h1>10번 WHEEL OF FORTUNE</h1>
+          <h1>{cardId}번 WHEEL OF FORTUNE</h1>
         </div>
       </div>
       {/* 오른쪽 */}
