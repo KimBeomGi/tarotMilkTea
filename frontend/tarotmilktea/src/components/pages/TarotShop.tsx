@@ -61,24 +61,14 @@ function TarotShop() {
 
   // 초기 등록
   useEffect(() => {
-    /////////// 지도 확대 축소시 문제 때문에 흰색 배경을 위해서 만들었음
     let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
     let options = { //지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(0, 0), //지도의 중심좌표.
+      center: new kakao.maps.LatLng(myLocation[0], myLocation[1]), //지도의 중심좌표.
+      // center: new kakao.maps.LatLng(0, 0), //지도의 중심좌표.
       level: 4 //지도의 레벨(확대, 축소 정도)
     };
     // let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     let createdMap = new window.kakao.maps.Map(container, options); // 지도 생성
-    ///////////
-
-
-    container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    options = { //지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(myLocation[0], myLocation[1]), //지도의 중심좌표.
-      level: 4 //지도의 레벨(확대, 축소 정도)
-    };
-    // let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-    createdMap = new window.kakao.maps.Map(container, options); // 지도 생성
     setMap(createdMap)
 
     // map.setDraggable(false)
@@ -120,6 +110,10 @@ function TarotShop() {
       setMyLocation([latlng.getLat(), latlng.getLng()])
     });
     
+    /////////// 지도 확대 축소시 문제 때문에 return으로 언마운트시 container를 비워버림
+    return () => {
+      if(container){container.innerHTML = '';}
+    }
   }, [])
   
   /////////////////////////////////////////////////////
