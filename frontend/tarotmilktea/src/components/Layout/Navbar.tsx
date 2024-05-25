@@ -70,6 +70,10 @@ function Navbar() {
           <Link to="/board" className={`nav-bar4 ${clickHamburger ? 'nav-bar-link-active' : ''}`} onClick={() => {
             treatSPhoneNavbar()
           }}>게시판</Link>
+          {/* css 차후 변경 */}
+          <Link to="/tarotshop" className={`nav-bar4 ${clickHamburger ? 'nav-bar-link-active' : ''}`} onClick={() => {
+            treatSPhoneNavbar()
+          }}>주변 점집</Link>
           <Link to="/login" className={`nav-bar5 nav-bar-login ${clickHamburger ? 'nav-bar-link-active' : ''}`} onClick={() => {
             treatSPhoneNavbar()
           }}>로그인</Link>

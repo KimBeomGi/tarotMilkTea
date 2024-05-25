@@ -5,6 +5,7 @@ import Login from './components/pages/Login';
 import NotFound from './components/pages/NotFound';
 import Navbar from './components/layout/Navbar';
 import Board from './components/pages/Board';
+import TarotShop from './components/pages/TarotShop';
 import CardExplain from './components/pages/CardExplain';
 import FortuneRead from './components/pages/FortuneRead';
 import CardExplainBody1 from './components/layout/CardExplainBody1';
@@ -24,6 +25,7 @@ function App() {
           
         </Route>
         <Route path='/board' element={<Board />} />
+        <Route path='/tarotshop' element={<TarotShop />} />
       </Route>
       <Route path='/login' element={<Login />} />
       <Route path='*' element={<NotFound />} />
