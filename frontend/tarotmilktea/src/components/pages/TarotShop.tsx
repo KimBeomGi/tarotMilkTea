@@ -59,6 +59,7 @@ function TarotShop() {
   const [tarotPositions, setTarotPositions] = useState([])
   const [clustererMap, setClustererMap] = useState<any>(null)
   const [tarotMarkers, setTarotMarkers] = useState<any>([])
+  const [selectedMarker, setSelectedMarker] = useState<any>(null)
   
   // 테스트중
   const [mapInfo, setMapInfo] = useState({ level: null, lat: null, lng: null });
@@ -154,18 +155,38 @@ function TarotShop() {
     setTarotMarkers([]);
   }
 
-  // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-  function makeOverListener(map :any, marker :any, infowindow :any) {
-    return function() {
-        infowindow.open(map, marker);
-    };
-  }
+  // // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+  // function makeOverListener(map :any, marker :any, infowindow :any) {
+  //   return function() {
+  //       infowindow.open(map, marker);
+  //   };
+  // }
 
-  // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-  function makeOutListener(infowindow :any) {
-    return function() {
+  // // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+  // function makeOutListener(infowindow :any) {
+  //   return function() {
+  //       infowindow.close();
+  //   };
+  // }
+  // 인포윈도우를 열 함수
+  function markerInfoOpenListener (map :any, marker :any, infowindow :any) {
+    // selectedMarker
+    // setSelectedMarker
+    // return function() {
+      // selectedMarker가 현재 마커가 아니면 infowindow.close()
+      if(!selectedMarker ||selectedMarker != marker){
         infowindow.close();
-    };
+      }
+      infowindow.open(map, marker);
+      setSelectedMarker(marker);
+    // };
+  }
+  // 인포윈도우를 닫을 함수
+  function markerInfoCloseListener (infowindow :any) {
+    // return function() {
+      infowindow.close();
+      setSelectedMarker(null);
+    // };
   }
 
 
@@ -174,13 +195,10 @@ function TarotShop() {
 
     // var listEl = document.getElementById('placesList'), 
     // menuEl = document.getElementById('menu_wrap'),
-    let fragment = document.createDocumentFragment(), 
-    bounds = new kakao.maps.LatLngBounds(), 
-    listStr = '';
+    // let fragment = document.createDocumentFragment(), 
+    // bounds = new kakao.maps.LatLngBounds(), 
+    // listStr = '';
     
-    // 검색 결과 목록에 추가된 항목들을 제거합니다
-    // removeAllChildNods(listEl);
-
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
     
@@ -190,17 +208,27 @@ function TarotShop() {
       var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x)
       let marker = addMarker(placePosition, i, places[i].place_name)
       
+      
       let infoContent =  `
       <div>
         <div style="margin:1rem;">
-          <a href="https://place.map.kakao.com/${places[i].id}" 
-            style="font-weight: 700; text-decoration: none; color: black;"
+          <a href="https://place.map.kakao.com/${places[i].id}" target="_blank" 
+            style="font-weight: 700; text-decoration: none; color: black; white-space:nowrap;"
           >
             ${places[i].place_name}
           </a>
-          <p style="font-size: 0.8rem;">${places[i].road_address_name}</p>
-          <p style="font-size: 0.8rem;">${places[i].phone}</p>
-          <a href="https://map.kakao.com/link/to/${places[i].place_name},${places[i].y},${places[i].x}" style="color:blue" target="_blank">길찾기</a>
+          <p style="font-size: 0.8rem; white-space:nowrap;">${places[i].road_address_name}</p>
+          <p style="font-size: 0.8rem; white-space:nowrap;">${places[i].phone}</p>
+          <a href="https://map.kakao.com/link/to/${places[i].place_name},${places[i].y},${places[i].x}" target="_blank"
+            style="font-size: 0.8rem; margin-right: 0.5rem; text-decoration:none;"  target="_blank;"
+          >
+            길찾기
+          </a>
+          <a href="https://place.map.kakao.com/${places[i].id}" target="_blank"
+            style="font-size: 0.8rem; text-decoration:none;"
+          >
+            상세보기
+          </a>
         </div>
       </div>
       `
@@ -215,8 +243,12 @@ function TarotShop() {
       // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
       // 이벤트 리스너로는 클로저를 만들어 등록합니다 
       // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-      kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-      kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+      // kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+      // kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+      kakao.maps.event.addListener(marker, 'click', () =>{markerInfoOpenListener(map, marker, infowindow)});
+      kakao.maps.event.addListener(map, 'click', () => {markerInfoCloseListener(infowindow)});
+      kakao.maps.event.addListener(map, 'dragstart', () => {markerInfoCloseListener(infowindow)});
     }
   }
 
@@ -272,20 +304,6 @@ function TarotShop() {
           if (status === kakao.maps.services.Status.OK) {
             console.log(result)
             
-            // // 검색된 가게들 정리
-            // const tmpPosition :any = []
-            // for (let index = 0; index < result.length; index++) {
-            //   tmpPosition.push(
-            //     {
-            //       store_name: result[index].place_name,
-            //       road_address : result[index].road_address_name,
-            //       latlng : new kakao.maps.LatLng(result[index].y, result[index].x),
-            //       place_url : result[index].place_url,
-            //       phone : result[index].phone
-            //     },
-            //   )
-            // }
-
             // 정상적으로 검색이 완료됐으면
             // 검색 목록과 마커를 표출합니다
             displayPlaces(result);
