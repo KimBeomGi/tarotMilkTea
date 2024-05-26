@@ -56,8 +56,6 @@ function TarotShop() {
 
   const [map, setMap] = useState<any>(null) // map 객체를 상태로 관리 react 사용하기위해서
   const [isMapMade, setIsMapMade] = useState<boolean>(false)
-  const [tarotPositions, setTarotPositions] = useState([])
-  const [clustererMap, setClustererMap] = useState<any>(null)
   const [tarotMarkers, setTarotMarkers] = useState<any>([])
   const [selectedMarker, setSelectedMarker] = useState<any>(null)
   
@@ -65,7 +63,7 @@ function TarotShop() {
   const [mapInfo, setMapInfo] = useState({ level: null, lat: null, lng: null });
 
   // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-  let infowindow = new kakao.maps.InfoWindow({zIndex:1});
+  let infowindow = new kakao.maps.InfoWindow({zIndex:1, removable:true});
 
   // 맵 생성 함수 createMap
   const createMap = () => {
@@ -125,23 +123,15 @@ function TarotShop() {
 
   // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
   function addMarker(position :any, idx :any, title :any) {
-    // var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-    // imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-    // imgOptions =  {
-    //     spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-    //     spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-    //     offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-    // }
-    // let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions)
     let marker = new kakao.maps.Marker({
       position : position, // 마커의 위치
-      // image: markerImage,
       title : title,
       clickable:true,
     });
 
     marker.setMap(map); // 지도 위에 마커를 표출합니다
     tarotMarkers.push(marker);  // 배열에 생성된 마커를 추가합니다
+    // setTarotMarkers((prev:any) => [...prev, marker]);
 
     return marker;
   }
@@ -151,102 +141,106 @@ function TarotShop() {
     for ( var i = 0; i < tarotMarkers.length; i++ ) {
       tarotMarkers[i].setMap(null);
     }
-    // setTarotMarkers = [];
     setTarotMarkers([]);
   }
 
-  // // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-  // function makeOverListener(map :any, marker :any, infowindow :any) {
-  //   return function() {
-  //       infowindow.open(map, marker);
-  //   };
+  // // 인포윈도우를 열 함수
+  // function markerInfoOpenListener (map :any, marker :any, infowindow :any) {
+  //   if(!selectedMarker ||selectedMarker != marker){
+  //     infowindow.close();
+  //   }
+  //   infowindow.open(map, marker);
+  //   setSelectedMarker(marker);
   // }
-
-  // // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-  // function makeOutListener(infowindow :any) {
-  //   return function() {
-  //       infowindow.close();
-  //   };
-  // }
-  // 인포윈도우를 열 함수
-  function markerInfoOpenListener (map :any, marker :any, infowindow :any) {
-    // selectedMarker
-    // setSelectedMarker
-    // return function() {
-      // selectedMarker가 현재 마커가 아니면 infowindow.close()
-      if(!selectedMarker ||selectedMarker != marker){
-        infowindow.close();
-      }
-      infowindow.open(map, marker);
-      setSelectedMarker(marker);
-    // };
-  }
   // 인포윈도우를 닫을 함수
   function markerInfoCloseListener (infowindow :any) {
-    // return function() {
-      infowindow.close();
-      setSelectedMarker(null);
-    // };
+    infowindow.close();
   }
-
 
   // 검색 결과 목록과 마커를 표출하는 함수입니다
   function displayPlaces (places :any):any {
 
-    // var listEl = document.getElementById('placesList'), 
-    // menuEl = document.getElementById('menu_wrap'),
-    // let fragment = document.createDocumentFragment(), 
-    // bounds = new kakao.maps.LatLngBounds(), 
-    // listStr = '';
-    
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
     
-    for ( var i=0; i<places.length; i++ ) {
+    for ( let i=0; i<places.length; i++ ) {
 
       // 마커를 생성하고 지도에 표시합니다
-      var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x)
+      let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x)
       let marker = addMarker(placePosition, i, places[i].place_name)
-      
-      
-      let infoContent =  `
-      <div>
-        <div style="margin:1rem;">
-          <a href="https://place.map.kakao.com/${places[i].id}" target="_blank" 
-            style="font-weight: 700; text-decoration: none; color: black; white-space:nowrap;"
-          >
-            ${places[i].place_name}
-          </a>
-          <p style="font-size: 0.8rem; white-space:nowrap;">${places[i].road_address_name}</p>
-          <p style="font-size: 0.8rem; white-space:nowrap;">${places[i].phone}</p>
-          <a href="https://map.kakao.com/link/to/${places[i].place_name},${places[i].y},${places[i].x}" target="_blank"
-            style="font-size: 0.8rem; margin-right: 0.5rem; text-decoration:none;"  target="_blank;"
-          >
-            길찾기
-          </a>
-          <a href="https://place.map.kakao.com/${places[i].id}" target="_blank"
-            style="font-size: 0.8rem; text-decoration:none;"
-          >
-            상세보기
-          </a>
-        </div>
-      </div>
-      `
 
-      // 마커에 표시할 인포윈도우를 생성합니다 
-      var infowindow = new kakao.maps.InfoWindow({
-        // 인포윈도우에 표시할 내용
-        content:infoContent,
-        removable : true
+      // 마커에 클릭이벤트를 등록합니다
+      kakao.maps.event.addListener(marker, 'click', function() {
+        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+        infowindow.setContent(
+          `
+          <div>
+            <div style="margin:1rem;">
+              <a href="https://place.map.kakao.com/${places[i].id}" target="_blank" 
+                style="font-weight: 700; text-decoration: none; color: black; white-space:nowrap;"
+              >
+                ${places[i].place_name}
+              </a>
+              <p style="font-size: 0.8rem; white-space:nowrap;">${places[i].road_address_name}</p>
+              <p style="font-size: 0.8rem; white-space:nowrap;">${places[i].phone}</p>
+              <a href="https://map.kakao.com/link/to/${places[i].place_name},${places[i].y},${places[i].x}" target="_blank"
+                style="font-size: 0.8rem; margin-right: 0.5rem; text-decoration:none;"  target="_blank;"
+              >
+                길찾기
+              </a>
+              <a href="https://place.map.kakao.com/${places[i].id}" target="_blank"
+                style="font-size: 0.8rem; text-decoration:none;"
+              >
+                상세보기
+              </a>
+            </div>
+          </div>
+          `
+        );
+        infowindow.open(map, marker);
       });
+      
+      // let infoContent =  `
+      // <div>
+      //   <div style="margin:1rem;">
+      //     <a href="https://place.map.kakao.com/${places[i].id}" target="_blank" 
+      //       style="font-weight: 700; text-decoration: none; color: black; white-space:nowrap;"
+      //     >
+      //       ${places[i].place_name}
+      //     </a>
+      //     <p style="font-size: 0.8rem; white-space:nowrap;">${places[i].road_address_name}</p>
+      //     <p style="font-size: 0.8rem; white-space:nowrap;">${places[i].phone}</p>
+      //     <a href="https://map.kakao.com/link/to/${places[i].place_name},${places[i].y},${places[i].x}" target="_blank"
+      //       style="font-size: 0.8rem; margin-right: 0.5rem; text-decoration:none;"  target="_blank;"
+      //     >
+      //       길찾기
+      //     </a>
+      //     <a href="https://place.map.kakao.com/${places[i].id}" target="_blank"
+      //       style="font-size: 0.8rem; text-decoration:none;"
+      //     >
+      //       상세보기
+      //     </a>
+      //   </div>
+      // </div>
+      // `
 
-      // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-      // 이벤트 리스너로는 클로저를 만들어 등록합니다 
-      // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-      // kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-      // kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+      // // 마커에 표시할 인포윈도우를 생성합니다 
+      // var infowindow = new kakao.maps.InfoWindow({
+      //   // 인포윈도우에 표시할 내용
+      //   content:infoContent,
+      //   removable : true
+      // });
 
-      kakao.maps.event.addListener(marker, 'click', () =>{markerInfoOpenListener(map, marker, infowindow)});
+
+      // // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+      // // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+      // // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+      // // kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+      // // kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+      // kakao.maps.event.addListener(marker, 'click', () => {
+      //   markerInfoOpenListener(map, marker, infowindow)
+      // });
       kakao.maps.event.addListener(map, 'click', () => {markerInfoCloseListener(infowindow)});
       kakao.maps.event.addListener(map, 'dragstart', () => {markerInfoCloseListener(infowindow)});
     }
@@ -267,6 +261,7 @@ function TarotShop() {
       }
       // setMap(null)
       // setTarotPositions([])
+      removeMarker()
     }
   }, [])
   
