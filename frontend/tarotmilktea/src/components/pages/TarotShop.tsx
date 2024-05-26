@@ -63,6 +63,9 @@ function TarotShop() {
   // 테스트중
   const [mapInfo, setMapInfo] = useState({ level: null, lat: null, lng: null });
 
+  // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+  let infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
   // 맵 생성 함수 createMap
   const createMap = () => {
     let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -130,8 +133,9 @@ function TarotShop() {
     // }
     // let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions)
     let marker = new kakao.maps.Marker({
-      position: position, // 마커의 위치
-      // image: markerImage 
+      position : position, // 마커의 위치
+      // image: markerImage,
+      title : title,
     });
 
     marker.setMap(map); // 지도 위에 마커를 표출합니다
@@ -143,11 +147,77 @@ function TarotShop() {
   // 지도 위에 표시되고 있는 마커를 모두 제거합니다
   function removeMarker() {
     for ( var i = 0; i < tarotMarkers.length; i++ ) {
-        tarotMarkers[i].setMap(null);
+      tarotMarkers[i].setMap(null);
     }   
     // setTarotMarkers = [];
     setTarotMarkers([]);
   }
+
+
+
+  //////////////////////////////////////////////
+  // 검색 결과 목록과 마커를 표출하는 함수입니다
+  function displayPlaces (places :any):any {
+
+    // var listEl = document.getElementById('placesList'), 
+    // menuEl = document.getElementById('menu_wrap'),
+    let fragment = document.createDocumentFragment(), 
+    bounds = new kakao.maps.LatLngBounds(), 
+    listStr = '';
+    
+    // 검색 결과 목록에 추가된 항목들을 제거합니다
+    // removeAllChildNods(listEl);
+
+    // 지도에 표시되고 있는 마커를 제거합니다
+    removeMarker();
+    
+    for ( var i=0; i<places.length; i++ ) {
+
+      // 마커를 생성하고 지도에 표시합니다
+      var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x)
+      let marker = addMarker(placePosition, i, places[i].place_name)
+      // let itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+
+      // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+      // LatLngBounds 객체에 좌표를 추가합니다
+      // bounds.extend(placePosition);
+
+      // 마커와 검색결과 항목에 mouseover 했을때
+      // 해당 장소에 인포윈도우에 장소명을 표시합니다
+      // mouseout 했을 때는 인포윈도우를 닫습니다
+      // (function(marker, title) {
+      //   kakao.maps.event.addListener(marker, 'mouseover', function() {
+      //     displayInfowindow(marker, title);
+      //   });
+
+      //   kakao.maps.event.addListener(marker, 'mouseout', function() {
+      //     infowindow.close();
+      //   });
+
+      //   itemEl.onmouseover =  function () {
+      //     displayInfowindow(marker, title);
+      //   };
+
+      //   itemEl.onmouseout =  function () {
+      //     infowindow.close();
+      //   };
+      // })(marker, places[i].place_name);
+
+      // fragment.appendChild(itemEl);
+    }
+
+    // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
+    // listEl.appendChild(fragment);
+    // menuEl.scrollTop = 0;
+
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+    // map.setBounds(bounds);
+  }
+
+  //////////////////////////////////////////////
+
+
+
 
 
   // 초기 등록
@@ -195,37 +265,48 @@ function TarotShop() {
         let places = new kakao.maps.services.Places();
         let center = map.getCenter();
 
-        let callback = function(result :any, status :any) {
+        // 검색 결과를 서버에서 받아오는 placesSearchCB()
+        let placesSearchCB = function(result :any, status :any) {
           if (status === kakao.maps.services.Status.OK) {
             console.log(result)
             
-            // 검색된 가게들 정리
-            const tmpPosition :any = []
-            for (let index = 0; index < result.length; index++) {
-              tmpPosition.push(
-                {
-                  store_name: result[index].place_name,
-                  road_address : result[index].road_address_name,
-                  latlng : new kakao.maps.LatLng(result[index].y, result[index].x),
-                  place_url : result[index].place_url,
-                  phone : result[index].phone
-                },
-              )
-            }
-            
+            // // 검색된 가게들 정리
+            // const tmpPosition :any = []
+            // for (let index = 0; index < result.length; index++) {
+            //   tmpPosition.push(
+            //     {
+            //       store_name: result[index].place_name,
+            //       road_address : result[index].road_address_name,
+            //       latlng : new kakao.maps.LatLng(result[index].y, result[index].x),
+            //       place_url : result[index].place_url,
+            //       phone : result[index].phone
+            //     },
+            //   )
+            // }
+
+            // 정상적으로 검색이 완료됐으면
+            // 검색 목록과 마커를 표출합니다
+            displayPlaces(result);
+          } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+            console.log('검색 결과가 존재하지 않습니다.');
+            return;
+          } else if (status === kakao.maps.services.Status.ERROR) {
+            console.log('검색 결과 중 오류가 발생했습니다.');
+            return;
           }
         };
         
-        places.keywordSearch('타로', callback, {
+        // 카카오맵 키워드로 검색
+        places.keywordSearch('타로', placesSearchCB, {
           // category_group_code : "CE7",
           bounds: search_bounds,
-          // useMapCenter : true,
-          location : center,
+          useMapCenter : true,
+          // location : center,
           size : 15,
           // sort: kakao.maps.services.SortBy.DISTANCE
         });
       });
-
+      
       //지도 위치 변경에 따른 정보 변경
       kakao.maps.event.addListener(map, 'tilesloaded', () => {
         const level = map.getLevel();
