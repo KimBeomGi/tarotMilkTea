@@ -64,57 +64,75 @@ function TarotShop() {
   // 초기 등록
   useEffect(() => {
     let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    let options = { //지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(myLocation[0], myLocation[1]), //지도의 중심좌표.
-      // center: new kakao.maps.LatLng(0, 0), //지도의 중심좌표.
-      level: 4 //지도의 레벨(확대, 축소 정도)
-
-    };
-    // let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-    let createdMap = new window.kakao.maps.Map(container, options); // 지도 생성
-    
-
-    // map.setDraggable(false)
-    // map.setZoomable(false)
-    
+    let options :any
+    // let createdMap = new kakao.maps.Map(container, options); // 지도 생성
+    let createdMap:any
 
     // 위치 엑세스 허용여부에 따라 변경
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(function(position) {
-          
-          let lat = position.coords.latitude, // 위도
-              lon = position.coords.longitude; // 경도
-          
-          let locPosition = new kakao.maps.LatLng(lat, lon) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-          // map.setCenter(locPosition)
-          createdMap.setCenter(locPosition)
-          setGpsLocation([lat, lon])
-          setMyLocation([lat, lon])
-        });
+        let lat = position.coords.latitude, // 위도
+            lon = position.coords.longitude; // 경도
         
+        let locPosition = new kakao.maps.LatLng(lat, lon) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+        options = { //지도를 생성할 때 필요한 기본 옵션
+          // center: new kakao.maps.LatLng(myLocation[0], myLocation[1]), //지도의 중심좌표.
+          center: locPosition, //지도의 중심좌표.
+          level: 4 //지도의 레벨(확대, 축소 정도)
+        };
+        createdMap = new kakao.maps.Map(container, options);
+
+        // map.setCenter(locPosition)
+        createdMap.setCenter(locPosition)
+        setGpsLocation([lat, lon])
+        setMyLocation([lat, lon])
+        setMap(createdMap)
+        console.log('히히')
+      }, function(error) {
+        // 위치 접근이 거부되었을 때 또는 에러가 발생했을 때
+        let locPosition = new kakao.maps.LatLng(defaultLoc[0], defaultLoc[1]);
+        options = { //지도를 생성할 때 필요한 기본 옵션
+          center: locPosition, //지도의 중심좌표.
+          level: 4 //지도의 레벨(확대, 축소 정도)
+        };
+        createdMap = new kakao.maps.Map(container, options);
+
+        // createdMap.setCenter(locPosition);
+        setMyLocation(defaultLoc);
+        setMap(createdMap);
+        console.log('하하');
+      });
     } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
         
         let locPosition = new kakao.maps.LatLng(defaultLoc[0], defaultLoc[1])
+        options = { //지도를 생성할 때 필요한 기본 옵션
+          center: locPosition, //지도의 중심좌표.
+          level: 4 //지도의 레벨(확대, 축소 정도)
+        };
+        createdMap = new kakao.maps.Map(container, options);
+
         // map.setCenter(locPosition)
-        createdMap.setCenter(locPosition)
+        // createdMap.setCenter(locPosition)
         setMyLocation(defaultLoc)
+        setMap(createdMap)
+        console.log('하하')
     }
 
-    // 지도 영역 변경여부
-    window.kakao.maps.event.addListener(createdMap, 'center_changed', () => {
-      const level = createdMap.getLevel();
+    //최초 지도 위치
+    // kakao.maps.event.addListener(createdMap, 'center_changed', () => {
+      // const level = createdMap.getLevel();
       
-      const latlng = createdMap.getCenter();
+      // const latlng = createdMap.getCenter();
 
-      setMapInfo({
-        level,
-        lat: latlng.getLat(),
-        lng: latlng.getLng(),
-      });
-      setMyLocation([latlng.getLat(), latlng.getLng()])
-    });  
-    setMap(createdMap)
+      // setMapInfo({
+      //   level,
+      //   lat: latlng.getLat(),
+      //   lng: latlng.getLng(),
+      // });
+      // setMyLocation([latlng.getLat(), latlng.getLng()])
+    // });
+    // // setMap(createdMap)
         
     /////////// 지도 확대 축소시 문제 때문에 return으로 언마운트시 container를 비워버림
     return () => {
@@ -124,16 +142,18 @@ function TarotShop() {
       setMap(null)
     }
   }, [])
-
-  //////////////
-  //지도 생성 완료 후 시행할 것들
+  
+  // 지도의 값 변경시 마다
   useEffect(() => {
     if(map){
+      ///////////////////////////////////////
+      // 위치, 레벨 등이 변경될 때 마다 검색
       let bounds = map.getBounds();
       let swLatlng = bounds.getSouthWest();
       let neLatlng = bounds.getNorthEast();
+
       // 지도가 이동, 확대, 축소로 인해 지도영역이 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
-      kakao.maps.event.addListener(map, 'bounds_changed', function() {             
+      kakao.maps.event.addListener(map, 'tilesloaded', function() {             
           
         // 지도 영역정보를 얻어옵니다 
         bounds = map.getBounds();
@@ -161,15 +181,27 @@ function TarotShop() {
           useMapCenter : true,
           size : 15,
         });
+        ///////////////////////////////////////
+      });
+
+      //지도 위치 변경에 따른 정보 변경
+      kakao.maps.event.addListener(map, 'tilesloaded', () => {
+        const level = map.getLevel();
+        
+        const latlng = map.getCenter();
+
+        setMapInfo({
+          level,
+          lat: latlng.getLat(),
+          lng: latlng.getLng(),
+        });
+        setMyLocation([latlng.getLat(), latlng.getLng()])
       });
     }
     
   }, [map])
   /////////////
   
-
-
-
   /////////////////////////////////////////////////////
   // 지도 중심 좌표 변화 이벤트를 등록한다
   const zoomIn = () => {
