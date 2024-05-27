@@ -26,38 +26,137 @@ function FortuneRead() {
     setLargeCategory(initialLargeCategories)
     setSmallCategoryList(initialLargeCategories2)
   }, [])
+
+  const [browserWidth, setBrowserWidth] = useState<number>(window.innerWidth)
+  const [browserHeight, setBrowserHeight] = useState<number>(window.innerHeight)
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const [sidebarH, setSidebarH] = useState<number>(window.innerHeight)
+  const [cgTopPosition, setCgTopPosition] = useState<number>(0)
+  const [isSmartPhone, setIsSmartPhone] = useState<boolean>(false)
+
+  const [tabActive1, setTabActive1] = useState<boolean[]>([]);
+
+  // 사이즈에 따른 사이드바 조정 함수
+  const handleSidebarTopPosition = () => {
+    let tmpTopPosi
+    let tmpSidebarH
+    if(1024 <= browserWidth){
+      // 스마트폰
+      setIsSmartPhone(false)
+      // 사이드바 위치 잡기
+      tmpTopPosi = 145.13 - scrollPosition
+      if(tmpTopPosi <= 0){
+        tmpTopPosi = 0
+      }
+      setCgTopPosition(tmpTopPosi)
+      // 사이드바 길이 조정
+      tmpSidebarH = browserHeight - (145.13 - scrollPosition)
+      if(tmpSidebarH >= browserHeight){
+        tmpSidebarH = browserHeight
+      }
+      setSidebarH(tmpSidebarH)
+    }else if(481 <= browserWidth){
+      // 스마트폰
+      setIsSmartPhone(false)
+      // 사이드바 위치 잡기
+      tmpTopPosi = 115.41 - scrollPosition
+      if(tmpTopPosi <= 0){
+        tmpTopPosi = 0
+      }
+      setCgTopPosition(tmpTopPosi)
+      // 사이드바 길이 조정
+      tmpSidebarH = browserHeight - (115.41 - scrollPosition)
+      if(tmpSidebarH >= browserHeight){
+        tmpSidebarH = browserHeight
+      }
+      setSidebarH(tmpSidebarH)
+    }else{
+      // 스마트폰
+      setIsSmartPhone(true)
+      // 사이드바 위치 잡기
+      tmpTopPosi = 49.36 - scrollPosition
+      if(tmpTopPosi <= 0){
+        tmpTopPosi = 0
+      }
+      setCgTopPosition(tmpTopPosi)
+      // 사이드바 길이 조정
+      tmpSidebarH = browserHeight - (49.36 - scrollPosition)
+      if(tmpSidebarH >= browserHeight){
+        tmpSidebarH = browserHeight
+      }
+      setSidebarH(tmpSidebarH)
+    }
+  }
+
+  
+
+  //  브라우저 사이즈 변경시
+  useEffect(() => {
+    const handleResize = () => {
+      setBrowserWidth(window.innerWidth);
+      setBrowserHeight(window.innerHeight);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    handleSidebarTopPosition()
+  }, [browserWidth, browserHeight, scrollPosition])
+  
+  const handleLargeCategoryClick = (index: number) => {
+    setTabActive1(prev => {
+      const newActiveState = [...prev];
+      newActiveState[index] = !newActiveState[index];
+      return newActiveState;
+    });
+  }
   
 
   return (
     <div className="FortuneRead">
       {/* 카테고리 창 */}
-      <div 
+      {/* <div 
+        style={{
+          height: `${sidebarH}px`, 
+          top:`${cgTopPosition}px`
+        }}
         className={`fR-cg-contain ${istest? "fR-cg-contain-active" : ""}`}
         onMouseLeave={() => {
           setIstest(false)
+          setTabActive1([])
         }}
       >
         {largeCategory?.map((v1, i1) => (
-          <div className='fR-cg' key={i1}>
-            <div className='fR-cg-largeCg'>
-              <h1>{v1}</h1>
+          <div className={`fR-cg`} key={i1}>
+            <div
+              tabIndex={0}
+              className={`fR-cg-largeCg`}
+              onClick={() => handleLargeCategoryClick(i1)}
+            >
+              <p>{v1}</p>
             </div>
             {smallCategoryList?.[i1]?.map((v2, i2) => (
-              <div key={i2}>
-                <h2>{v2[0]}</h2>
+              <div key={i2}
+                tabIndex={0}
+                className={`fR-cg-smallCg ${tabActive1[i1] ? "fR-cg-smallCg-active" : ""}`}
+              >
+                <p>{v2[0]}</p>
               </div>
             ))}
           </div>
         ))}
-      </div>
+      </div> */}
       {/* 카테고리 버튼 */}
-      <div className={`fR-cateogry-open ${istest ? "fR-cateogry-open-none": ""}`}
+      {/* <div className={`fR-cateogry-open ${istest ? "fR-cateogry-open-none": ""}`}
         onClick={() => {
           setIstest(!istest)
         }}
       >
         <IoIosArrowDroprightCircle className='fR-cateogry-open-icon'/>
-      </div>
+      </div> */}
       <Outlet/>
     </div>
   );

@@ -1,7 +1,7 @@
 .fR-cg-contain{
-  width: calc(100vw * 0.33);
+  width: calc(100vw * 0.2);
   position: fixed;
-  left: calc(100vw * 0.33 * -1);
+  left: calc(100vw * 0.2 * -1);
   border: 1px solid #000000;
   border-top: 0px;
   border-collapse: collapse;
@@ -14,15 +14,59 @@
   left: 0;
 }
 .fR-cg{
-  
+  text-align: center;
 }
 .fR-cg-largeCg{
-  border: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-top: 1px solid #000000;
   border-right: 0px;
   box-sizing: border-box;
   border-collapse: collapse;
 }
+.fR-cg-largeCg > p{
+  margin: 0rem;
+  padding: 0.75rem 0rem 0.75rem 0rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+.fR-cg-largeCg:hover{
+  background: linear-gradient(to right, #C7FCEB, #FFC65A);
+  cursor: pointer;
+}
+.fR-cg-largeCg:focus{
+  background: linear-gradient(to right, #C7FCEB, #FFC65A);
+  cursor: pointer;
+}
+.fR-cg-largeCg:active{
+  background: linear-gradient(to left, #C7FCEB, #FFC65A);
+  cursor: pointer;
+}
 
+.fR-cg-smallCg{
+  /* text-align:start; */
+  display: none;
+}
+.fR-cg-smallCg-active{
+  display: block;
+}
+.fR-cg-smallCg > p{
+  margin: 0rem;
+  padding: 0.375rem 0rem 0.375rem 0rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.fR-cg-smallCg:hover{
+  background: linear-gradient(to right, #F9F871, #FF9071);
+  cursor: pointer;
+}
+.fR-cg-smallCg:focus{
+  background: linear-gradient(to left, #F9F871, #FF9071);
+  cursor: pointer;
+}
+.fR-cg-smallCg:active{
+  background: linear-gradient(to right, #F9F871, #FF9071);
+  cursor: pointer;
+}
 
 .fR-cateogry-open{
   height: calc(2rem + 2vmin);
