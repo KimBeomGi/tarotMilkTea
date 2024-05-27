@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-const {kakao} :any = window
+// const {kakao} :any = window
 
 function TarotShop() {
   // const count = useAppSelector((state) => state.counter.value)
@@ -63,13 +63,13 @@ function TarotShop() {
   const [mapInfo, setMapInfo] = useState({ level: null, lat: null, lng: null });
 
   // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-  let infowindow = new kakao.maps.InfoWindow({zIndex:1, removable:true});
+  let infowindow = new window.kakao.maps.InfoWindow({zIndex:1, removable:true, disableAutoPan:true});
 
   // 맵 생성 함수 createMap
   const createMap = () => {
     let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
     let options :any
-    // let createdMap = new kakao.maps.Map(container, options); // 지도 생성
+    // let createdMap = new window.kakao.maps.Map(container, options); // 지도 생성
     let createdMap:any
 
     // 위치 엑세스 허용여부에 따라 변경
@@ -79,13 +79,13 @@ function TarotShop() {
         let lat = position.coords.latitude, // 위도
             lon = position.coords.longitude; // 경도
         
-        let locPosition = new kakao.maps.LatLng(lat, lon) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+        let locPosition = new window.kakao.maps.LatLng(lat, lon) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
         options = { //지도를 생성할 때 필요한 기본 옵션
-          // center: new kakao.maps.LatLng(myLocation[0], myLocation[1]), //지도의 중심좌표.
+          // center: new window.kakao.maps.LatLng(myLocation[0], myLocation[1]), //지도의 중심좌표.
           center: locPosition, //지도의 중심좌표.
           level: 5 //지도의 레벨(확대, 축소 정도)
         };
-        createdMap = new kakao.maps.Map(container, options);
+        createdMap = new window.kakao.maps.Map(container, options);
 
         // map.setCenter(locPosition)
         createdMap.setCenter(locPosition)
@@ -94,12 +94,12 @@ function TarotShop() {
         setMap(createdMap)
       }, function(error) {
         // 위치 접근이 거부되었을 때 또는 에러가 발생했을 때
-        let locPosition = new kakao.maps.LatLng(defaultLoc[0], defaultLoc[1]);
+        let locPosition = new window.kakao.maps.LatLng(defaultLoc[0], defaultLoc[1]);
         options = { //지도를 생성할 때 필요한 기본 옵션
           center: locPosition, //지도의 중심좌표.
           level: 4 //지도의 레벨(확대, 축소 정도)
         };
-        createdMap = new kakao.maps.Map(container, options);
+        createdMap = new window.kakao.maps.Map(container, options);
 
         // createdMap.setCenter(locPosition);
         setMyLocation(defaultLoc);
@@ -107,12 +107,12 @@ function TarotShop() {
       });
     } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
         
-        let locPosition = new kakao.maps.LatLng(defaultLoc[0], defaultLoc[1])
+        let locPosition = new window.kakao.maps.LatLng(defaultLoc[0], defaultLoc[1])
         options = { //지도를 생성할 때 필요한 기본 옵션
           center: locPosition, //지도의 중심좌표.
           level: 4 //지도의 레벨(확대, 축소 정도)
         };
-        createdMap = new kakao.maps.Map(container, options);
+        createdMap = new window.kakao.maps.Map(container, options);
 
         // map.setCenter(locPosition)
         // createdMap.setCenter(locPosition)
@@ -123,7 +123,7 @@ function TarotShop() {
 
   // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
   function addMarker(position :any, idx :any, title :any) {
-    let marker = new kakao.maps.Marker({
+    let marker = new window.kakao.maps.Marker({
       position : position, // 마커의 위치
       title : title,
       clickable:true,
@@ -166,11 +166,11 @@ function TarotShop() {
     for ( let i=0; i<places.length; i++ ) {
 
       // 마커를 생성하고 지도에 표시합니다
-      let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x)
+      let placePosition = new window.kakao.maps.LatLng(places[i].y, places[i].x)
       let marker = addMarker(placePosition, i, places[i].place_name)
 
       // 마커에 클릭이벤트를 등록합니다
-      kakao.maps.event.addListener(marker, 'click', function() {
+      window.kakao.maps.event.addListener(marker, 'click', function() {
         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
         infowindow.setContent(
           `
@@ -199,50 +199,8 @@ function TarotShop() {
         );
         infowindow.open(map, marker);
       });
-      
-      // let infoContent =  `
-      // <div>
-      //   <div style="margin:1rem;">
-      //     <a href="https://place.map.kakao.com/${places[i].id}" target="_blank" 
-      //       style="font-weight: 700; text-decoration: none; color: black; white-space:nowrap;"
-      //     >
-      //       ${places[i].place_name}
-      //     </a>
-      //     <p style="font-size: 0.8rem; white-space:nowrap;">${places[i].road_address_name}</p>
-      //     <p style="font-size: 0.8rem; white-space:nowrap;">${places[i].phone}</p>
-      //     <a href="https://map.kakao.com/link/to/${places[i].place_name},${places[i].y},${places[i].x}" target="_blank"
-      //       style="font-size: 0.8rem; margin-right: 0.5rem; text-decoration:none;"  target="_blank;"
-      //     >
-      //       길찾기
-      //     </a>
-      //     <a href="https://place.map.kakao.com/${places[i].id}" target="_blank"
-      //       style="font-size: 0.8rem; text-decoration:none;"
-      //     >
-      //       상세보기
-      //     </a>
-      //   </div>
-      // </div>
-      // `
-
-      // // 마커에 표시할 인포윈도우를 생성합니다 
-      // var infowindow = new kakao.maps.InfoWindow({
-      //   // 인포윈도우에 표시할 내용
-      //   content:infoContent,
-      //   removable : true
-      // });
-
-
-      // // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-      // // 이벤트 리스너로는 클로저를 만들어 등록합니다 
-      // // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-      // // kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-      // // kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-
-      // kakao.maps.event.addListener(marker, 'click', () => {
-      //   markerInfoOpenListener(map, marker, infowindow)
-      // });
-      kakao.maps.event.addListener(map, 'click', () => {markerInfoCloseListener(infowindow)});
-      kakao.maps.event.addListener(map, 'dragstart', () => {markerInfoCloseListener(infowindow)});
+      window.kakao.maps.event.addListener(map, 'click', () => {markerInfoCloseListener(infowindow)});
+      window.kakao.maps.event.addListener(map, 'dragstart', () => {markerInfoCloseListener(infowindow)});
     }
   }
 
@@ -252,6 +210,7 @@ function TarotShop() {
   useEffect(() => {
     
     createMap()
+    infowindow = new window.kakao.maps.InfoWindow({zIndex:1, removable:true, disableAutoPan:true});
 
     /////////// 지도 확대 축소시 문제 때문에 return으로 언마운트시 map인 mapContainer를 비워버림
     return () => {
@@ -259,7 +218,7 @@ function TarotShop() {
       if(mapContainer){
         mapContainer.innerHTML = '';
       }
-      // setMap(null)
+      setMap(null)
       // setTarotPositions([])
       removeMarker()
     }
@@ -275,7 +234,7 @@ function TarotShop() {
       let neLatlng = bounds.getNorthEast();
 
       // 지도가 이동, 확대, 축소로 인해 지도영역이 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
-      kakao.maps.event.addListener(map, 'tilesloaded', function() {             
+      window.kakao.maps.event.addListener(map, 'tilesloaded', function() {             
         
         // 지도 영역정보를 얻어옵니다 
         bounds = map.getBounds();
@@ -286,44 +245,44 @@ function TarotShop() {
         // 영역정보의 북동쪽 정보를 얻어옵니다 
         neLatlng = bounds.getNorthEast();
 
-        let sw = new kakao.maps.LatLng(swLatlng.Ma, swLatlng.La),
-        ne = new kakao.maps.LatLng(neLatlng.Ma, neLatlng.La);
+        let sw = new window.kakao.maps.LatLng(swLatlng.Ma, swLatlng.La),
+        ne = new window.kakao.maps.LatLng(neLatlng.Ma, neLatlng.La);
 
-        let search_bounds = new kakao.maps.LatLngBounds(sw, ne); // 인자를 주지 않으면 빈 영역을 생성한다.
+        let search_bounds = new window.kakao.maps.LatLngBounds(sw, ne); // 인자를 주지 않으면 빈 영역을 생성한다.
 
-        let places = new kakao.maps.services.Places();
+        let places = new window.kakao.maps.services.Places();
         let center = map.getCenter();
 
         // 검색 결과를 서버에서 받아오는 placesSearchCB()
         let placesSearchCB = function(result :any, status :any) {
-          if (status === kakao.maps.services.Status.OK) {
+          if (status === window.kakao.maps.services.Status.OK) {
             console.log(result)
             
             // 정상적으로 검색이 완료됐으면
             // 검색 목록과 마커를 표출합니다
             displayPlaces(result);
-          } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+          } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
             console.log('검색 결과가 존재하지 않습니다.');
             return;
-          } else if (status === kakao.maps.services.Status.ERROR) {
+          } else if (status === window.kakao.maps.services.Status.ERROR) {
             console.log('검색 결과 중 오류가 발생했습니다.');
             return;
           }
         };
         
         // 카카오맵 키워드로 검색
-        places.keywordSearch('타로', placesSearchCB, {
+        places.keywordSearch('윤', placesSearchCB, {
           // category_group_code : "CE7",
           bounds: search_bounds,
           useMapCenter : true,
           // location : center,
           size : 15,
-          // sort: kakao.maps.services.SortBy.DISTANCE
+          // sort: window.kakao.maps.services.SortBy.DISTANCE
         });
       });
       
       //지도 위치 변경에 따른 정보 변경
-      kakao.maps.event.addListener(map, 'tilesloaded', () => {
+      window.kakao.maps.event.addListener(map, 'tilesloaded', () => {
         const level = map.getLevel();
         
         const latlng = map.getCenter();
@@ -363,7 +322,7 @@ function TarotShop() {
   }
   const panTo = () => {
     // 이동할 위도 경도 위치를 생성합니다 
-    let moveLatLon = new kakao.maps.LatLng(gpsLocation[0], gpsLocation[1]);
+    let moveLatLon = new window.kakao.maps.LatLng(gpsLocation[0], gpsLocation[1]);
     
     // 지도 중심을 부드럽게 이동시킵니다
     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
