@@ -63,7 +63,17 @@ function TarotShop() {
   const [mapInfo, setMapInfo] = useState({ level: null, lat: null, lng: null });
 
   // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-  let infowindow = new window.kakao.maps.InfoWindow({zIndex:1, removable:true, disableAutoPan:true});
+  // let infowindow = new window.kakao.maps.InfoWindow({zIndex:1, removable:true, disableAutoPan:true});
+  let customOverlay = new window.kakao.maps.CustomOverlay({
+    // map: map,
+    clickable: true,
+    content: '<div class="customOverlay"><a href="#">Chart</a></div>',
+    // position: new window.kakao.maps.LatLng(33.450701, 126.570667),
+    xAnchor: 0.5,
+    yAnchor: 1,
+    zIndex: 3
+  });
+
 
   // 맵 생성 함수 createMap
   const createMap = () => {
@@ -153,9 +163,11 @@ function TarotShop() {
   //   setSelectedMarker(marker);
   // }
   // 인포윈도우를 닫을 함수
-  function markerInfoCloseListener (infowindow :any) {
-    infowindow.close();
-  }
+  // function markerInfoCloseListener (infowindow :any) {
+  // function markerInfoCloseListener () {
+  //   // infowindow.close();
+  //   customOverlay.setMap(null)
+  // }
 
   // 검색 결과 목록과 마커를 표출하는 함수입니다
   function displayPlaces (places :any):any {
@@ -169,38 +181,49 @@ function TarotShop() {
       let placePosition = new window.kakao.maps.LatLng(places[i].y, places[i].x)
       let marker = addMarker(placePosition, i, places[i].place_name)
 
-      // 마커에 클릭이벤트를 등록합니다
-      window.kakao.maps.event.addListener(marker, 'click', function() {
-        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-        infowindow.setContent(
-          `
-          <div>
-            <div style="margin:1rem;">
-              <a href="https://place.map.kakao.com/${places[i].id}" target="_blank" 
-                style="font-weight: 700; text-decoration: none; color: black; white-space:nowrap;"
-              >
-                ${places[i].place_name}
-              </a>
-              <p style="font-size: 0.8rem; white-space:nowrap;">${places[i].road_address_name}</p>
-              <p style="font-size: 0.8rem; white-space:nowrap;">${places[i].phone}</p>
-              <a href="https://map.kakao.com/link/to/${places[i].place_name},${places[i].y},${places[i].x}" target="_blank"
-                style="font-size: 0.8rem; margin-right: 0.5rem; text-decoration:none;"  target="_blank;"
-              >
-                길찾기
-              </a>
-              <a href="https://place.map.kakao.com/${places[i].id}" target="_blank"
-                style="font-size: 0.8rem; text-decoration:none;"
-              >
-                상세보기
-              </a>
+      
+
+      // <div class="close" onclick="customOverlay.setMap(null)" title="닫기"></div>
+      // <div class="img">
+      // <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumnail.png" width="73" height="70">
+      // </div>
+      let infoContent = `
+        <div class="wrap">
+          <div class="info">
+            <div class="title">
+              ${places[i].place_name}
+            </div>
+            
+            <div class="body">
+              <div class="desc">
+                <div class="ellipsis">${places[i].road_address_name || '주소 정보 없음'}</div>
+                <div class="jibun ellipsis">${places[i].phone || '전화번호 정보 없음'}</div>
+                <div><a href="https://map.kakao.com/link/to/${places[i].place_name},${places[i].y},${places[i].x}" target="_blank" class="link">길찾기</a></div>
+                <div><a href="https://place.map.kakao.com/${places[i].id}" target="_blank" class="link">상세보기</a></div>
+              </div>
             </div>
           </div>
-          `
-        );
-        infowindow.open(map, marker);
+        </div>
+      `;
+      // 마커에 클릭이벤트를 등록합니다
+      window.kakao.maps.event.addListener(marker, 'click', function() {
+        // // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+        // infowindow.setContent(infoContent);
+        // infowindow.open(map, marker);
+        customOverlay.setMap(map)
+        customOverlay.setPosition(placePosition)
+        customOverlay.setContent(infoContent)
+
       });
-      window.kakao.maps.event.addListener(map, 'click', () => {markerInfoCloseListener(infowindow)});
-      window.kakao.maps.event.addListener(map, 'dragstart', () => {markerInfoCloseListener(infowindow)});
+
+      const markerInfoCloseListener = () => {
+        // infowindow.close();
+        customOverlay.setMap(null)
+      }
+      // window.kakao.maps.event.addListener(map, 'click', () => {markerInfoCloseListener(infowindow)});
+      // window.kakao.maps.event.addListener(map, 'dragstart', () => {markerInfoCloseListener(infowindow)});
+      window.kakao.maps.event.addListener(map, 'click', () => {markerInfoCloseListener()});
+      window.kakao.maps.event.addListener(map, 'dragstart', () => {markerInfoCloseListener()});
     }
   }
 
@@ -210,9 +233,8 @@ function TarotShop() {
   useEffect(() => {
     
     createMap()
-    infowindow = new window.kakao.maps.InfoWindow({zIndex:1, removable:true, disableAutoPan:true});
 
-    /////////// 지도 확대 축소시 문제 때문에 return으로 언마운트시 map인 mapContainer를 비워버림
+    //지도 확대 축소시 문제 때문에 return으로 언마운트시 map인 mapContainer를 비워버림
     return () => {
       const mapContainer = document.getElementById('map')
       if(mapContainer){
@@ -271,7 +293,7 @@ function TarotShop() {
         };
         
         // 카카오맵 키워드로 검색
-        places.keywordSearch('윤', placesSearchCB, {
+        places.keywordSearch('타로', placesSearchCB, {
           // category_group_code : "CE7",
           bounds: search_bounds,
           useMapCenter : true,
@@ -343,12 +365,12 @@ function TarotShop() {
       <div className="custom_location radius_border">
         <span onClick={() => {panTo()}}><img src={gpsImage} alt="현위치"/></span>
       </div>
-      <div>{mapInfo.level !== null && (
+      {/* <div>{mapInfo.level !== null && (
         <span>
           <p>지도 레벨은 {mapInfo.level} 이고</p>
           <p>중심 좌표는 위도 {mapInfo.lat}, 경도 {mapInfo.lng}입니다</p>
         </span>
-      )}</div>
+      )}</div> */}
     </div>
   );
 }
