@@ -154,6 +154,7 @@ function TarotShop() {
     setTarotMarkers([]);
   }
 
+
   // // 인포윈도우를 열 함수
   // function markerInfoOpenListener (map :any, marker :any, infowindow :any) {
   //   if(!selectedMarker ||selectedMarker != marker){
