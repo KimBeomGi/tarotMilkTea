@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { decrement, increment, incrementByAmount, decrementByAmount } from '../../store/slices/counter/counterSlice'
 import "./ReadCard1.css"
@@ -9,6 +9,7 @@ import "./ReadCard1.css"
 
 
 function ReadCard1() {
+  const navigate = useNavigate()
   const count = useAppSelector((state) => state.counter.value)
   const dispatch = useAppDispatch()
   const [incrementN, setIncrementN] = useState<number>(7)
@@ -48,6 +49,9 @@ function ReadCard1() {
   };
 
   function handleMix() {
+    setClickMix(true)
+    // 섞을 때 카드를 비움.
+    // setSelectedCards([])
     // 카드를 섞어서 30개 뽑음
     handleRandomTarot()
 
@@ -67,6 +71,9 @@ function ReadCard1() {
         card.classList.remove('drawcard-img-rotate');
       }, { once: true }); // 이벤트 리스너가 한 번 실행되고 자동으로 제거되도록 설정
     });
+    setTimeout(() => {
+      setClickMix(false)
+    }, 550);
   }
 
   useEffect(() => {
@@ -150,17 +157,41 @@ function ReadCard1() {
       <div className='RC-right'>
         <div className={`drawcard-div`}>
           {randomTarotNumbers.map((num, i) => (
-            <img 
+            // <img 
+            //   tabIndex={0}
+            //   key={i}
+            //   className={`drawcard-img drawcard-img-front ${clickMix?"drawcard-img-rotate":""}`} 
+            //   src="/images/tarotCardBack.png" alt={`Tarot Card ${num}`}
+            //   onClick={() => {
+            //     if(selectedCards.length < 5){
+            //       setSelectedCards((prev) => [...prev, num])
+            //     }
+            //   }}
+            // />
+            <div
               tabIndex={0}
               key={i}
-              className={`drawcard-img drawcard-img-front ${clickMix?"drawcard-img-rotate":""}`} 
-              src="/images/tarotCardBack.png" alt={`Tarot Card ${num}`}
+              className={`drawcard-img-div`}
+              // src="/images/tarotCardBack.png" alt={`Tarot Card ${num}`}
+              // style={{ backgroundImage: `url(/images/tarotCardBack.png)`, backgroundSize: 'cover' }}
               onClick={() => {
-                if(selectedCards.length < 5){
+                if(selectedCards.length < 5 && !selectedCards.includes(num)){
                   setSelectedCards((prev) => [...prev, num])
                 }
               }}
+            >
+              <img 
+              tabIndex={0}
+              key={i}
+              className={`drawcard-img ${selectedCards.includes(num)?"drawcard-img-selected":""}`}
+              src="/images/tarotCardBack.png" alt={`Tarot Card ${num}`}
+              onClick={() => {
+                // if(selectedCards.length < 5){
+                //   setSelectedCards((prev) => [...prev, num])
+                // }
+              }}
             />
+            </div>
           ))}
         </div>
         {/* 카드섞기 및 운세보기 버튼 */}
@@ -168,15 +199,20 @@ function ReadCard1() {
           <div className={`RC-right-btn RC-right-btn-mix`}
             tabIndex={0}
             onClick={() => {
-              handleMix()
+              if(!clickMix && selectedCards.length === 0){
+                handleMix()
+              }
             }}
           >
             <p>카드섞기</p>
           </div>
-          <div className={`RC-right-btn RC-right-btn-read`}
+          <div className={`RC-right-btn ${selectedCards.length == 5 ? "RC-right-btn-read": ""}`}
             tabIndex={0}
             onClick={() => {
-              
+              if(selectedCards.length == 5){
+                console.log('운세보기 작ㅋ동ㅋ')
+                navigate(`/fortune/read`)
+              }
             }}
           >
             <p>운세보기</p>

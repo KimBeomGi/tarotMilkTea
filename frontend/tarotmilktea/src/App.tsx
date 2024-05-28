@@ -11,6 +11,7 @@ import FortuneRead from './components/pages/FortuneRead';
 import CardExplainBody1 from './components/layout/CardExplainBody1';
 import CardExplainBody2 from './components/layout/CardExplainBody2';
 import ReadCard1 from './components/layout/ReadCard1';
+import ReadCard2 from './components/layout/ReadCard2';
 
 function App() {
 
@@ -24,6 +25,8 @@ function App() {
         </Route>
         <Route path='/fortune' element={<FortuneRead />}>
           <Route path='' element={<ReadCard1 />} />
+          {/* <Route path=':cardId' element={<ReadCard2 />} /> */}
+          <Route path='read' element={<ReadCard2 />} />
         </Route>
         <Route path='/board' element={<Board />} />
         <Route path='/tarotshop' element={<TarotShop />} />
