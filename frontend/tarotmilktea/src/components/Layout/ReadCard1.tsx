@@ -48,13 +48,13 @@ function ReadCard1() {
   };
 
   function handleMix() {
-    // 카드를 섞는 로직을 여기에 추가하세요 (예시 코드에는 포함되어 있지 않음)
-  
+    // 카드를 섞어서 30개 뽑음
     handleRandomTarot()
+
     // 각 카드에 대한 무작위 회전 시간 설정
     const cards = document.querySelectorAll('.drawcard-img');
     cards.forEach((card:any) => {
-      // 0.1초에서 1.1초 사이의 무작위 지속 시간 생성
+      // 0.1초에서 0.5초 사이의 무작위 지속 시간 생성
       const randomDuration = `${Math.random() * 0.4 + 0.1}s`;
       // CSS 변수 --rotate-duration을 무작위 지속 시간으로 설정
       card.style.setProperty('--rotate-duration', randomDuration);
@@ -124,6 +124,7 @@ function ReadCard1() {
               className='input-consultation'
             /> */}
             <textarea
+              readOnly={selectedCards.length? true: false}
               className={`input-consultation`}
               rows={4}
               cols={50}
@@ -142,7 +143,7 @@ function ReadCard1() {
           <p>이제 78장의 카드 중 30장이 보여질 거에요. 이 중에서 5장의 카드를 뽑아주세요.</p>
           <p>카드를 뽑은 후, '운세보기' 버튼을 클릭해주세요.</p>
           <p>카드를 섞고 싶다면, '카드 섞기' 버튼을 눌러서 카드를 섞은 후 다시 선택해보세요.</p>
-          <p>하지만 한 번 카드를 선택하고 나면 더 이상 카드를 섞을 수 없습니다.</p>
+          <p>한 번 카드를 선택하고 나면 더 이상 카드를 섞을 수 없으며, 주제와 고민을 변경할 수 없습니다.</p>
         </div>
       </div>
       {/* 타로 카드 뽑기 */}
@@ -154,7 +155,11 @@ function ReadCard1() {
               key={i}
               className={`drawcard-img drawcard-img-front ${clickMix?"drawcard-img-rotate":""}`} 
               src="/images/tarotCardBack.png" alt={`Tarot Card ${num}`}
-              onClick={() => {handleRandomTarot()}}
+              onClick={() => {
+                if(selectedCards.length < 5){
+                  setSelectedCards((prev) => [...prev, num])
+                }
+              }}
             />
           ))}
         </div>
