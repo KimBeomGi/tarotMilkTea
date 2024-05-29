@@ -184,7 +184,7 @@ function ReadCard1() {
               tabIndex={0}
               key={i}
               className={`drawcard-img ${selectedCards.includes(num)?"drawcard-img-selected":""}`}
-              src="/images/tarotCardBack.png" alt={`Tarot Card ${num}`}
+              src="/images/tarotCardBack.png" alt={`타로카드뒷면`}
               onClick={() => {
                 // if(selectedCards.length < 5){
                 //   setSelectedCards((prev) => [...prev, num])
