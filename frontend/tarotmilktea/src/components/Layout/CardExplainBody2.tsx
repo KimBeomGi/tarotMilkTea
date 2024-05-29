@@ -6,6 +6,8 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks'
 // import tarotCard0 from '../../assets/images/tarot/tarotCard0.png'
 
 import "./CardExplainBody2.css"
+import TarotNumbers from "./TarotNumber.json"
+import {TarotNumbersType} from "../types/explainCards/explainCardsType"
 
 const cardExplainData = [
   { id: 1, name: '홍길동', age: 25, job: '개발자' },
@@ -40,6 +42,9 @@ const data2 = [
 
 function CardExplainBody2() {
   const { cardId } = useParams()
+  const tarotNumbersTyped = TarotNumbers as TarotNumbersType;
+
+  const [cardTitle,setCardTitle] = useState<string|undefined>(undefined)
   // const count = useAppSelector((state) => state.counter.value)
   const dispatch = useAppDispatch()
   const [browerWidth, setBrowerWidth] = useState<number>(window.innerWidth)
@@ -49,6 +54,18 @@ function CardExplainBody2() {
 
   // 수비학적 의미와 회화적 의미에 대해서
   const [handledData2, setHandledData2] = useState<string[]>([])
+
+  function getCardTitle(cardId: string): string | undefined {
+    return tarotNumbersTyped.cards[cardId as keyof TarotNumbersType["cards"]];
+  }
+  // cardId를 받아서 해당 카드의 제목을 설정하는 함수
+  function settingCardTitle(cardId: string): void {
+    const title = getCardTitle(cardId);
+    if (title !== undefined) {
+      setCardTitle(title)
+    }
+    
+  }
 
   useEffect(() => {
     const handleDate2 = () => {
@@ -61,6 +78,9 @@ function CardExplainBody2() {
       console.log(handledData2)
     }
     handleDate2()
+    if(cardId != undefined){
+      settingCardTitle(cardId)
+    }
   }, [])
 
 
@@ -119,9 +139,13 @@ function CardExplainBody2() {
         className="cardExplainBody2-left"
       >
         <div className='CEB2-left-cardImage'>
-          <img src={`/images/tarotCardImg/tarotCard${cardId}.jpg`} alt={`타로카드${cardId}`}/>
+          {/* <img src={`/images/tarotCardImg/tarotCard${cardId}.jpg`} alt={`타로카드${cardId}`}/> */}
+          <img 
+            src={`https://whalebigtarotmilktea.s3.ap-northeast-2.amazonaws.com/tarotCard${cardId}.jpg`}
+            alt={`tarot card ${cardId}`}
+          />
           {/* <h1>The Fool</h1> */}
-          <h1>{cardId}번 WHEEL OF FORTUNE</h1>
+          <h1>{cardId}번 {cardTitle}</h1>
         </div>
       </div>
       {/* 오른쪽 */}

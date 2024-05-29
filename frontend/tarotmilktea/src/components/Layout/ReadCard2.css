@@ -1,0 +1,21 @@
+.ReadCard2{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container{
+  width: 80%;
+}
+.selected-div{
+  display: flex;
+  justify-content:space-evenly;
+  margin-top: 1rem;
+}
+.cardShow{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.showImg{
+  width: 12vw;
+}
