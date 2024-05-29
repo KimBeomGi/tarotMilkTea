@@ -1,12 +1,16 @@
 import React, {useState} from 'react';
 
-import { Outlet, Link, useParams } from "react-router-dom";
+import { Outlet, Link, useParams, useLocation } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { decrement, increment, incrementByAmount, decrementByAmount } from '../../store/slices/counter/counterSlice'
-
+import ReadCard2Data from "./ReadCard2Data.json"
 
 function ReadCard2() {
   // const { cardId } = useParams()
+  const tmpData = ReadCard2Data
+  const tmpMessage = tmpData.message
+  const location = useLocation();
+  const selectedCards:number[] = location.state?.selectedCards;
   const count = useAppSelector((state) => state.counter.value)
   const dispatch = useAppDispatch()
   const [incrementN, setIncrementN] = useState<number>(7)
@@ -15,27 +19,15 @@ function ReadCard2() {
   return (
     <div className="ReadCard2">
       <div>
-        <h1>홈페이지</h1>
+        {selectedCards.map((num,i) => (
+          <div>
+            <h1>{selectedCards[i]}</h1>
+          </div>
+        ))}
+        
       </div>
       <div>
-        <button onClick={() => {dispatch(increment())}}>+</button>
-        <button onClick={() => {dispatch(decrement())}}>-</button>
-        <hr />
-        <span>{incrementN}씩 증가</span>
-        <button onClick={() => {dispatch(incrementByAmount(incrementN))}}>+</button>
-        <hr />
-        <span>{discountN}씩 증가</span>
-        <button onClick={() => {dispatch(decrementByAmount(discountN))}}>-</button>
-        <hr />
-        <p>{count}</p>
-      </div>
-      <div>
-        <p>
-          <Link to="/">Home</Link>
-        </p>
-        <p>
-          <Link to="/Login">로그인</Link>
-        </p>
+        <p>{tmpMessage}</p>
       </div>
     </div>
   );

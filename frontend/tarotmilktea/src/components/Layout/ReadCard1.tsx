@@ -211,7 +211,7 @@ function ReadCard1() {
             onClick={() => {
               if(selectedCards.length == 5){
                 console.log('운세보기 작ㅋ동ㅋ')
-                navigate(`/fortune/read`)
+                navigate(`/fortune/read`, {state:{selectedCards}})
               }
             }}
           >
