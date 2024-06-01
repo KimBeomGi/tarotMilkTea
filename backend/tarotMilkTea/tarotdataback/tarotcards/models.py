@@ -8,4 +8,9 @@ class TarotCard(models.Model):
 
 class TarotCardMeaning(models.Model):
     card_mean = models.CharField(max_length=255)
-    card_num = models.ForeignKey(TarotCard, on_delete=models.CASCADE)
+    # card_num = models.IntegerField(null=False)
+    tarotcard = models.ForeignKey(TarotCard, on_delete=models.CASCADE)
+
+    @property
+    def card_num(self):
+        return self.tarotcard.card_num
