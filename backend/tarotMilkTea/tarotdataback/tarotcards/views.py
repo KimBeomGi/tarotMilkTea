@@ -134,13 +134,13 @@ def useGemini(request):
             response_data = {
                 "message": "성공",
                 "requestData": request_data,
-                "gemi_an" : gemini_answer,
+                "answer" : gemini_answer,
             }
         except:
             response_data = {
                 "message":"실패",
                 "requestData": request_data,
-                "gemi_an" : False
+                "answer" : False
             }
     return Response(response_data, status=status.HTTP_201_CREATED)
 
