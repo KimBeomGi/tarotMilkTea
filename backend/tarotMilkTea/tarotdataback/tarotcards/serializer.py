@@ -12,6 +12,17 @@ class TarotCardMeaningSerializer(serializers.ModelSerializer):
         model = TarotCardMeaning
         fields = ('card_mean', 'card_num')
 
+class TarotCardReverseMeaningSerializer(serializers.ModelSerializer):
+    card_num = serializers.IntegerField(source='tarotcard.card_num', read_only=True)
+    class Meta:
+        model = TarotCardMeaning
+        fields = ('card_reverse_mean', 'card_num')
+
+class TarotBaseListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TarotCard
+        fields = ("card_num", "card_name")
+
 class TarotListSerializer(serializers.ModelSerializer):
     card_means_list = serializers.SerializerMethodField()
 

@@ -23,7 +23,6 @@ function ReadCard2() {
 
   useEffect(() => {
     // 계속 진행할 수는 없으니까, 나중에 store에 있는 값을 이용해야함.
-    // alert('크하하핳하')
   }, [])
   return (
     <div className="ReadCard2">

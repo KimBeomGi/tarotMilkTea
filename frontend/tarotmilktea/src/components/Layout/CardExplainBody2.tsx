@@ -9,11 +9,7 @@ import "./CardExplainBody2.css"
 import TarotNumbers from "./TarotNumber.json"
 import {TarotNumbersType} from "../types/explainCards/explainCardsType"
 
-const cardExplainData = [
-  { id: 1, name: '홍길동', age: 25, job: '개발자' },
-  { id: 2, name: '김철수', age: 30, job: '디자이너' },
-  { id: 3, name: '이영희', age: 22, job: '마케터' },
-];
+
 const data1 = [
   "타로 카드의 주요 아르카나 중 하나인 'The Fool'(바보) 카드는 새로운 시작, 무한한 가능성, 순수한 열정, 그리고 모험을 상징합니다. 이 카드는 여정의 시작을 의미하며, 삶에서 발견, 경험, 그리고 성장을 위한 준비를 나타냅니다. 'The Fool'은 무지와 무모함의 부정적인 측면이 아니라, 순수한 마음과 세상에 대한 무한한 호기심을 상징합니다.",
   "'The Fool' 카드의 이미지에서, '바보'는 절벽 끝에 서 있는 모습으로 묘사됩니다. 이는 알려지지 않은 것에 대한 무한한 가능성과 모험을 상징합니다. 그의 발 아래에는 작은 개가 있어, 충성과 보호의 상징으로, 새로운 경험을 향한 그의 여정에서 그를 돕는 역할을 합니다. '바보'의 옷은 화려하고, 무거운 짐을 지니지 않은 채로 여행을 떠남으로써 세상에 대한 순수한 열정과 마음을 열고 새로운 것을 받아들일 준비가 되어 있음을 나타냅니다.",

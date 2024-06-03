@@ -4,6 +4,7 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { decrement, increment, incrementByAmount, decrementByAmount } from '../../store/slices/counter/counterSlice'
 import "./ReadCard1.css"
+import {getTarotCard, getReadTarotCard} from "../../axios/TarotCardAxios"
 
 // import { RxTriangleDown } from "react-icons/rx";
 
@@ -22,6 +23,27 @@ function ReadCard1() {
   const [selectedCards, setSelectedCards] = useState<number[]>([])
   const [clickMix, setClickMix] = useState<boolean>(false)
 
+  // const handleGetTarotCard = async () => {
+  //   try {
+  //     const response = await getTarotCard()
+  //     console.log(response?.data)
+  //   }catch(e){
+  //     console.log(e)
+  //   }
+  // }
+
+  const handleGetReadTarotCard = async () => {
+    let sendData = {
+      "subject" : selectedOption,
+      "concern" : consulValue,
+      "selectedCard" : selectedCards,
+    }
+    const response = await getReadTarotCard(sendData)
+  }
+
+  useEffect(() => {
+    // handleGetTarotCard()
+  }, [])
 
   // custom select태그
   const handleOptionClick = (event :any) => {

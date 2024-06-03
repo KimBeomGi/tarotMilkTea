@@ -14,3 +14,7 @@ interface FRDTType{
   "name": string
   "kinds": ((string | number)[])[]
 }
+
+export interface GetReadTarotCardTye {
+  
+}

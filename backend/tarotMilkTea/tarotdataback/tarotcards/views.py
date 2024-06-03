@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .serializer import TarotListSerializer, TarotCardMeaningSerializer, TarotCardSerializer
+from .serializer import TarotListSerializer, TarotCardMeaningSerializer, TarotCardSerializer, TarotBaseListSerializer
 from .models import TarotCard, TarotCardMeaning
 
 import pymongo
@@ -16,11 +16,207 @@ import json
 # from bson import ObjectId
 GOOGLE_API_KEY = os.environ.get('GOOGLE_MY_API_KEY')
 
+@api_view(["GET"])
+def tarot_list(request):
+    if request.method =="GET":
+        response_data = {
+            "data":"GET 요청데이터"
+        }
+        return Response(response_data)
+    elif request.method =="POST":
+        response_data = {
+            "data":"POST 요청데이터"
+        }
+        return Response(response_data)
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
+
+@api_view(["GET"])
+def tarot_detail_list(request):
+    if request.method =="GET":
+        response_data = {
+            "data":"GET 요청데이터"
+        }
+        return Response(response_data)
+    elif request.method =="POST":
+        response_data = {
+            "data":"POST 요청데이터"
+        }
+        return Response(response_data)
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
+
+@api_view(["GET"])
+def tarot_major_list(request):
+    if request.method =="GET":
+        response_data = {
+            "data":"GET 요청데이터"
+        }
+        return Response(response_data)
+    elif request.method =="POST":
+        response_data = {
+            "data":"POST 요청데이터"
+        }
+        return Response(response_data)
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
+
+@api_view(["GET"])
+def tarot_minor_list(request):
+    if request.method =="GET":
+        response_data = {
+            "data":"GET 요청데이터"
+        }
+        return Response(response_data)
+    elif request.method =="POST":
+        response_data = {
+            "data":"POST 요청데이터"
+        }
+        return Response(response_data)
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
+
+@api_view(["GET"])
+def tarot_detail(request, tarot_num):
+    if request.method =="GET":
+        response_data = {
+            "data":"GET 요청데이터",
+            "tarot_num" : tarot_num,
+        }
+        return Response(response_data)
+    elif request.method =="POST":
+        response_data = {
+            "data":"POST 요청데이터"
+        }
+        return Response(response_data)
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
+
+@api_view(["POST", "PUT"])
+def tarot_forward(request):
+    if request.method == "POST":
+        response_data = {
+            "data":"POST 요청데이터"
+        }
+        return Response(response_data)
+    elif request.method == "PUT":
+        response_data = {
+            "data":"PUT 요청데이터"
+        }
+        return Response(response_data)
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
+
+@api_view(["POST", "PUT"])
+def tarot_reverse(request):
+    if request.method =="POST":
+        response_data = {
+            "data":"POST 요청데이터"
+        }
+        return Response(response_data)
+    elif request.method =="PUT":
+        response_data = {
+            "data":"PUT 요청데이터"
+        }
+        return Response(response_data)
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
+
+@api_view(["POST", "PUT"])
+def tarot_numeric(request):
+    if request.method =="POST":
+        response_data = {
+            "data":"POST 요청데이터"
+        }
+        return Response(response_data)
+    elif request.method =="PUT":
+        response_data = {
+            "data":"PUT 요청데이터"
+        }
+        return Response(response_data)
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
+
+@api_view(["POST", "PUT"])
+def tarot_picture(request):
+    if request.method =="POST":
+        response_data = {
+            "data":"POST 요청데이터"
+        }
+        return Response(response_data)
+    elif request.method =="PUT":
+        response_data = {
+            "data":"PUT 요청데이터"
+        }
+        return Response(response_data)
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
+
+@api_view(["POST", "PUT"])
+def tarot_explain(request):
+    if request.method =="POST":
+        response_data = {
+            "data":"POST 요청데이터"
+        }
+        return Response(response_data)
+    elif request.method =="PUT":
+        response_data = {
+            "data":"PUT 요청데이터"
+        }
+        return Response(response_data)
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
+
+
+@api_view(["GET"])
+def tarot_card_list(request):
+    if request.method == 'GET':
+        # cards = TarotCard.objects.all()
+        # serializer = TarotBaseListSerializer(cards, many=True)
+        TarotCardMeaning.objects.all().delete()
+        response_data = {
+            # "cards" : serializer.data
+            "data":"데이타를 지웠습니다."
+        }
+        return Response(response_data)
+
+@api_view(["POST"])
+def addmean(request):
+    if request.method == "POST":
+        try:
+            response_data = {
+                "message" : "입력완료"
+            }
+        except:
+            response_data = {
+                "message" : "입력실패"
+            }
+        return Response(response_data)
+
 @api_view(["GET", "POST"])
 def tarot_means_list(request):
     # 요청 처리 논리 (예: 데이터베이스에서 데이터 가져오기)
     if request.method == 'GET':
-        # serializer = TarotListSerializer(cards, many=True)
         cards = TarotCardMeaning.objects.all()
         serializer = TarotCardMeaningSerializer(cards, many=True)
         try:
@@ -50,7 +246,9 @@ def tarot_means_list(request):
         }
         
         return Response(response_data, status=status.HTTP_201_CREATED)
-    
+
+
+# gemini api 활용한 사용자 고민에 대한 답변 제공
 @api_view(["POST"])
 def useGemini(request):
     if request.method == 'POST':
@@ -134,13 +332,13 @@ def useGemini(request):
             response_data = {
                 "message": "성공",
                 "requestData": request_data,
-                "answer" : gemini_answer,
+                "gemini_answer" : gemini_answer,
             }
         except:
             response_data = {
                 "message":"실패",
                 "requestData": request_data,
-                "answer" : False
+                "gemini_answer" : False
             }
     return Response(response_data, status=status.HTTP_201_CREATED)
 
@@ -151,4 +349,3 @@ def useGemini(request):
 # mydoc = collection.find({"card_num":74},{"_id":0, "card_mean": 1})
 # collection.find({}, {"_id":0, "id":1}).sort("id", -1).limit(1).next()
 # collection.insert_one(mydict)
-
