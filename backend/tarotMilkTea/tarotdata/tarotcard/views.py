@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializer import TarotCardSerializer, TarotCardForwardMeaningSerializer, TarotCardReverseMeaningSerializer, GETTarotCardForwardMeaningSerializer
 # 목록 serializer 
-from .serializer import TarotGeneralListSerializer, TarotDetailListSerializer
+from .serializer import TarotGeneralListSerializer, TarotDetailListSerializer, TarotMajorListSerializer, TarotMinorListSerializer
 from .models import TarotCard, TarotCardForwardMeaning, TarotCardReverseMeaning, TarotNumerologyMean, TarotPictureMean, TarotMeanExplain
 
 import pymongo
@@ -66,8 +66,11 @@ def tarot_detail_list(request):
 @api_view(["GET"])
 def tarot_major_list(request):
     if request.method =="GET":
+        cards = get_list_or_404(TarotCard)
+        serializer = TarotMajorListSerializer(cards, many=True)
         response_data = {
-            "data":"GET 요청데이터"
+            "data":"GET 요청데이터",
+            "test" : serializer.data
         }
         return Response(response_data)
     elif request.method =="POST":
@@ -84,8 +87,11 @@ def tarot_major_list(request):
 @api_view(["GET"])
 def tarot_minor_list(request):
     if request.method =="GET":
+        cards = get_list_or_404(TarotCard)
+        serializer = TarotMinorListSerializer(cards, many=True)
         response_data = {
-            "data":"GET 요청데이터"
+            "data":"GET 요청데이터",
+            "test" : serializer.data
         }
         return Response(response_data)
     elif request.method =="POST":

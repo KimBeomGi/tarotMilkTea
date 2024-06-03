@@ -111,9 +111,30 @@ class TarotDetailListSerializer(serializers.ModelSerializer):
 #########################################################################
 
 # 카드 목록(메이저 상세) 가져오기################################################
+class TarotMajorListSerializer(serializers.ModelSerializer):
+    card_means = serializers.SerializerMethodField()
+    card_r_means = serializers.SerializerMethodField()
+    class Meta:
+        model = TarotCard
+        fields = ['card_num', 'card_name', 'card_means', 'card_r_means']
+    def get_card_means(self, obj):
+        forward_meanings = TarotCardForwardMeaning.objects.filter(tarotcard=obj)
+        return [meaning.card_forward_mean for meaning in forward_meanings]
+
+    def get_card_r_means(self, obj):
+        reverse_meanings = TarotCardReverseMeaning.objects.filter(tarotcard=obj)
+        return [meaning.card_reverse_mean for meaning in reverse_meanings]
 #########################################################################
 
-# 카드 목록(마이너 상세) 가져오기################################################
+# 카드 목록(마이너 상세) 가져오기##########################################
+class TarotMinorListSerializer(serializers.ModelSerializer):
+    card_means = serializers.SerializerMethodField()
+    class Meta:
+        model = TarotCard
+        fields = ['card_num', 'card_name', 'card_means']
+    def get_card_means(self, obj):
+        forward_meanings = TarotCardForwardMeaning.objects.filter(tarotcard=obj)
+        return [meaning.card_forward_mean for meaning in forward_meanings]
 #########################################################################
 
 # 카드 세부(상세) 가져오기################################################
