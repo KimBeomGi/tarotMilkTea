@@ -2,7 +2,9 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .serializer import TarotCardSerializer, TarotCardForwardMeaningSerializer, TarotCardReverseMeaningSerializer
+from .serializer import TarotCardSerializer, TarotCardForwardMeaningSerializer, TarotCardReverseMeaningSerializer, GETTarotCardForwardMeaningSerializer
+# 목록 serializer 
+from .serializer import TarotGeneralListSerializer, TarotDetailListSerializer
 from .models import TarotCard, TarotCardForwardMeaning, TarotCardReverseMeaning, TarotNumerologyMean, TarotPictureMean, TarotMeanExplain
 
 import pymongo
@@ -22,8 +24,11 @@ GOOGLE_API_KEY = os.environ.get('GOOGLE_MY_API_KEY')
 @api_view(["GET"])
 def tarot_list(request):
     if request.method =="GET":
+        cards = get_list_or_404(TarotCard)
+        serializer = TarotGeneralListSerializer(cards, many=True)
         response_data = {
-            "data":"GET 요청데이터"
+            "data":"GET 요청데이터",
+            "test" : serializer.data
         }
         return Response(response_data)
     elif request.method =="POST":
@@ -40,8 +45,11 @@ def tarot_list(request):
 @api_view(["GET"])
 def tarot_detail_list(request):
     if request.method =="GET":
+        cards = get_list_or_404(TarotCard)
+        serializer = TarotDetailListSerializer(cards, many=True)
         response_data = {
-            "data":"GET 요청데이터"
+            "data":"GET 요청데이터",
+            "test" : serializer.data
         }
         return Response(response_data)
     elif request.method =="POST":
@@ -126,8 +134,20 @@ card_forward_means_data = [
 ]
 
 # 카드 정방향 의미 기입
-@api_view(["POST", "PUT"])
+@api_view(["GET","POST", "PUT"])
 def tarot_forward(request):
+    if request.method =="GET":
+        try:
+            cardmean = TarotCardForwardMeaning.objects.get(card_forward_mean="모험")
+            serializer = GETTarotCardForwardMeaningSerializer(cardmean)
+            # data = {"tarotcard_id" : str(cardmean.tarotcard_id)}
+            return Response(serializer.data, status=status.HTTP_200_CREATED)
+        except Exception as e:
+            response_data = {
+                "message": e
+            }
+            return Response(response_data)
+
     if request.method =="POST":
         response_data = []
         # TarotCardForwardMeaning.objects.all().delete()
@@ -138,7 +158,7 @@ def tarot_forward(request):
                 card_f_m = card_means[j]
                 data = {
                     'card_forward_mean' : card_f_m,
-                    'tarotcard': tarot_card._id  # ObjectId를 str로 변환
+                    'tarotcard': tarot_card._id  # ObjectId를 str로 변환해주면 읽을수 있음
                 }
                 serializer = TarotCardForwardMeaningSerializer(data=data)
                 if serializer.is_valid():
@@ -170,23 +190,23 @@ card_reverse_means_data =[
 def tarot_reverse(request):
     if request.method =="POST":
         response_data = []
-        # TarotCardReverseMeaning.objects.all().delete()
+        TarotCardReverseMeaning.objects.all().delete()
         for i in range(len(card_reverse_means_data)):
             tarot_card = TarotCard.objects.get(card_num = i)
             card_means = card_reverse_means_data[i].split(', ')
             for j in range(len(card_means)):
                 card_r_m = card_means[j]
-                meandata = {
+                data = {
                     'card_reverse_mean' : card_r_m,
-                    'tarotcard' : tarot_card._id
+                    'tarotcard': tarot_card._id
                 }
-                serializer = TarotCardReverseMeaningSerializer(data=meandata)
+                serializer = TarotCardReverseMeaningSerializer(data=data)
                 if serializer.is_valid():
                     serializer.save()
                     response_data.append(serializer.data)
                 else:
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+            print(tarot_card._id)
         return Response(response_data, status=status.HTTP_201_CREATED)
     elif request.method =="PUT":
         response_data = {
@@ -439,10 +459,12 @@ tarots = [
 def addtarot(request):
     if request.method == "GET":
         tarto_cards = TarotCard.objects.all()
+        # tarto_cards = TarotCard.objects.get(card_num = 21)
         serializer = TarotCardSerializer(tarto_cards, many=True)
+        # serializer = TarotCardSerializer(tarto_cards)
         return Response(serializer.data)
     if request.method =="POST":
-        # TarotCard.objects.all().delete()
+        # TarotCard.objects.get(card_num = 21).delete()
         response_data = []
         tmp_o = 0
         tmp_x = 0
