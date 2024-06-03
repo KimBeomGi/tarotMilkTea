@@ -8,11 +8,12 @@ from .models import TarotCard, TarotCardForwardMeaning, TarotCardReverseMeaning,
 import pymongo
 from pymongo import MongoClient
 from bson import ObjectId
+import json
 
 # 구글 gemini api이용
 import os
 import google.generativeai as genai
-import json
+
 
 # from bson import ObjectId
 GOOGLE_API_KEY = os.environ.get('GOOGLE_MY_API_KEY')
