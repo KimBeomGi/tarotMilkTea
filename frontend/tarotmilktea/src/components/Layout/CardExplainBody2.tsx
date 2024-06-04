@@ -78,6 +78,11 @@ function CardExplainBody2() {
       settingCardTitle(cardId)
     }
   }, [])
+  useEffect(() => {
+    if(cardId != undefined){
+      settingCardTitle(cardId)
+    }
+  },[cardId])
 
 
   // 브라우저 사이즈
