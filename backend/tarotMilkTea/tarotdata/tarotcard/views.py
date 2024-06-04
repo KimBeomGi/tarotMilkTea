@@ -3,8 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .serializer import TarotCardSerializer, TarotCardForwardMeaningSerializer, TarotCardReverseMeaningSerializer, GETTarotCardForwardMeaningSerializer, TarotNumerologyMeanSerializer, TarotPictureMeanSerializer, TarotMeanExplainSerializer
-# 목록 serializer 
-from .serializer import TarotGeneralListSerializer, TarotDetailListSerializer, TarotMajorListSerializer, TarotMinorListSerializer
+# 목록 및 세부 가져오기 serializer 
+from .serializer import TarotGeneralListSerializer, TarotDetailListSerializer, TarotMajorListSerializer, TarotMinorListSerializer, TarotDetaliSerializer
 from .models import TarotCard, TarotCardForwardMeaning, TarotCardReverseMeaning, TarotNumerologyMean, TarotPictureMean, TarotMeanExplain
 
 import pymongo
@@ -66,8 +66,8 @@ def tarot_detail_list(request):
 def tarot_major_list(request):
     if request.method =="GET":
         try:
-            # mongoDB의 데이터 저장 방식으로 인해 djongo에서 boolean type은 문제를 일으킴
-            # 따라서 is_major = True 가 아닌 is_major__in=[True]를 사용해야함.
+        # mongoDB의 데이터 저장 방식으로 인해 djongo에서 boolean type은 문제를 일으킴
+        # 따라서 is_major = True 가 아닌 is_major__in=[True]를 사용해야함.
             cards = get_list_or_404(TarotCard, is_major__in=[True])
             serializer = TarotMajorListSerializer(cards, many=True)
             return Response(serializer.data)
@@ -87,13 +87,12 @@ def tarot_major_list(request):
 @api_view(["GET"])
 def tarot_minor_list(request):
     if request.method =="GET":
-        cards = get_list_or_404(TarotCard)
-        serializer = TarotMinorListSerializer(cards, many=True)
-        response_data = {
-            "data":"GET 요청데이터",
-            "test" : serializer.data
-        }
-        return Response(response_data)
+        try:
+            cards = get_list_or_404(TarotCard, is_major__in=[False])
+            serializer = TarotMinorListSerializer(cards, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            Response({"error": str(e)}, status=500)
     elif request.method =="POST":
         response_data = {
             "data":"POST 요청데이터"
@@ -108,22 +107,14 @@ def tarot_minor_list(request):
 @api_view(["GET"])
 def tarot_detail(request, tarot_num):
     if request.method =="GET":
-        # tarot_num에 해당하는 카드 가져오기
-        # card = TarotCard.objects.get(card_num=tarot_num)
-        # serializer = TarotCardSerializer(card)
-        # card_mean = get_list_or_404(TarotCardForwardMeaning, tarotcard_id=5)
-        # serializer = TarotCardForwardMeaningSerializer(card_mean, many=True)
+        try:
+            # tarot_num에 해당하는 카드 가져오기
+            card = TarotCard.objects.get(card_num=tarot_num)
+            serializer = TarotDetaliSerializer(card)
+            return Response(serializer.data)
+        except Exception as e:
+            Response({"error": str(e)}, status=500)
         
-        response_data = {
-            "data":"GET 요청데이터",
-            # "tarot_card" : serializer.data,
-        }
-    #     return Response(response_data)
-    # elif request.method =="POST":
-    #     response_data = {
-    #         "data":"POST 요청데이터"
-    #     }
-    #     return Response(response_data)
     response_data = {
         "data":"비관리 메서드데이터"
     }
@@ -308,26 +299,15 @@ def tarot_picture(request):
     }
     return Response(response_data)
 
-
-explain_card = [
-    "타로 카드의 주요 아르카나 중 하나인 'The Magician'(마법사) 카드는 의지, 창조성, 자원, 그리고 가능성을 상징합니다. 이 카드는 새로운 아이디어와 계획을 현실로 구현하는 능력을 나타내며, 자신의 목표를 달성하기 위한 모든 도구와 자원을 가지고 있음을 의미합니다.",
-    "'The Magician' 카드의 이미지에서, 마법사는 한 손으로 하늘을 가리키고 다른 손으로는 땅을 가리키고 있습니다. 이는 천상의 영감과 지상의 실현을 연결하는 역할을 상징합니다. 그의 앞에 놓인 테이블에는 지팡이, 컵, 칼, 그리고 펜타클이 있어, 각각 불, 물, 공기, 땅의 원소를 나타내며, 마법사가 모든 요소를 조정할 수 있는 능력을 가지고 있음을 보여줍니다.",
-    "'The Magician' 카드는 창조적 에너지가 최고조에 달하는 시기, 새로운 프로젝트를 시작하거나 목표를 달성하기 위한 적절한 시기를 암시합니다. 이 카드는 자신에게 필요한 자원과 능력이 이미 주어져 있음을 상기시키며, 그것들을 효과적으로 활용할 수 있는 능력을 믿으라는 메시지를 전달합니다.",
-    "또한, 'The Magician'은 자신감과 결단력을 상징합니다. 이 카드는 자신의 능력과 자원을 믿고, 이를 통해 원하는 결과를 얻기 위해 적극적으로 행동하라고 격려합니다. 마법사는 자신의 비전과 의지를 통해 현실을 변화시키는 능력을 가지고 있음을 상징합니다.",
-    "요약하자면, 'The Magician' 카드는 의지와 창조성, 그리고 자원을 통해 목표를 달성할 수 있는 능력을 상징합니다. 이 카드는 우리가 우리의 꿈과 아이디어를 현실로 만들기 위해 필요한 모든 것을 이미 가지고 있음을 상기시키며, 자신감을 가지고 행동할 것을 권합니다."
-  ]
-
-# json 파일의 경로를 설정합니다.
+#########################
+# json 파일의 경로를 설정
 json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cardExplain.json')
 
-# 파일을 안전하게 열고 내용을 읽습니다.
+# 파일을 열고 내용을 읽기;.
 with open(json_path, 'r', encoding='utf-8') as f:
     explain_data = json.load(f)
 
-# 읽은 데이터를 출력합니다.
 explainD = explain_data["cards"]
-# print(explainD[0][0])
-
 
 # 카드 설명 의미 기입
 @api_view(["POST", "PUT"])
@@ -536,12 +516,7 @@ def useGemini(request):
     return Response(response_data, status=status.HTTP_201_CREATED)
 
 
-# client = MongoClient(uri)
-# db = client["TMT"]
-# collection = db["tarotcards_tarotcard"]
-# mydoc = collection.find({"card_num":74},{"_id":0, "card_mean": 1})
-# collection.find({}, {"_id":0, "id":1}).sort("id", -1).limit(1).next()
-# collection.insert_one(mydict)
+
 
 
 tarots = [
@@ -631,3 +606,11 @@ def addtarot(request):
         "data":"비관리 메서드데이터"
     }
     return Response(response_data)
+
+
+# client = MongoClient(uri)
+# db = client["TMT"]
+# collection = db["tarotcards_tarotcard"]
+# mydoc = collection.find({"card_num":74},{"_id":0, "card_mean": 1})
+# collection.find({}, {"_id":0, "id":1}).sort("id", -1).limit(1).next()
+# collection.insert_one(mydict)
