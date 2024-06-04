@@ -25,11 +25,11 @@ def tarot_list(request):
     if request.method =="GET":
         cards = get_list_or_404(TarotCard)
         serializer = TarotGeneralListSerializer(cards, many=True)
-        response_data = {
-            "data":"GET 요청데이터",
-            "test" : serializer.data
-        }
-        return Response(response_data)
+        # response_data = {
+        #     "data":"GET 요청데이터",
+        #     "test" : serializer.data
+        # }
+        return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method =="POST":
         response_data = {
             "data":"POST 요청데이터"
@@ -46,11 +46,11 @@ def tarot_detail_list(request):
     if request.method =="GET":
         cards = get_list_or_404(TarotCard)
         serializer = TarotDetailListSerializer(cards, many=True)
-        response_data = {
-            "data":"GET 요청데이터",
-            "test" : serializer.data
-        }
-        return Response(response_data)
+        # response_data = {
+        #     "data":"GET 요청데이터",
+        #     "test" : serializer.data
+        # }
+        return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method =="POST":
         response_data = {
             "data":"POST 요청데이터"
@@ -65,13 +65,14 @@ def tarot_detail_list(request):
 @api_view(["GET"])
 def tarot_major_list(request):
     if request.method =="GET":
-        cards = get_list_or_404(TarotCard)
-        serializer = TarotMajorListSerializer(cards, many=True)
-        response_data = {
-            "data":"GET 요청데이터",
-            "test" : serializer.data
-        }
-        return Response(response_data)
+        try:
+            # mongoDB의 데이터 저장 방식으로 인해 djongo에서 boolean type은 문제를 일으킴
+            # 따라서 is_major = True 가 아닌 is_major__in=[True]를 사용해야함.
+            cards = get_list_or_404(TarotCard, is_major__in=[True])
+            serializer = TarotMajorListSerializer(cards, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
     elif request.method =="POST":
         response_data = {
             "data":"POST 요청데이터"
