@@ -15,6 +15,11 @@ interface FRDTType{
   "kinds": ((string | number)[])[]
 }
 
-export interface GetReadTarotCardTye {
-  
+export interface GeminiAnsewrType {
+  "greeting" : string
+  "past" : string
+  "present" : string
+  "future" : string
+  "advice" : string
+  "conclusion" : string
 }

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import counterReducer from './slices/counter/counterSlice'
+import tarotReducer from './slices/tarot/tarotSlice'
 
 export const store = configureStore({
   reducer: {
-    counter:counterReducer
+    counter:counterReducer,
+    tarot:tarotReducer
   },
 })
 

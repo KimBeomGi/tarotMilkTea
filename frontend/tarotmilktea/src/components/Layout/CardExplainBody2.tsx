@@ -76,7 +76,6 @@ function CardExplainBody2() {
     }
     try {
       const response = await getTarotDetail(numericCardId)
-      console.log(response?.data)
       if (response){
         setNumMean(response.data.numerology_means.join(', '))
         setPicMean(response.data.picture_means.join(', '))

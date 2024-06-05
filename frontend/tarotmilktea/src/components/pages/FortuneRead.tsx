@@ -10,7 +10,6 @@ import { IoIosArrowDroprightCircle } from "react-icons/io";
 import "./FortuneRead.css"
 import {FortuneReadDataType} from "../types/readFortune/fortuneReadType"
 
-
 function FortuneRead() {
   // const count = useAppSelector((state) => state.counter.value)
   const dispatch = useAppDispatch()
@@ -22,7 +21,7 @@ function FortuneRead() {
   useEffect(() => {
     const initialLargeCategories = Object.values(fortuneReadData.fortuneType).map(type => type.name);
     const initialLargeCategories2 = Object.values(fortuneReadData.fortuneType).map(type => type.kinds);
-    console.log(initialLargeCategories2)
+    // console.log(initialLargeCategories2)
     setLargeCategory(initialLargeCategories)
     setSmallCategoryList(initialLargeCategories2)
   }, [])

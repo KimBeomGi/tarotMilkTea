@@ -2,25 +2,32 @@ import React, {useEffect, useState} from 'react';
 
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
-import { decrement, increment, incrementByAmount, decrementByAmount } from '../../store/slices/counter/counterSlice'
+// import { decrement, increment, incrementByAmount, decrementByAmount } from '../../store/slices/counter/counterSlice'
+import { decrement, increment, incrementByAmount, decrementByAmount } from '../../store/slices/tarot/tarotSlice'
+import { trueIsSelectcomplete, falseIsSelectcomplete } from '../../store/slices/tarot/tarotSlice'
 import "./ReadCard1.css"
-import {getTarotCard, getReadTarotCard} from "../../axios/TarotCardAxios"
-
+import TarotNumbers from "./TarotNumber.json"
+import {getTarotCard, getReadTarotByGemini} from "../../axios/TarotCardAxios"
+import {TarotNumbersType} from "../types/explainCards/explainCardsType"
 // import { RxTriangleDown } from "react-icons/rx";
 
 
 function ReadCard1() {
   const navigate = useNavigate()
-  const count = useAppSelector((state) => state.counter.value)
+  const count = useAppSelector((state) => state.tarot.value)
   const dispatch = useAppDispatch()
   const [incrementN, setIncrementN] = useState<number>(7)
   const [discountN, setDiscountN] = useState<number>(7)
+
+  const tarotNumbersDict = TarotNumbers as TarotNumbersType;
+  const isClickGoRead = useAppSelector((state) => state.tarot.isClickGoRead)
   
   const [isClickCSL, setIsClickCSL] = useState<boolean>(false)
   const [selectedOption, setSelectedOption] = useState<string>("운세 선택하기")
   const [consulValue, setConsulValue] = useState<string>("")
   const [randomTarotNumbers, setRandomTarotNumbers] = useState<number[]>([])
   const [selectedCards, setSelectedCards] = useState<number[]>([])
+  const [selectedCardsName, setSelectedCardsName] = useState<string[]>([])
   const [clickMix, setClickMix] = useState<boolean>(false)
 
   // const handleGetTarotCard = async () => {
@@ -32,17 +39,18 @@ function ReadCard1() {
   //   }
   // }
 
-  const handleGetReadTarotCard = async () => {
+  const handleGetReadTarotByGemini = async () => {
     let sendData = {
       "subject" : selectedOption,
       "concern" : consulValue,
       "selectedCard" : selectedCards,
     }
-    const response = await getReadTarotCard(sendData)
+    const response = await getReadTarotByGemini(sendData)
   }
 
   useEffect(() => {
     // handleGetTarotCard()
+    dispatch(falseIsSelectcomplete())
   }, [])
 
   // custom select태그
@@ -98,8 +106,19 @@ function ReadCard1() {
     }, 550);
   }
 
+  const goReadTarot = () => {
+    if(selectedCards.length == 5 && selectedOption !== "운세 선택하기"){
+      dispatch(trueIsSelectcomplete())
+      // console.log(selectedOption)
+      // console.log(selectedCards)
+      navigate(`/fortune/read`, {state:{selectedOption, selectedCards, consulValue, selectedCardsName}})
+    }
+  }
+
   useEffect(() => {
     handleRandomTarot();
+
+    return () => {}
   }, [])
 
   return (
@@ -153,7 +172,7 @@ function ReadCard1() {
               className='input-consultation'
             /> */}
             <textarea
-              readOnly={selectedCards.length? true: false}
+              // readOnly={selectedCards.length? true: false}
               className={`input-consultation`}
               rows={4}
               cols={50}
@@ -172,7 +191,7 @@ function ReadCard1() {
           <p>이제 78장의 카드 중 30장이 보여질 거에요. 이 중에서 5장의 카드를 뽑아주세요.</p>
           <p>카드를 뽑은 후, '운세보기' 버튼을 클릭해주세요.</p>
           <p>카드를 섞고 싶다면, '카드 섞기' 버튼을 눌러서 카드를 섞은 후 다시 선택해보세요.</p>
-          <p>한 번 카드를 선택하고 나면 더 이상 카드를 섞을 수 없으며, 주제와 고민을 변경할 수 없습니다.</p>
+          {/* <p>한 번 카드를 선택하고 나면 더 이상 카드를 섞을 수 없으며, 주제와 고민을 변경할 수 없습니다.</p> */}
         </div>
       </div>
       {/* 타로 카드 뽑기 */}
@@ -199,6 +218,8 @@ function ReadCard1() {
               onClick={() => {
                 if(selectedCards.length < 5 && !selectedCards.includes(num)){
                   setSelectedCards((prev) => [...prev, num])
+                  const name = tarotNumbersDict.cards[num]
+                  setSelectedCardsName((prev) => [...prev, name])
                 }
               }}
             >
@@ -228,13 +249,11 @@ function ReadCard1() {
           >
             <p>카드섞기</p>
           </div>
-          <div className={`RC-right-btn ${selectedCards.length == 5 ? "RC-right-btn-read": ""}`}
+          <div className={`RC-right-btn ${selectedCards.length == 5 && selectedOption !== "운세 선택하기" ? "RC-right-btn-read": ""}`}
             tabIndex={0}
             onClick={() => {
-              if(selectedCards.length == 5){
-                console.log('운세보기 작!동!')
-                navigate(`/fortune/read`, {state:{selectedCards}})
-              }
+              goReadTarot()
+              
             }}
           >
             <p>운세보기</p>

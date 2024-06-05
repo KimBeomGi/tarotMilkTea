@@ -4,18 +4,46 @@
   align-items: center;
 }
 .container{
-  width: 80%;
+  width: 90%;
 }
 .selected-div{
   display: flex;
-  justify-content:space-evenly;
+  justify-content:space-around;
   margin-top: 1rem;
 }
 .cardShow{
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* flex-wrap: wrap; */
 }
 .showImg{
   width: 12vw;
+}
+.cardNameSize{
+  font-size: 1rem;
+}
+
+.loadingP{
+  font-size: 1.25rem
+}
+
+@media all and (max-width:768px) {
+  .cardNameSize{
+    font-size: 0.75rem;
+  }
+  .loadingP{
+    font-size: 1rem
+  }
+}
+@media all and (max-width:480px) {
+  .selected-div{
+    flex-wrap: wrap;
+  }
+  .showImg{
+    width: 25vw;
+  }
+  .loadingP{
+    font-size: 0.75rem
+  }
 }

@@ -30,7 +30,6 @@ function CardExplainBody1() {
   const handleGetTarotMajorList = async () => {
     try {
       const response = await getTarotMajorList()
-      console.log(response?.data)
       setMajorData(response?.data)
     } catch (error) {
       console.log('데이터를 받아올 수 없습니다.', error)      
