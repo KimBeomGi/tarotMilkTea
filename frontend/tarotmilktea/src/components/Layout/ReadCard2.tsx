@@ -34,7 +34,47 @@ function ReadCard2() {
   // 브라우저 사이즈
   const [browserWidth, setBrowserWidth] = useState<number>(window.innerWidth)
   const [browserHeight, setBrowserHeight] = useState<number>(window.innerHeight)
+
+  // geminiAPI의 대답 생성동안의 나올 대답
+  const [loadingMessage] = useState([
+    "고민의 답을 해결하기 위한 풀이 중이에요😊",
+    "혼자 고민을 앓지말고 여기 털어보세요. 저는 입이 무겁답니다🤫",
+    "기다리고 계시면 답이 나와요. 그러니까 뒤로가기와 새로고침은 금지❌",
+    "저기압일 때는 고기 앞으로🥩",
+    "모든 게 다 잘 될 거예요. 잘 되라 얍🤗!!!",
+    "'동트기 전이 가장 어둡다'라는 말이 있어요. 곧 다 잘 될 거예요!",
+    "'비 온 뒤에 땅이 굳는다'라는 말이 있어요. 힘듬을 이겨내고, 성장해보자구요!",
+    "신비로운 힘이 답변을 준비하고 있어요✨",
+    "긍정적인 마음으로 기다리시면, 좋은 결과가 올 거예요!",
+    "정말로, 모든 게 다 잘 될 거예요!!!"
+  ])
+  const [randomIndex, setRandomIndex] = useState<number>(0)
   
+  const handleRandomLoading = () => {
+    let randIndex = Math.floor(Math.random() * loadingMessage.length);
+    if (randIndex === randomIndex) {
+      randIndex = (randIndex + 1) % loadingMessage.length;
+    }
+    setRandomIndex(randIndex);
+  }
+
+  // GeminiAPI 받아오는동안 보여질 메세지
+  type MessageProps = {
+    randomNum: number;
+  }
+  
+  const Message: React.FC<MessageProps> = ({ randomNum }) => {
+    const tmpMessage = loadingMessage[randomNum].split('.')
+    return (
+      <div className="loadingMessageDiv">
+        {tmpMessage.map((v1, i1) => (
+          <p className='loadingMessage' key={i1}>
+            {v1}
+          </p>
+        ))}
+      </div>
+    );
+  }
 
   const handleGetReadTarotByGemini = async () => {
     let sendData = {
@@ -58,6 +98,7 @@ function ReadCard2() {
       //   setGeminiAnswer(response?.data.gemini_answer)
       // }
     } catch (error) {
+      alert('풀이에 실패했어요...😥 다음에 다시 시도해주세요.')
       console.error(error)
     }
   }
@@ -79,15 +120,28 @@ function ReadCard2() {
     // setSelectedOption(selectedOptionFromLocation)
     // setConsulValue(consulValueFromLocation)
     // setSelectedCards(selectedCardsFromLocation)
+    let interval: NodeJS.Timeout
+    
     if(isClickGoRead){
+
       console.log('가능')
-      handleGetReadTarotByGemini()
+      interval = setInterval(() => {
+        handleRandomLoading()
+      }, 3000)
+
+      // handleGetReadTarotByGemini().then(() => {
+      //   clearInterval(interval)
+      // })
+      
     }else{
       console.log('불가능')
     }
     return () => {
       dispatch(falseIsSelectcomplete())
       setIsReceiveGemini(false)
+      if(interval){
+        clearInterval(interval)
+      }
     }
   }, [])
 
@@ -130,9 +184,7 @@ function ReadCard2() {
               <p>{geminiAnswer?.conclusion}</p>
             </div>
           : 
-            <div>
-              <p className='loadingP'>고민의 답을 해결하기 위한 풀이 중이에요😊</p>
-            </div>
+            <Message randomNum={randomIndex}/>
           }
           
         </div>

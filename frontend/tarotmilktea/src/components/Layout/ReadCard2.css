@@ -24,17 +24,43 @@
   font-size: 1rem;
 }
 
-.loadingP{
-  font-size: 1.25rem
+.loadingMessageDiv{
+  animation: fadein 0.5s;
+  margin-top: 3rem;
+}
+
+/* 효과를 동작시간 동안 0 ~ 1까지 */
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* 효과를 동작시간 동안 0 ~ 1까지 */
+/* @keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+} */
+
+.loadingMessage{
+  font-size: 1.25rem;  
+  text-align: center;
 }
 
 @media all and (max-width:768px) {
   .cardNameSize{
     font-size: 0.75rem;
   }
-  .loadingP{
-    font-size: 1rem
+  .loadingMessage{
+    font-size: 1rem;
   }
+  
 }
 @media all and (max-width:480px) {
   .selected-div{
@@ -43,7 +69,10 @@
   .showImg{
     width: 25vw;
   }
-  .loadingP{
+  .loadingMessage{
     font-size: 0.75rem
+  }
+  .loadingMessageDiv{
+    margin-top: 0rem;
   }
 }
