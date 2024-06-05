@@ -53,7 +53,7 @@ export async function getTarotDetailList() {
 // 카드목록(메이저상세) 가져오기
 export async function getTarotMajorList() {
   try {
-    const response = await axios.get(`${base_url}major_list/`)
+    const response = await axios.get(`${base_url}tarotcard/major_list/`)
     
     return response
   } catch (e) {
@@ -63,7 +63,7 @@ export async function getTarotMajorList() {
 // 카드목록(마이너상세) 가져오기
 export async function getTarotMinorList() {
   try {
-    const response = await axios.get(`${base_url}minor_list/`)
+    const response = await axios.get(`${base_url}tarotcard/minor_list/`)
     
     return response
   } catch (e) {
@@ -74,7 +74,7 @@ export async function getTarotMinorList() {
 // 카드세부(상세) 가져오기
 export async function getTarotDetail(cardId:number) {
   try {
-    const response = await axios.get(`${base_url}detail/${cardId}/`);
+    const response = await axios.get(`${base_url}tarotcard/detail/${cardId}/`);
     
     return response;
   } catch (e) {

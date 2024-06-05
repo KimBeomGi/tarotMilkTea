@@ -5,6 +5,8 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import AboutTarot from "./AboutTarot.json"
 import aboutTarotImg1 from "../../assets/images/aboutTarotImg1.png"
 
+import {getTarotMajorList, getTarotMinorList} from "../../axios/TarotCardAxios"
+import {TarotExplainDataType} from "../types/explainCards/explainCardsType"
 import "./CardExplainBody1.css"
 
 function CardExplainBody1() {
@@ -17,6 +19,44 @@ function CardExplainBody1() {
   const [historyPDivHeight, setHistoryPDivHeight] = useState(0); // historyPDiv의 높이를 저장할 상태 변수를 생성합니다.
   const [bH, setBH] = useState<number>(window.innerHeight)
   const [bW, setBW] = useState<number>(window.innerWidth)
+
+  const [cardOrder, setCardOrder] = useState<string[]>(['1','2','3','4','5','6','7','8','9','10','Page','Knight','Queen','King'])
+  const [majorData, setMajorData] = useState<TarotExplainDataType[]>([])
+  const [pentasData, setPentasData] = useState<TarotExplainDataType[]>([])
+  const [wandsData, setWandsData] = useState<TarotExplainDataType[]>([])
+  const [cupsData, setCupsData] = useState<TarotExplainDataType[]>([])
+  const [swordsData, setSwordsData] = useState<TarotExplainDataType[]>([])
+
+  const handleGetTarotMajorList = async () => {
+    try {
+      const response = await getTarotMajorList()
+      console.log(response?.data)
+      setMajorData(response?.data)
+    } catch (error) {
+      console.log('데이터를 받아올 수 없습니다.', error)      
+    }
+  }
+  const handleGetTarotMinorList = async () => {
+    try {
+      const response = await getTarotMinorList()
+      const pent = response?.data.filter((item: { distinguish: number; }) => item.distinguish === 1);
+      const wand = response?.data.filter((item: { distinguish: number; }) => item.distinguish === 2);
+      const cup = response?.data.filter((item: { distinguish: number; }) => item.distinguish === 3);
+      const sword = response?.data.filter((item: { distinguish: number; }) => item.distinguish === 4);
+      setPentasData(pent)
+      setWandsData(wand)
+      setCupsData(cup)
+      setSwordsData(sword)
+    } catch (error) {
+      console.log('데이터를 받아올 수 없습니다.', error)      
+    }
+  }
+
+  useEffect(() => {
+    handleGetTarotMajorList()
+    handleGetTarotMinorList()
+  }, [])
+
 
   useEffect(() => {
     const updateHeightAndWidth = () => {
@@ -93,21 +133,19 @@ function CardExplainBody1() {
               </tr>
             </thead>
             <tbody>
-              {aboutTarot[0].majorTarotMeaning.map((v3, i3) => (
+              {majorData?.map((v3, i3) => (
                 <tr key={i3}
                   onClick={() => {
-                    console.log(v3.card_id)
-                    navigate(`/explain/${v3.card_id}`)
+                    navigate(`/explain/${v3.card_num }`)
                   }}
-                  
                 >
-                  <td>{v3.number}</td>
-                  <td>{v3.name}</td>
+                  <td>{v3.card_num }</td>
+                  <td>{v3.card_name }</td>
                   <td>
-                    {v3.forward.join(", ")}
+                    {v3.card_means.join(", ")}
                   </td>
                   <td>
-                    {v3.reverse.join(", ")}
+                    {v3.card_r_means.join(", ")}
                   </td>
                 </tr>
               ))}
@@ -132,40 +170,36 @@ function CardExplainBody1() {
               </tr>
             </thead>
             <tbody>
-              {aboutTarot[0].minorTarotMeaning.map((v4, i4) => (
+              {cardOrder.map((v4, i4) => (
                 <tr key={i4}>
-                  <td>{v4.number}</td>
+                  <td>{v4}</td>
                   <td className='minorTarot-table-element'
                     onClick={() => {
-                      console.log(v4.number, v4.pentacles.card_id)
-                      navigate(`/explain/${v4.pentacles.card_id}`)
+                      navigate(`/explain/${pentasData[i4].card_num}`)
                     }}
                   >
-                    {v4.pentacles.means.join(", ")}
+                    {pentasData.length>0?pentasData[i4].card_means.join(", "):""}
                   </td>
                   <td className='minorTarot-table-element'
                     onClick={() => {
-                      console.log(v4.number, v4.wands.card_id)
-                      navigate(`/explain/${v4.wands.card_id}`)
+                      navigate(`/explain/${wandsData[i4].card_num}`)
                     }}
                   >
-                    {v4.wands.means.join(", ")}
+                    {wandsData.length>0?wandsData[i4].card_means.join(", "):""}
                   </td>
                   <td className='minorTarot-table-element'
                     onClick={() => {
-                      console.log(v4.number, v4.cups.card_id)
-                      navigate(`/explain/${v4.cups.card_id}`)
+                      navigate(`/explain/${cupsData[i4].card_num}`)
                     }}
                   >
-                    {v4.cups.means.join(", ")}
+                    {cupsData.length>0?cupsData[i4].card_means.join(", "):""}
                   </td>
                   <td className='minorTarot-table-element'
                     onClick={() => {
-                      console.log(v4.number, v4.swords.card_id)
-                      navigate(`/explain/${v4.swords.card_id}`)
+                      navigate(`/explain/${swordsData[i4].card_num}`)
                     }}
                   >
-                    {v4.swords.means.join(", ")}
+                    {swordsData.length>0?swordsData[i4].card_means.join(", "):""}
                   </td>
                 </tr>
               ))}

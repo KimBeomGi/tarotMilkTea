@@ -9,8 +9,9 @@ import "./CardExplainBody2.css"
 import TarotNumbers from "./TarotNumber.json"
 import {TarotNumbersType} from "../types/explainCards/explainCardsType"
 
+import {getTarotDetail} from "../../axios/TarotCardAxios"
 
-const data1 = [
+const explain_data = [
   "타로 카드의 주요 아르카나 중 하나인 'The Fool'(바보) 카드는 새로운 시작, 무한한 가능성, 순수한 열정, 그리고 모험을 상징합니다. 이 카드는 여정의 시작을 의미하며, 삶에서 발견, 경험, 그리고 성장을 위한 준비를 나타냅니다. 'The Fool'은 무지와 무모함의 부정적인 측면이 아니라, 순수한 마음과 세상에 대한 무한한 호기심을 상징합니다.",
   "'The Fool' 카드의 이미지에서, '바보'는 절벽 끝에 서 있는 모습으로 묘사됩니다. 이는 알려지지 않은 것에 대한 무한한 가능성과 모험을 상징합니다. 그의 발 아래에는 작은 개가 있어, 충성과 보호의 상징으로, 새로운 경험을 향한 그의 여정에서 그를 돕는 역할을 합니다. '바보'의 옷은 화려하고, 무거운 짐을 지니지 않은 채로 여행을 떠남으로써 세상에 대한 순수한 열정과 마음을 열고 새로운 것을 받아들일 준비가 되어 있음을 나타냅니다.",
   "'The Fool' 카드가 나타날 때, 그것은 새로운 시작, 새로운 경험, 그리고 새로운 모험이 기다리고 있음을 암시합니다. 이 카드는 우리에게 두려움을 떨치고 알려지지 않은 것을 향해 첫 발을 내딛을 용기를 주며, 삶의 여정에서 새로운 가능성을 탐색할 것을 격려합니다.",
@@ -48,8 +49,12 @@ function CardExplainBody2() {
   const [scrollPosition, setScrollPosition] = useState<number>(0)
   const [bH, setBH] = useState<number>(0)
 
+  const [numMean, setNumMean] = useState<string[]>([])
+  const [picMean, setPicMean] = useState<string[]>([])
+  const [explainD, setExplainD] = useState<string[]>([])
+
   // 수비학적 의미와 회화적 의미에 대해서
-  const [handledData2, setHandledData2] = useState<string[]>([])
+  // const [handledData2, setHandledData2] = useState<string[]>([])
 
   function getCardTitle(cardId: string): string | undefined {
     return tarotNumbersTyped.cards[cardId as keyof TarotNumbersType["cards"]];
@@ -59,28 +64,44 @@ function CardExplainBody2() {
     const title = getCardTitle(cardId);
     if (title !== undefined) {
       setCardTitle(title)
-    }
-    
+    } 
   }
 
-  useEffect(() => {
-    const handleDate2 = () => {
-      let tmp_data2: string[] = []
-      for (let i = 0; i < data2.length; i++) {
-        const tmp_data = data2[i].join(", ");
-        tmp_data2.push(tmp_data)
+
+  const handleGetTarotDetail = async() => {
+    const numericCardId = parseInt(cardId!, 10);
+    if (isNaN(numericCardId)) {
+      console.error('cardId cannot be converted to a number')
+      return
+    }
+    try {
+      const response = await getTarotDetail(numericCardId)
+      console.log(response?.data)
+      if (response){
+        setNumMean(response.data.numerology_means.join(', '))
+        setPicMean(response.data.picture_means.join(', '))
+        setExplainD(response.data.card_explain)
       }
-      setHandledData2(tmp_data2)
-      console.log(handledData2)
+      
+      
+    } catch (error) {
+      console.log('데이터를 불러올 수 없습니다.')
     }
-    handleDate2()
-    if(cardId != undefined){
-      settingCardTitle(cardId)
-    }
-  }, [])
+      
+
+  }
+
+
+  // useEffect(() => {
+    // if(cardId != undefined){
+    //   settingCardTitle(cardId)
+    // }
+    // handleGetTarotDetail()
+  // }, [])
   useEffect(() => {
     if(cardId != undefined){
       settingCardTitle(cardId)
+      handleGetTarotDetail()
     }
   },[cardId])
 
@@ -140,13 +161,11 @@ function CardExplainBody2() {
         className="cardExplainBody2-left"
       >
         <div className='CEB2-left-cardImage'>
-          {/* <img src={`/images/tarotCardImg/tarotCard${cardId}.jpg`} alt={`타로카드${cardId}`}/> */}
           <img 
             src={`https://whalebigtarotmilktea.s3.ap-northeast-2.amazonaws.com/tarotCard${cardId}.jpg`}
             alt={`tarot card ${cardId}`}
           />
-          {/* <h1>The Fool</h1> */}
-          <h1>{cardId}번 {cardTitle}</h1>
+          <h1>{parseInt(cardId!,10)<22?<span>{cardId}번</span>:''} {cardTitle}</h1>
         </div>
       </div>
       {/* 오른쪽 */}
@@ -168,7 +187,7 @@ function CardExplainBody2() {
               cEB2-right-card-width100
             `}
           >
-            <p>{handledData2[0]}</p>
+            <p>{numMean}</p>
           </div>
         </div>
         <div className={`cEB2-right-card-title`}>
@@ -185,7 +204,7 @@ function CardExplainBody2() {
               cEB2-right-card-width100
             `}
           >
-            <p>{handledData2[1]}</p>
+            <p>{picMean}</p>
           </div>
         </div>
         <div className={`cEB2-right-card-title`}>
@@ -195,11 +214,11 @@ function CardExplainBody2() {
               cEB2-right-card-gradient-bg
             `}
           >
-            <h2>카드가 가지는 상징</h2>
+            <h2>카드에 대한 부가 설명</h2>
           </div>
           <div className={`cEB2-right-explain-symbol`}>
-            {data1.map((v, i) => (
-              <p key={i}>{v}</p>                
+            {explainD.map((v, i) => (
+              <p key={i}>{v}</p>
             ))}
           </div>
         </div>
