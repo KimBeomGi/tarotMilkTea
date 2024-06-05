@@ -24,11 +24,6 @@
   font-size: 1rem;
 }
 
-.loadingMessageDiv{
-  animation: fadein 0.5s;
-  margin-top: 3rem;
-}
-
 .answerDiv{
   margin: 2rem 0rem 2rem 0rem;
 }
@@ -58,14 +53,26 @@
   }
 } */
 
-.loadingMessage{
-  font-size: 1.25rem;  
+.loadingMessageDiv{
   text-align: center;
+}
+.loadingMessage{
+  font-size: 1.25rem;
+}
+.loadingIcon{
+  width: 20%;
+  margin: 2em;
+  animation: loading_image 2s linear infinite;
+}
+@keyframes loading_image {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media all and (max-width:768px) {
   .cardNameSize{
-    font-size: 0.75rem;
+    font-size: 0.625rem;
   }
   .loadingMessage{
     font-size: 1rem;
@@ -76,8 +83,11 @@
   .answerP{
     font-size: 1rem;
   }
-  
+  .loadingIcon{
+    width: 25%;
+  }
 }
+
 @media all and (max-width:480px) {
   .selected-div{
     flex-wrap: wrap;
@@ -96,5 +106,9 @@
   }
   .answerP{
     font-size: 0.875rem;
+  }
+  
+  .loadingIcon{
+    width: 40%;
   }
 }

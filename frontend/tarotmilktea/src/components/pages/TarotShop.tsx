@@ -279,8 +279,7 @@ function TarotShop() {
         // 검색 결과를 서버에서 받아오는 placesSearchCB()
         let placesSearchCB = function(result :any, status :any) {
           if (status === window.kakao.maps.services.Status.OK) {
-            console.log(result)
-            
+            // console.log(result)
             // 정상적으로 검색이 완료됐으면
             // 검색 목록과 마커를 표출합니다
             displayPlaces(result);

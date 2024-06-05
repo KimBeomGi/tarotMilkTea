@@ -72,6 +72,8 @@ function ReadCard2() {
             {v1}
           </p>
         ))}
+        <img className='loadingIcon' src="/loadingicon.png" alt="로딩" />
+        
       </div>
     );
   }
@@ -107,10 +109,6 @@ function ReadCard2() {
   }, []);
 
   useEffect(() => {
-    // 계속 진행할 수는 없으니까, 나중에 store에 있는 값을 이용해야함.
-    // setSelectedOption(selectedOptionFromLocation)
-    // setConsulValue(consulValueFromLocation)
-    // setSelectedCards(selectedCardsFromLocation)
     let interval: NodeJS.Timeout
     
     if(isClickGoRead){
