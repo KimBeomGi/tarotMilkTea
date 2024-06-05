@@ -84,19 +84,19 @@ function ReadCard2() {
     }
     try {
       console.log(sendData)
-      // const response = await getReadTarotByGemini(sendData)
-      // console.log(response?.data)
-      // console.log(response?.data.gemini_answer)
-      // console.log(response?.data.gemini_answer.greeting)
-      // console.log(response?.data.gemini_answer.past)
-      // console.log(response?.data.gemini_answer.present)
-      // console.log(response?.data.gemini_answer.future)
-      // console.log(response?.data.gemini_answer.advice)
-      // console.log(response?.data.gemini_answer.conclusion)
-      // setIsReceiveGemini(true)
-      // if(response){
-      //   setGeminiAnswer(response?.data.gemini_answer)
-      // }
+      const response = await getReadTarotByGemini(sendData)
+      console.log(response?.data)
+      console.log(response?.data.gemini_answer)
+      console.log(response?.data.gemini_answer.greeting)
+      console.log(response?.data.gemini_answer.past)
+      console.log(response?.data.gemini_answer.present)
+      console.log(response?.data.gemini_answer.future)
+      console.log(response?.data.gemini_answer.advice)
+      console.log(response?.data.gemini_answer.conclusion)
+      setIsReceiveGemini(true)
+      if(response){
+        setGeminiAnswer(response?.data.gemini_answer)
+      }
     } catch (error) {
       alert('풀이에 실패했어요...😥 다음에 다시 시도해주세요.')
       console.error(error)
@@ -129,9 +129,9 @@ function ReadCard2() {
         handleRandomLoading()
       }, 3000)
 
-      // handleGetReadTarotByGemini().then(() => {
-      //   clearInterval(interval)
-      // })
+      handleGetReadTarotByGemini().then(() => {
+        clearInterval(interval)
+      })
       
     }else{
       console.log('불가능')
@@ -147,51 +147,53 @@ function ReadCard2() {
 
   return (
     <div className="ReadCard2">
-      {/* {isClickGoRead
-      ? */}
-        <div className="container">
-          <div className={"selected-div"}>
-            {selectedCards.map((num,i) => (
-              <div key={i} className='cardShow'>
-                <img 
-                  className={"showImg"} 
-                  src={`https://whalebigtarotmilktea.s3.ap-northeast-2.amazonaws.com/tarotCard${num}.jpg`}
-                  alt={process.env.PUBLIC_URL+"/images/tarotCardBack.png"}
-                />
-                
-                { browserWidth > 480 ? 
-                  <h2 className='cardNameSize'>
-                    {/* {selectedCards[i]} */}
-                    {/* {tarotNumbersDict.cards[num]} */}
-                    {selectedCardsName[i]}
-                  </h2>
-                  :
-                  <h2></h2>
-                }
-              </div>
-            ))}
-          </div>
-          { geminiAnswer ? 
-            <div>
-              <p><strong>고민주제</strong> : {selectedOption}</p>
-              <p><strong>고민내용</strong> : {consulValue? consulValue : "고민내용 미입력"}</p>
-              
-              <p>{geminiAnswer?.greeting}</p>
-              <p>{geminiAnswer?.past}</p>
-              <p>{geminiAnswer?.present}</p>
-              <p>{geminiAnswer?.future}</p>
-              <p>{geminiAnswer?.advice}</p>
-              <p>{geminiAnswer?.conclusion}</p>
+      {isClickGoRead
+        ?
+          <div className="container">
+            <div className={"selected-div"}>
+              {selectedCards.map((num,i) => (
+                <div key={i} className='cardShow'>
+                  <img 
+                    className={"showImg"} 
+                    src={`https://whalebigtarotmilktea.s3.ap-northeast-2.amazonaws.com/tarotCard${num}.jpg`}
+                    alt={process.env.PUBLIC_URL+"/images/tarotCardBack.png"}
+                  />
+                  
+                  { browserWidth > 480 ? 
+                    <h2 className='cardNameSize'>
+                      {/* {selectedCards[i]} */}
+                      {/* {tarotNumbersDict.cards[num]} */}
+                      {selectedCardsName[i]}
+                    </h2>
+                    :
+                    <h2></h2>
+                  }
+                </div>
+              ))}
             </div>
-          : 
-            <Message randomNum={randomIndex}/>
-          }
-          
-        </div>
-      {/* :
-        <div><h1>올바른 방법으로 카드를 선택 후 방문해주세요.</h1></div>
-      } */}
-      
+            { geminiAnswer ? 
+              <div className='answerDiv'>
+                <p className='consulP'><strong>고민주제</strong> : {selectedOption}</p>
+                <p className='consulP'><strong>고민내용</strong> : {consulValue? consulValue : "고민내용 미입력"}</p>
+                
+                <p className='answerP'>{geminiAnswer?.greeting}</p>
+                <p className='answerP'>{geminiAnswer?.past}</p>
+                <p className='answerP'>{geminiAnswer?.present}</p>
+                <p className='answerP'>{geminiAnswer?.future}</p>
+                <p className='answerP'>{geminiAnswer?.advice}</p>
+                <p className='answerP'>{geminiAnswer?.conclusion}</p>
+              </div>
+            : 
+              <Message randomNum={randomIndex}/>
+            }
+            
+          </div>
+        :
+          <div>
+            <h1>카드를 선택 후 운세보기 버튼을 클릭해주세요.</h1>
+            <p>올바른 방법으로 입장하지 않을 시 답변을 확인할 수 없습니다.</p>
+          </div>
+      }
     </div>
   );
 }

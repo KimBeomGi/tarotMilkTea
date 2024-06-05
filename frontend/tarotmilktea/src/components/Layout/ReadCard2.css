@@ -29,6 +29,16 @@
   margin-top: 3rem;
 }
 
+.answerDiv{
+  margin: 2rem 0rem 2rem 0rem;
+}
+.consulP{
+  font-size: 1.25rem;
+}
+.answerP{
+  font-size: 1.125rem;
+  margin :  1em 0em 1em 0em
+}
 /* 효과를 동작시간 동안 0 ~ 1까지 */
 @keyframes fadein {
   from {
@@ -60,6 +70,12 @@
   .loadingMessage{
     font-size: 1rem;
   }
+  .consulP{
+    font-size: 1.125rem;
+  }
+  .answerP{
+    font-size: 1rem;
+  }
   
 }
 @media all and (max-width:480px) {
@@ -74,5 +90,11 @@
   }
   .loadingMessageDiv{
     margin-top: 0rem;
+  }
+  .consulP{
+    font-size: 1rem;
+  }
+  .answerP{
+    font-size: 0.875rem;
   }
 }
