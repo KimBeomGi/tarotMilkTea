@@ -15,12 +15,6 @@ export async function getTarotCard() { // async, await을 사용하는 경우
 
 // GeminiApi를 이용한 운세 보기
 export async function getReadTarotByGemini(sendData:any) {
-  // const subject_data = sendData.subject
-  // const concern_data = sendData.concern
-  // const selectedCard_data = sendData.selectedCard
-  // console.log(subject_data)
-  // console.log(concern_data)
-  // console.log(selectedCard_data)
   try {
   // POST 요청은 body에 실어 보냄
     const response = await axios.post(`${base_url}tarotcard/gemini/`, {

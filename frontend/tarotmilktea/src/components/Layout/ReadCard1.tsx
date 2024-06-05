@@ -7,7 +7,7 @@ import { decrement, increment, incrementByAmount, decrementByAmount } from '../.
 import { trueIsSelectcomplete, falseIsSelectcomplete } from '../../store/slices/tarot/tarotSlice'
 import "./ReadCard1.css"
 import TarotNumbers from "./TarotNumber.json"
-import {getTarotCard, getReadTarotByGemini} from "../../axios/TarotCardAxios"
+// import {getTarotCard, getReadTarotByGemini} from "../../axios/TarotCardAxios"
 import {TarotNumbersType} from "../types/explainCards/explainCardsType"
 // import { RxTriangleDown } from "react-icons/rx";
 
@@ -29,24 +29,6 @@ function ReadCard1() {
   const [selectedCards, setSelectedCards] = useState<number[]>([])
   const [selectedCardsName, setSelectedCardsName] = useState<string[]>([])
   const [clickMix, setClickMix] = useState<boolean>(false)
-
-  // const handleGetTarotCard = async () => {
-  //   try {
-  //     const response = await getTarotCard()
-  //     console.log(response?.data)
-  //   }catch(e){
-  //     console.log(e)
-  //   }
-  // }
-
-  const handleGetReadTarotByGemini = async () => {
-    let sendData = {
-      "subject" : selectedOption,
-      "concern" : consulValue,
-      "selectedCard" : selectedCards,
-    }
-    const response = await getReadTarotByGemini(sendData)
-  }
 
   useEffect(() => {
     // handleGetTarotCard()
@@ -121,6 +103,24 @@ function ReadCard1() {
     return () => {}
   }, [])
 
+
+  const [Loptions, setLoptions] = useState(['신년운', '애정운', '금전운', '학업운', '직장운', '건강운', '오늘의 운세'])
+  const CustomSelect = () => {
+    return(
+      <ul className={`custom-select-large-option-list ${isClickCSL ? "CSLOL-active": ""}`}
+        onClick={() => {
+          setIsClickCSL(false)
+        }}
+      >
+        {Loptions.map((v1, i1) => (
+          <li key={i1} value={v1} className="custom-select-large-option"
+            onClick={(e) => {handleOptionClick(e)}}
+          >{v1}</li>
+        ))}
+      </ul>
+    )
+  }
+
   return (
     <div className="ReadCard1">
       {/* 보고싶은 운세 */}
@@ -137,40 +137,11 @@ function ReadCard1() {
               >
                 <p className="custom-select-text" tabIndex={0}>{selectedOption}</p>
               </div>
-              <ul className={`custom-select-large-option-list ${isClickCSL ? "CSLOL-active": ""}`}
-                onClick={() => {
-                  setIsClickCSL(false)
-                }}
-              >
-                <li value="selectOption1" className="custom-select-large-option"
-                  onClick={(e) => {handleOptionClick(e)}}
-                >신년운</li>
-                <li value="selectOption2" className="custom-select-large-option"
-                  onClick={(e) => {handleOptionClick(e)}}
-                >애정운</li>
-                <li value="selectOption3" className="custom-select-large-option"
-                  onClick={(e) => {handleOptionClick(e)}}
-                >금전운</li>
-                <li value="selectOption4" className="custom-select-large-option"
-                  onClick={(e) => {handleOptionClick(e)}}
-                >학업운</li>
-                <li value="selectOption5" className="custom-select-large-option"
-                  onClick={(e) => {handleOptionClick(e)}}
-                >직장운</li>
-                <li value="selectOption6" className="custom-select-large-option"
-                  onClick={(e) => {handleOptionClick(e)}}
-                >건강운</li>
-                <li value="selectOption7" className="custom-select-large-option"
-                  onClick={(e) => {handleOptionClick(e)}}
-                >오늘의 운세</li>
-              </ul>
+              <CustomSelect/>
             </div>
           </div>
           <div className='consultation-div'>
             <p>고민의 내용을 적어주세요. (100자 이내)</p>
-            {/* <input type="text" placeholder="예시) 오늘하루는 기분 좋은 일이 있을까요?"
-              className='input-consultation'
-            /> */}
             <textarea
               // readOnly={selectedCards.length? true: false}
               className={`input-consultation`}
@@ -198,23 +169,10 @@ function ReadCard1() {
       <div className='RC-right'>
         <div className={`drawcard-div`}>
           {randomTarotNumbers.map((num, i) => (
-            // <img 
-            //   tabIndex={0}
-            //   key={i}
-            //   className={`drawcard-img drawcard-img-front ${clickMix?"drawcard-img-rotate":""}`} 
-            //   src="/images/tarotCardBack.png" alt={`Tarot Card ${num}`}
-            //   onClick={() => {
-            //     if(selectedCards.length < 5){
-            //       setSelectedCards((prev) => [...prev, num])
-            //     }
-            //   }}
-            // />
             <div
               tabIndex={0}
               key={i}
               className={`drawcard-img-div`}
-              // src="/images/tarotCardBack.png" alt={`Tarot Card ${num}`}
-              // style={{ backgroundImage: `url(/images/tarotCardBack.png)`, backgroundSize: 'cover' }}
               onClick={() => {
                 if(selectedCards.length < 5 && !selectedCards.includes(num)){
                   setSelectedCards((prev) => [...prev, num])
@@ -228,11 +186,6 @@ function ReadCard1() {
               key={i}
               className={`drawcard-img ${selectedCards.includes(num)?"drawcard-img-selected":""}`}
               src="/images/tarotCardBack.png" alt={`타로카드뒷면`}
-              onClick={() => {
-                // if(selectedCards.length < 5){
-                //   setSelectedCards((prev) => [...prev, num])
-                // }
-              }}
             />
             </div>
           ))}

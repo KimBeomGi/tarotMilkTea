@@ -83,16 +83,7 @@ function ReadCard2() {
       "selectedCard" : selectedCardsName,
     }
     try {
-      console.log(sendData)
       const response = await getReadTarotByGemini(sendData)
-      console.log(response?.data)
-      console.log(response?.data.gemini_answer)
-      console.log(response?.data.gemini_answer.greeting)
-      console.log(response?.data.gemini_answer.past)
-      console.log(response?.data.gemini_answer.present)
-      console.log(response?.data.gemini_answer.future)
-      console.log(response?.data.gemini_answer.advice)
-      console.log(response?.data.gemini_answer.conclusion)
       setIsReceiveGemini(true)
       if(response){
         setGeminiAnswer(response?.data.gemini_answer)
@@ -123,8 +114,6 @@ function ReadCard2() {
     let interval: NodeJS.Timeout
     
     if(isClickGoRead){
-
-      console.log('가능')
       interval = setInterval(() => {
         handleRandomLoading()
       }, 3000)
@@ -133,9 +122,7 @@ function ReadCard2() {
         clearInterval(interval)
       })
       
-    }else{
-      console.log('불가능')
-    }
+    }else{}
     return () => {
       dispatch(falseIsSelectcomplete())
       setIsReceiveGemini(false)
@@ -161,8 +148,6 @@ function ReadCard2() {
                   
                   { browserWidth > 480 ? 
                     <h2 className='cardNameSize'>
-                      {/* {selectedCards[i]} */}
-                      {/* {tarotNumbersDict.cards[num]} */}
                       {selectedCardsName[i]}
                     </h2>
                     :
