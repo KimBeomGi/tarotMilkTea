@@ -20,4 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tarotcard/', include('tarotcard.urls')),
+    path('users/', include('authentication.urls')),
+    # 카카오 로그인
+    # path('accounts/', include('allauth.urls'))
 ]

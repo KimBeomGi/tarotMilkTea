@@ -15,13 +15,13 @@ function KakaoRedirection() {
 
   // 카카오 로그인을 위한 코드///////////////////////////////////////////////////////////////
   // const code = window.location.search;
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const code = params.get("code");
 
   useEffect(() => {
-    console.log(code)
+    console.log('code :',code)
     // console.log(process.env.REACT_APP_URL);
     // axios.post(`${process.env.REACT_APP_URL}kakaoLogin${code}`).then((r) => {
     //   console.log(r.data);
@@ -31,11 +31,16 @@ function KakaoRedirection() {
       
     //   navigate('/loginSuccess');
     // });
+    
+    if(code){
+      handleGetKakaoLoginCode(code)
+    }
+    // navigate('/')
   }, []);
 
-  async function handleGetKakaoLoginCode() {
+  async function handleGetKakaoLoginCode(code:string) {
     try {
-      await getKakaoLoginCode();
+      await getKakaoLoginCode(code);
     } catch (error) {
       console.log(error);
     }

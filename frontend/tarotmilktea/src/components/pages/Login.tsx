@@ -13,8 +13,8 @@ function Login() {
   const [discountN, setDiscountN] = useState<number>(7)
 
   // kakao Login을 위한 코드///////////////////////////////////////////
-  const clientId = process.env.REACT_APP_CLIENT_ID;
-  const redirectUri = process.env.REACT_APP_REDIRECT_URI;
+  const clientId = process.env.REACT_APP_KAKAO_CLIENT_ID;
+  const redirectUri = process.env.REACT_APP_KAKAO_REDIRECT_URI;
   if (!clientId || !redirectUri) {
     throw new Error('REACT_APP_CLIENT_ID or REACT_APP_REDIRECT_URI is not defined');
   }
