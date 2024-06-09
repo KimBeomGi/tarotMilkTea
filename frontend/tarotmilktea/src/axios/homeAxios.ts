@@ -17,10 +17,15 @@ export async function getKakaoLoginCode(code:string) { // async, await을 사용
   }
 }
 
-export async function getKakaoLogout(accesstoken:string){
-  console.log(accesstoken)
+export async function getKakaoLogout(kakao_ACCESS_TOKEN:string, tmt_ACCESS_TOKEN:string){
+  console.log(tmt_ACCESS_TOKEN)
+  console.log(kakao_ACCESS_TOKEN)
+  const data={
+    "kakao_ACCESS_TOKEN" : kakao_ACCESS_TOKEN,
+    "tmt_ACCESS_TOKEN" : tmt_ACCESS_TOKEN
+  }
   try {
-    const response = await axios.post(`${base_url}users/kakao/logout/`,{accesstoken})
+    const response = await axios.post(`${base_url}users/kakao/logout/`,data)
     console.log(response)
     console.log(response.data)
     return response

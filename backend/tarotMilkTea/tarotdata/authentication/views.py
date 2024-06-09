@@ -3,26 +3,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 import requests
-
-
+from .models import CustomUser
 import os
 
 GOOGLE_API_KEY = os.environ.get('GOOGLE_MY_API_KEY')
 KAKAO_CLIENT_ID = os.environ.get('KAKAO_CLIENT_ID')
 KAKA_REDIRECT_URI = os.environ.get('KAKA_REDIRECT_URI')
-
-
-# Create your views here.
-
-# from django.contrib.auth import login
-
-# def my_login_view(request):
-#     user = authenticate(request, username='john', password='secret')
-#     if user is not None:
-#         login(request, user)
-#         return HttpResponse("로그인 성공")
-#     else:
-#         return HttpResponse("로그인 실패")
 
 @api_view(["POST"])
 def kakao_login(request):
@@ -71,23 +57,32 @@ def kakao_login(request):
 
         # ACCESS_TOKEN을 user에게 보내고 유저가 가지고 있게하자.
         # User 테이블에 기록 및 꺼내오기
-        # try:
-        #     user = User.objects.get(email=kakao_account.get("email"))
-        #     login(request, user)
-        #     return Response(status=status.HTTP_200_OK)
-        # except User.DoesNotExist:
-        #     user = User.objects.create(
-        #         email=kakao_account.get("email"),
-        #         username=profile.get("nickname"),
-        #         name=profile.get("nickname"),
-        #         profile_url=profile.get("profile_image_url"),
-        #     )
-        #     user.set_unusable_password()    # kakao로그인이니까 No password!
-        #     user.save()
-        #     login(request, user)
-        #     return Response(status=status.HTTP_200_OK)
-
-        return Response(ACCESS_TOKEN, status=status.HTTP_200_OK)
+        try:
+            user = CustomUser.objects.get(email=kakao_account.get("email"), provider='kakao')
+            # tmt로그인
+            tmt_ACCESS_TOKEN =  user.social_login(email, 'kakao')
+            response_data = {
+                "tmt_ACCESS_TOKEN" : tmt_ACCESS_TOKEN,
+                "kakao_ACCESS_TOKEN" : ACCESS_TOKEN
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
+        except CustomUser.DoesNotExist:
+            user = CustomUser.objects.create(
+                email=kakao_account.get("email"),
+                nickname=profile.get("nickname"),
+                username=profile.get("nickname"),
+                profile_url=profile.get("profile_image_url"),
+                provider='kakao',
+            )
+            # user.set_unusable_password()    # 소셜로그인(kakao로그인)이므로 password는 없어도 되게.
+            user.save()
+            # tmt로그인
+            tmt_ACCESS_TOKEN = user.social_login(email, 'kakao')
+            response_data = {
+                "tmt_ACCESS_TOKEN" : tmt_ACCESS_TOKEN,
+                "kakao_ACCESS_TOKEN" : ACCESS_TOKEN
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -95,12 +90,13 @@ def kakao_login(request):
 @api_view(["POST"])
 def kakao_logout(request):
     request_data = request.data
-    ACCESS_TOKEN = request_data.get("ACCESS_TOKEN")
+    kakao_ACCESS_TOKEN = request_data.get("kakao_ACCESS_TOKEN")
+    tmt_ACCESS_TOKEN = request_data.get("tmt_ACCESS_TOKEN")
     try:
         logout_response = requests.post(
             "https://kapi.kakao.com/v1/user/logout",
             headers={
-                "Authorization" : f"Bearer {ACCESS_TOKEN}",
+                "Authorization" : f"Bearer {kakao_ACCESS_TOKEN}",
                 "Content-type" : "application/x-www-form-urlencoded;charset=utf-8",
             }
         )
@@ -109,6 +105,8 @@ def kakao_logout(request):
         requests.get(
             f"https://kauth.kakao.com/oauth/logout?client_id=${KAKAO_CLIENT_ID}&logout_redirect_uri=${KAKA_REDIRECT_URI}"
         )
+        # tmt 로그아웃
+        CustomUser.logout(tmt_ACCESS_TOKEN)
 
         return Response(status=status.HTTP_200_OK)
     except Exception as e:
