@@ -63,7 +63,9 @@ def kakao_login(request):
             tmt_ACCESS_TOKEN =  user.social_login(email, 'kakao')
             response_data = {
                 "tmt_ACCESS_TOKEN" : tmt_ACCESS_TOKEN,
-                "kakao_ACCESS_TOKEN" : ACCESS_TOKEN
+                "kakao_ACCESS_TOKEN" : ACCESS_TOKEN,
+                "nickname" : user.nickname,
+                "profile_url" : user.profile_url,
             }
             return Response(response_data, status=status.HTTP_200_OK)
         except CustomUser.DoesNotExist:
@@ -80,7 +82,9 @@ def kakao_login(request):
             tmt_ACCESS_TOKEN = user.social_login(email, 'kakao')
             response_data = {
                 "tmt_ACCESS_TOKEN" : tmt_ACCESS_TOKEN,
-                "kakao_ACCESS_TOKEN" : ACCESS_TOKEN
+                "kakao_ACCESS_TOKEN" : ACCESS_TOKEN,
+                "nickname" : user.nickname,
+                "profile_url" : user.profile_url,
             }
             return Response(response_data, status=status.HTTP_200_OK)
     except Exception as e:

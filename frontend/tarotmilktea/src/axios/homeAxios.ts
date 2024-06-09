@@ -8,9 +8,7 @@ export async function getKakaoLoginCode(code:string) { // async, await을 사용
   try {
     const response = await axios.post(`${base_url}users/kakao/login/`, {code}) // Backtick(`)을 이용해 이렇게 요청할 수도 있다.
     console.log(response)
-    console.log(response.data)
-    const accessToken = response.data
-    return accessToken
+    return response
   } catch (e) {
     // 실패 시 처리
     console.error(e);

@@ -41,14 +41,21 @@ function KakaoRedirection() {
   async function handleGetKakaoLoginCode(code:string) {
     try {
       const respose = await getKakaoLoginCode(code);
-      const responseData = respose.data
+      const responseData = respose?.data
       const tmt_ACCESS_TOKEN = responseData.tmt_ACCESS_TOKEN
       const kakao_ACCESS_TOKEN = responseData.kakao_ACCESS_TOKEN
+      const nickname = responseData.nickname
+      const profile_url = responseData.profile_url
       window.localStorage.setItem("tmt_ACCESS_TOKEN", tmt_ACCESS_TOKEN)
       window.localStorage.setItem("kakao_ACCESS_TOKEN", kakao_ACCESS_TOKEN)
       
+      console.log('받았다.')
+      console.log(typeof(responseData))
       console.log("tmt_ACCESS_TOKEN",tmt_ACCESS_TOKEN)
       console.log("kakao_ACCESS_TOKEN",kakao_ACCESS_TOKEN)
+      console.log("nickname",nickname)
+      console.log("profile_url",profile_url)
+      navigate('/')
 
     } catch (error) {
       console.log(error);
