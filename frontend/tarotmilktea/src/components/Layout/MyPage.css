@@ -1,0 +1,52 @@
+.MyPage{
+  display:flex;
+  justify-content: center;
+}
+.myPageContainer{
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.styled-table tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.styled-table .first-column {
+  width: 20%;
+  font-weight: bold;
+  text-align: center;
+  background: #f3dbff;
+}
+/* .styled-table>tbody>tr>td:nth-child(1){
+  width: 20%;
+  font-weight: bold;
+  text-align: center;
+  background: #f3dbff;
+} */
+/* .first-column{
+  width: 20%;
+  font-weight: bold;
+  text-align: center;
+  background: #f3dbff;
+} */
+.logoutP{
+  text-align: end;
+  cursor: pointer;
+}
+.logoutP:hover{
+  color: red;
+}
+.logoutP:active{
+  color: blue;
+}

@@ -13,6 +13,7 @@ import CardExplainBody2 from './components/layout/CardExplainBody2';
 import ReadCard1 from './components/layout/ReadCard1';
 import ReadCard2 from './components/layout/ReadCard2';
 import KakaoRedirection from './components/layout/KakaoRedirection'
+import MyPage from './components/layout/MyPage'
 
 function App() {
 
@@ -31,8 +32,10 @@ function App() {
         </Route>
         <Route path='/board' element={<Board />} />
         <Route path='/tarotshop' element={<TarotShop />} />
+        <Route path='/mypage' element={<MyPage />}/>
       </Route>
       <Route path='/login' element={<Login />}/>
+      
       {/* 카카오 로그인을 위해 /social/kakao로 진입시 */}
       <Route path='/social/kakao' element={<KakaoRedirection />} />
       

@@ -4,6 +4,7 @@ import { Outlet, Link, redirect } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { decrement, increment, incrementByAmount, decrementByAmount } from '../../store/slices/counter/counterSlice'
 import {KakaoParamsType} from '../types/home/homeType'
+import "./Login.css"
 
 
 function Login() {
@@ -34,36 +35,30 @@ function Login() {
   
   return (
     <div className="Login">
-      <div>
-        <h1>로그인 페이지</h1>
+      <div className="loginContainer">
+        <div className='margin100'>
+          <Link to="/">
+            <img src={process.env.PUBLIC_URL+"/images/tarotMilkTea_logo.png"} alt="" className='tmtlogo' />
+          </Link>
+        </div>
+          
+        <div className='flexCenter'>
+          <div
+            className='loginButton'
+            onClick={() => {navgiateToKakaoLogin()}}
+            >
+            <img src={process.env.PUBLIC_URL+"images/kakaoLoginBtn1.png"} alt="" className='btnImg'/>
+          </div>
+          <div
+            className='loginButton spacebetween loginButtonBorder'
+            >
+              <img src={process.env.PUBLIC_URL+"images/githubLogo.png"} alt="" className='btnLogoImg'/>
+              <span className='loginBtnFont'>Github 로그인</span>
+              <div className='btnLogoImg'></div>
+          </div>
+          <Link to="/" className='nodecoration'>메인 페이지로 이동</Link>
+        </div>
       </div>
-      {/* <div>
-        <button onClick={() => {dispatch(increment())}}>+</button>
-        <button onClick={() => {dispatch(decrement())}}>-</button>
-        <hr />
-        <span>{incrementN}씩 증가</span>
-        <button onClick={() => {dispatch(incrementByAmount(incrementN))}}>+</button>
-        <hr />
-        <span>{discountN}씩 증가</span>
-        <button onClick={() => {dispatch(decrementByAmount(discountN))}}>-</button>
-        <hr />
-        <p>{count}</p>
-      </div>
-      <div>
-        <p>
-          <Link to="/Login">로그인</Link>
-        </p>
-        <p>
-          <Link to="/">Home</Link>
-        </p>
-      </div> */}
-      <button>
-        <Link to="/">Home</Link>
-      </button>
-      <button
-        onClick={() => {navgiateToKakaoLogin()}}
-      >카카오 로그인</button>
-
     </div>
   );
 }

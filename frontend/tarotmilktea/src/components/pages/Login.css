@@ -1,0 +1,88 @@
+.Login{
+  display: flex;
+  justify-content: center;
+}
+.loginContainer{
+  width: 600px;
+  text-align: center;
+}
+.margin100{
+  margin: 100px 0px 100px 0px;
+}
+.tmtlogo{
+  width: 100%;
+}
+.loginButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 60px;
+  cursor: pointer;
+  margin: 0.5rem 0rem 0.5rem 0rem;
+}
+.btnImg{
+  width: 100%;
+}
+.btnLogoImg{
+  width: 60px;
+  height: 30px;
+  object-fit: contain;
+}
+.loginBtnFont{
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.flexCenter{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.spacebetween{
+  justify-content: space-between;
+}
+.loginButtonBorder{
+  border: 1px solid black;
+  border-radius: 12px;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+.nodecoration{
+  text-decoration: none;
+  color: black;
+  margin-top: 1rem;
+}
+
+@media all and (max-width:768px) {
+  .loginContainer{
+    width: 450px;
+    text-align: center;
+  }
+}
+@media all and (max-width:480px) {
+  .loginContainer{
+    width: 250px;
+    text-align: center;
+  }
+  .loginButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 30px;
+    cursor: pointer;
+    margin: 0.5rem 0rem 0.5rem 0rem;
+  }
+  .btnLogoImg{
+    width: 30px;
+    height: 15px;
+    object-fit: contain;
+  }
+  .loginBtnFont{
+    font-size: 0.625rem;
+    font-weight: 700;
+  }
+  .spacebetween{
+    justify-content: space-between;
+  }
+}

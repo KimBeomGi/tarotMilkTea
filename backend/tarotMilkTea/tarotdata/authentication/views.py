@@ -66,6 +66,7 @@ def kakao_login(request):
                 "kakao_ACCESS_TOKEN" : ACCESS_TOKEN,
                 "nickname" : user.nickname,
                 "profile_url" : user.profile_url,
+                "email" : user.email,
             }
             return Response(response_data, status=status.HTTP_200_OK)
         except CustomUser.DoesNotExist:
@@ -85,6 +86,7 @@ def kakao_login(request):
                 "kakao_ACCESS_TOKEN" : ACCESS_TOKEN,
                 "nickname" : user.nickname,
                 "profile_url" : user.profile_url,
+                "email" : user.email,
             }
             return Response(response_data, status=status.HTTP_200_OK)
     except Exception as e:
