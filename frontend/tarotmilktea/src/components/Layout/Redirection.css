@@ -1,0 +1,27 @@
+.redirectionContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2em;
+}
+.redirectionDiv{
+  width: 270px;
+  text-align: center;
+}
+.redirectionDiv p{
+  margin: 2em 0em 2em 0em;
+}
+.redirectionDiv>div:nth-child(1){
+  text-align: start;;
+}
+.loadingImg{
+  width: 10rem;
+  height: 10rem;
+  animation: loading_image 1s linear infinite;
+}
+
+@keyframes loading_image {
+  100% {
+    transform: rotate(360deg);
+  }
+}

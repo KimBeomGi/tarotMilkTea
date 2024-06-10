@@ -6,6 +6,7 @@ import { decrement, increment, incrementByAmount, decrementByAmount } from '../.
 import { setProfileUrl, setNickname, setEmail } from "../../store/slices/account/accountSlice"
 import axios from 'axios';
 import {getKakaoLoginCode} from '../../axios/homeAxios'
+import "./Redirection.css"
 
 
 function KakaoRedirection() {
@@ -55,11 +56,30 @@ function KakaoRedirection() {
   }
   ///////////////////////////////////////////////////////////////
 
+  // 대기창 화면
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCount((prev) => (prev + 1) % 4);
+    }, 500);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   return (
-    <div className="KakaoRedirection">
-      <div>
-        <h1>로그인 중입니다.</h1>
-      </div>;
+    <div className="KakaoRedirection redirectionContainer">
+      <div className="redirectionDiv">
+        <div>
+          <h1>로그인 중입니다.{'.'.repeat(count)}</h1>
+        </div>
+        <p>다른 페이지로 넘어가지 마세요.</p>
+        <div>
+          <img src={process.env.PUBLIC_URL+"/loadingicon.png"} alt="" className='loadingImg'/>
+        </div>
+      </div>
     </div>
   );
 }
