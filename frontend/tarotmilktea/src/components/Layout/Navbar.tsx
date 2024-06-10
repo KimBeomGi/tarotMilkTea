@@ -105,9 +105,9 @@ function Navbar() {
           <Link to="/fortune" className={`nav-bar3 ${clickHamburger ? 'nav-bar-link-active' : ''}`} onClick={() => {
             treatSPhoneNavbar()
           }}>운세보기</Link>
-          <Link to="/board" className={`nav-bar4 ${clickHamburger ? 'nav-bar-link-active' : ''}`} onClick={() => {
+          {/* <Link to="/board" className={`nav-bar4 ${clickHamburger ? 'nav-bar-link-active' : ''}`} onClick={() => {
             treatSPhoneNavbar()
-          }}>게시판</Link>
+          }}>게시판</Link> */}
           {/* css 차후 변경 */}
           <Link to="/tarotshop" className={`nav-bar4 ${clickHamburger ? 'nav-bar-link-active' : ''}`} onClick={() => {
             treatSPhoneNavbar()

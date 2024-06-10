@@ -145,7 +145,7 @@
     flex-direction: column;
     padding: 0rem;
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     display: flex;
     opacity: 0;
     transform: translateY(-120%);
