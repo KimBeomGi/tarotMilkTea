@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import { Outlet, Link, redirect } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { decrement, increment, incrementByAmount, decrementByAmount } from '../../store/slices/counter/counterSlice'
-import {KakaoParamsType} from '../types/home/homeType'
+import {KakaoParamsType, GithubParamsType} from '../types/home/homeType'
 import "./Login.css"
 
 
@@ -14,14 +14,14 @@ function Login() {
   const [discountN, setDiscountN] = useState<number>(7)
 
   // kakao Login을 위한 코드///////////////////////////////////////////
-  const clientId = process.env.REACT_APP_KAKAO_CLIENT_ID;
-  const redirectUri = process.env.REACT_APP_KAKAO_REDIRECT_URI;
-  if (!clientId || !redirectUri) {
+  const kakaoClientId = process.env.REACT_APP_KAKAO_CLIENT_ID;
+  const kakaoRedirectUri = process.env.REACT_APP_KAKAO_REDIRECT_URI;
+  if (!kakaoClientId || !kakaoRedirectUri) {
     throw new Error('REACT_APP_CLIENT_ID or REACT_APP_REDIRECT_URI is not defined');
   }
   const kakaoParams :KakaoParamsType = {
-    "client_id" : clientId,
-    "redirect_uri" :  redirectUri,
+    "client_id" : kakaoClientId,
+    "redirect_uri" :  kakaoRedirectUri,
     "response_type" : "code",
   }
   const kParams = new URLSearchParams(kakaoParams).toString()
@@ -30,7 +30,22 @@ function Login() {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?${kParams}`
     // window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   }
-  console.log(kParams)
+  //////////////////////////////////////////////////////////////////////////////////////
+  // github Login을 위한 코드///////////////////////////////////////////
+  const githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
+  const githubRedirectUri = process.env.REACT_APP_GITHUB_REDIRECT_URI;
+  if (!githubClientId || !githubRedirectUri) {
+    throw new Error('REACT_APP_GITHUB_CLIENT_ID or REACT_APP_GITHUB_REDIRECT_URI is not defined');
+  }
+  const githubParams :GithubParamsType = {
+    "client_id" : githubClientId,
+    "redirect_uri" : githubRedirectUri,
+    "scope" : "read:user, user:email",
+  }
+  const gParams = new URLSearchParams(githubParams).toString()
+  function navigateGithubLogin(){
+    window.location.href = `https://github.com/login/oauth/authorize?${gParams}`
+  }
   //////////////////////////////////////////////////////////////////////////////////////
   
   return (
@@ -50,9 +65,10 @@ function Login() {
             <img src={process.env.PUBLIC_URL+"images/kakaoLoginBtn1.png"} alt="" className='btnImg'/>
           </div>
           <div
-            className='loginButton spacebetween loginButtonBorder'
+            className='loginButton spacebetween loginButtonBorder bgGithub'
+            onClick={() => {navigateGithubLogin()}}
             >
-              <img src={process.env.PUBLIC_URL+"images/githubLogo.png"} alt="" className='btnLogoImg'/>
+              <img src={process.env.PUBLIC_URL+"images/githubLogo1.png"} alt="" className='btnLogoImg'/>
               <span className='loginBtnFont'>Github 로그인</span>
               <div className='btnLogoImg'></div>
           </div>

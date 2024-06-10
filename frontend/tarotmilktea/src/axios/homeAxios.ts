@@ -33,3 +33,16 @@ export async function getKakaoLogout(kakao_ACCESS_TOKEN:string, tmt_ACCESS_TOKEN
     console.error(e);
   }
 }
+
+// 깃허브 로그인을 위한 
+export async function getGithubLoginCode(code:string) { // async, await을 사용하는 경우
+  console.log(code)
+  try {
+    const response = await axios.post(`${base_url}users/github/login/`, {code}) // Backtick(`)을 이용해 이렇게 요청할 수도 있다.
+    console.log(response)
+    return response
+  } catch (e) {
+    // 실패 시 처리
+    console.error(e);
+  }
+}

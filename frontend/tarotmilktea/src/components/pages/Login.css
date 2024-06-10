@@ -21,6 +21,9 @@
   cursor: pointer;
   margin: 0.5rem 0rem 0.5rem 0rem;
 }
+.bgGithub{
+  background-color: #0D1117;
+}
 .btnImg{
   width: 100%;
 }
@@ -30,8 +33,9 @@
   object-fit: contain;
 }
 .loginBtnFont{
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.25rem;
+  /* font-weight: 600; */
+  color: #ffffff;
 }
 .flexCenter{
   display: flex;
@@ -45,7 +49,6 @@
   border: 1px solid black;
   border-radius: 12px;
   border-collapse: collapse;
-  background: #ffffff;
 }
 .nodecoration{
   text-decoration: none;
@@ -80,9 +83,12 @@
   }
   .loginBtnFont{
     font-size: 0.625rem;
-    font-weight: 700;
+    /* font-weight: 700; */
   }
   .spacebetween{
     justify-content: space-between;
+  }
+  .loginButtonBorder{
+    border-radius: 6px;
   }
 }
