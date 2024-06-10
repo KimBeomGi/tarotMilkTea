@@ -95,7 +95,7 @@ def kakao_login(request):
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-# 로그아웃
+# 카카오 로그아웃
 @api_view(["POST"])
 def kakao_logout(request):
     request_data = request.data
@@ -229,5 +229,32 @@ def github_login(request):
             }
             return Response(response_data, status=status.HTTP_200_OK)
         
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# 깃허브 로그아웃
+@api_view(["POST"])
+def github_logout(request):
+    request_data = request.data
+    github_ACCESS_TOKEN = request_data.get("github_ACCESS_TOKEN")
+    tmt_ACCESS_TOKEN = request_data.get("tmt_ACCESS_TOKEN")
+    try:
+        # logout_response = requests.post(
+        #     "https://kapi.kakao.com/v1/user/logout",
+        #     headers={
+        #         "Authorization" : f"Bearer {kakao_ACCESS_TOKEN}",
+        #         "Content-type" : "application/x-www-form-urlencoded;charset=utf-8",
+        #     }
+        # )
+        # # print(logout_response.json())
+        # # 카카오 계정과 함께 로그아웃
+        # requests.get(
+        #     f"https://kauth.kakao.com/oauth/logout?client_id=${KAKAO_CLIENT_ID}&logout_redirect_uri=${KAKAO_REDIRECT_URI}"
+        # )
+        # tmt 로그아웃
+        CustomUser.logout(tmt_ACCESS_TOKEN)
+
+        return Response(status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

@@ -46,3 +46,23 @@ export async function getGithubLoginCode(code:string) { // async, await을 사�
     console.error(e);
   }
 }
+
+// 깃허브 로그아웃
+export async function getGithubLogout(github_ACCESS_TOKEN:string, tmt_ACCESS_TOKEN:string){
+  // console.log(tmt_ACCESS_TOKEN)
+  // console.log(github_ACCESS_TOKEN)
+  console.log("getgithubLogout")
+  const data={
+    "github_ACCESS_TOKEN" : github_ACCESS_TOKEN,
+    "tmt_ACCESS_TOKEN" : tmt_ACCESS_TOKEN
+  }
+  try {
+    const response = await axios.post(`${base_url}users/github/logout/`,data)
+    console.log(response)
+    console.log(response.data)
+    return response
+  } catch (e) {
+    // 실패 시 처리
+    console.error(e);
+  }
+}

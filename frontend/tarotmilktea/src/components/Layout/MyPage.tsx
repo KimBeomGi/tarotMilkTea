@@ -4,7 +4,7 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { decrement, increment, incrementByAmount, decrementByAmount } from '../../store/slices/counter/counterSlice'
 import "./MyPage.css"
-import {getKakaoLogout} from '../../axios/homeAxios'
+import {getKakaoLogout, getGithubLogout} from '../../axios/homeAxios'
 
 function MyPage() {
   // const count = useAppSelector((state) => state.counter.value)
@@ -37,13 +37,31 @@ function MyPage() {
   }
 
 
-  async function handleGetKakaoLogout(){
+  async function handleGetLogout(){
     const tmt_ACCESS_TOKEN  = window.localStorage.getItem("tmt_ACCESS_TOKEN")
     const provide_ACCESS_TOKEN  = window.localStorage.getItem("provide_ACCESS_TOKEN")
     const provide = window.localStorage.getItem("provide")
     if (provide === "kakao" && provide_ACCESS_TOKEN && tmt_ACCESS_TOKEN) {
       try {
         const Response = await getKakaoLogout(provide_ACCESS_TOKEN, tmt_ACCESS_TOKEN)
+        console.log(Response?.status)
+        // localStroage에 있는 토큰과 정보 초기화
+        window.localStorage.setItem("tmt_ACCESS_TOKEN", "")
+        window.localStorage.setItem("provide_ACCESS_TOKEN", "")
+        window.localStorage.setItem("provide", '')
+        window.localStorage.setItem("userinfo",JSON.stringify({
+          "profile_url": "",
+          "nickname":"",
+          "email":""
+        }))
+        // navigate('/')
+        window.location.href = 'http://127.0.0.1:3000/'
+      } catch (error) {
+        console.log(error)
+      }
+    }else if(provide === "github" && provide_ACCESS_TOKEN && tmt_ACCESS_TOKEN){
+      try {
+        const Response = await getGithubLogout(provide_ACCESS_TOKEN, tmt_ACCESS_TOKEN)
         console.log(Response?.status)
         // localStroage에 있는 토큰과 정보 초기화
         window.localStorage.setItem("tmt_ACCESS_TOKEN", "")
@@ -93,7 +111,7 @@ function MyPage() {
         <div>
           <p 
             className='logoutP'
-            onClick={() => {handleGetKakaoLogout()}}
+            onClick={() => {handleGetLogout()}}
             >
             로그아웃
           </p>
