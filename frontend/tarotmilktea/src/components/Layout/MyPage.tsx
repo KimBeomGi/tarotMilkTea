@@ -31,7 +31,8 @@ function MyPage() {
       }
     } else {
       console.log("No userinfo found in localStorage")
-      navigate('/')
+      // navigate('/')
+      window.location.href = 'http://127.0.0.1:3000/'
     }
   }
 
@@ -53,7 +54,8 @@ function MyPage() {
           "nickname":"",
           "email":""
         }))
-        navigate('/')
+        // navigate('/')
+        window.location.href = 'http://127.0.0.1:3000/'
       } catch (error) {
         console.log(error)
       }
