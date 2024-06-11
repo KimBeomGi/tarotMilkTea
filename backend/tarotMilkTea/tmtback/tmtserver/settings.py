@@ -227,3 +227,5 @@ REST_AUTH = {
     'JWT_AUTH_COOKIE_USE_CSRF': False,
     'SESSION_LOGIN': False,
 }
+
+AUTH_USER_MODEL = 'accounts.User'
