@@ -23,7 +23,7 @@ function NotFound() {
           <div>
             <h1>사이트에 연결할 수 없습니다.</h1>
             <p>웹페이지 주소가 정확하게 입력되었는지 다시 한 번 확인하시기 바랍니다.<br/>
-            현재 입력한 주소는 {currentUrl}입니다.
+              현재 입력한 주소는 {currentUrl}입니다.
             </p>
           </div>
           <button onClick={() => {handleRefresh()}} className='button404 button404maring'>새로고침</button>
