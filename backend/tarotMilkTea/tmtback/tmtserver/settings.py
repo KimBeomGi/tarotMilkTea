@@ -71,7 +71,8 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     # django-cors-headers
     'corsheaders',
-
+    # 앱
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -173,35 +174,43 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000','http://localhost:3000','원하는 포트번호']#(포트 지정)
 CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000','http://localhost:3000']#(포트 지정)
 CORS_ALLOW_ALL_ORIGINS = True #(모든 포트 허용)
+CORS_ALLOW_CREDENTIALS = True # <-쿠키가 cross-site HTTP 요청에 포함될 수 있다
 
 CORS_ALLOW_METHODS = (
-"DELETE",
-"GET",
-"OPTIONS",
-"PATCH",
-"POST",
-"PUT",
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
 )
 CORS_ALLOW_HEADERS = (
-"accept",
-"authorization",
-"content-type",
-"user-agent",
-"x-csrftoken",
-"x-requested-with",
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 )
 
 SITE_ID = 1 # dj_rest_auth Registration (선택사항)
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 # ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # dj_rest_atuh JWT(선택사항)
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     )
@@ -209,6 +218,12 @@ REST_FRAMEWORK = {
 REST_AUTH = {
     'USE_JWT': True,
     # 토큰의 만료시간 제한과 갱신을 위함.
-    # 'JWT_AUTH_COOKIE': 'my-app-auth',
-    # 'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
+    'JWT_AUTH_COOKIE': 'tmt-auth',
+    'JWT_AUTH_REFRESH_COOKIE': 'tmt-refresh-token',
+    'OLD_PASSWORD_FIELD_ENABLED': True,
+    # 'JWT_AUTH_HTTPONLY': True,
+    # 'JWT_AUTH_COOKIE_USE_CSRF': True,
+    'JWT_AUTH_HTTPONLY': False,
+    'JWT_AUTH_COOKIE_USE_CSRF': False,
+    'SESSION_LOGIN': False,
 }
