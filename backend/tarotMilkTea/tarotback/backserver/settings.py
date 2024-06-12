@@ -10,12 +10,22 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-import os, json
+import os, environ, json
 from django.core.exceptions import ImproperlyConfigured # secrets.json을 이용하기 위해 추가
 from pathlib import Path
+from datetime import timedelta
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+environ.Env.read_env(
+    env_file=os.path.join(BASE_DIR, '.env')
+)
 
 secret_file = os.path.join(BASE_DIR, 'secrets.json')  # secrets.json 파일 위치를 명시
 
@@ -31,15 +41,12 @@ def get_secret(setting):
         raise ImproperlyConfigured(error_msg)
 
 
-SECRET_KEY = get_secret("SECRET_KEY")
-
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-uf2ko(vygi!w13ml(c^nzc*p9=0g*hzqin7p_(0((e%gt0!tc9'
+# SECRET_KEY = get_secret("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -68,10 +75,10 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'dj_rest_auth.registration',
-    # 'allauth.socialaccount.providers.facebook',
-    # 'allauth.socialaccount.providers.twitter',
+    
     # 소셜로그인
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     # django-cors-headers
     'corsheaders',
     # 앱
@@ -125,7 +132,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tarotmilktea',
         'USER': 'root',
-        'PASSWORD': get_secret("MYSQL_PW"),
+        # 'PASSWORD': get_secret("MYSQL_PW"),
+        'PASSWORD': env("MYSQL_PW"),
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -233,3 +241,9 @@ REST_AUTH = {
 }
 
 AUTH_USER_MODEL = 'accounts.User'
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}

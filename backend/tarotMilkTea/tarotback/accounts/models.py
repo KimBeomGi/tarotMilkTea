@@ -11,7 +11,7 @@ class User(AbstractUser):
     profile_image_url = models.CharField(max_length=200, default="https://whalebigtarotmilktea.s3.ap-northeast-2.amazonaws.com/tmtbaseprofile.png")
     followings = models.ManyToManyField("self", symmetrical=False, related_name='followers')
     social = models.CharField(max_length=100, default="base")
-    
+    social_id = models.CharField(max_length=100, null=True, blank=True)
 
     def clean(self):
         super().clean()
