@@ -14,6 +14,7 @@ import ReadCard1 from './components/layout/ReadCard1';
 import ReadCard2 from './components/layout/ReadCard2';
 import KakaoRedirection from './components/layout/KakaoRedirection'
 import GithubRedirection from './components/layout/GithubRedirection'
+import GoogleRedirection from './components/layout/GoogleRedirection'
 import MyPage from './components/layout/MyPage'
 
 function App() {
@@ -41,6 +42,8 @@ function App() {
       <Route path='/social/kakao' element={<KakaoRedirection />} />
       {/* github 로그인을 위해 /social/github로 진입시 */}
       <Route path='/social/github' element={<GithubRedirection />} />
+      {/* google 로그인을 위해 /social/google로 진입시 */}
+      <Route path='/social/google' element={<GoogleRedirection />} />
       
       <Route path='*' element={<NotFound />} />
     </Routes>

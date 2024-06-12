@@ -47,6 +47,16 @@ function Login() {
     window.location.href = `https://github.com/login/oauth/authorize?${gParams}`
   }
   //////////////////////////////////////////////////////////////////////////////////////
+  // google Login을 위한 코드
+  // const base_url = "http://127.0.0.1:3000/"
+  const googleScope = "https://www.googleapis.com/auth/userinfo.email"
+  const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
+  // const googleCallBackUri = base_url + 'accounts/google/callback/'
+  const googleRedirectUri = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
+  function navigateGoogleLogin(){
+    window.location.href =`https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&response_type=code&redirect_uri=${googleRedirectUri}&scope=${googleScope}`
+  }
+  /////
   
   return (
     <div className="Login">
@@ -71,6 +81,12 @@ function Login() {
               <img src={process.env.PUBLIC_URL+"images/githubLogo1.png"} alt="" className='btnLogoImg'/>
               <span className='loginBtnFont'>Github 로그인</span>
               <div className='btnLogoImg'></div>
+          </div>
+          <div
+            className='loginButton spacebetween loginButtonBorder bgGithub'
+            onClick={() => {navigateGoogleLogin()}}
+          >
+            <span className='loginBtnFont'>Google 로그인</span>
           </div>
           <Link to="/" className='nodecoration'>메인 페이지로 이동</Link>
         </div>

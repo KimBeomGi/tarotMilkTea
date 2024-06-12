@@ -39,7 +39,6 @@ def google_login(request):
 #######
 
 def google_callback(request):
-    print('여기?')
     client_id = os.environ.get("SOCIAL_AUTH_GOOGLE_CLIENT_ID")
     client_secret = os.environ.get("SOCIAL_AUTH_GOOGLE_SECRET")
     # 사용자의 구글 코드
@@ -94,7 +93,13 @@ def google_callback(request):
             'refresh': str(refresh_token),
             'access': str(refresh_token.access_token),
             # 'email': email,
-            'message': '가져오기 성공'
+            'message': '가져오기 성공',
+            'userInfo' : {
+                'nickname' : user.nickname,
+                'social' :user.social,
+                'email' : user.email,
+                'profile_url' : user.profile_image_url
+            }
         }
         print('response_data====', response_data)
         # return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
@@ -102,9 +107,6 @@ def google_callback(request):
 
 
     except User.DoesNotExist:
-        # users = User.objects.all()
-        # print('users===',users)
-        # users.delete()
         nickname = f"{random.choice(nickname_a)}{random.choice(nickname_b)}{random.randint(1000, 9999)}"
         data = {
             'email' : email,
@@ -113,7 +115,6 @@ def google_callback(request):
             'social' : 'google',
             'social_id' : str(user_id),
         }
-        # registerSocial(data)
         try:
             user = User.objects.create(
                 email=data.get("email"),
@@ -122,7 +123,7 @@ def google_callback(request):
                 social=data.get("social"),
                 social_id=data.get("social_id")
             )
-            user.set_unusable_password()    # kakao로그인이니까 No password!
+            user.set_unusable_password()    # 소셜로그인이니까 No password!
             user.save()
 
             user = User.objects.get(username=data.username, social=data.social, email=email)
@@ -131,7 +132,13 @@ def google_callback(request):
             response_data = {
                 'refresh': str(refresh_token),
                 'access': str(refresh_token.access_token),
-                'message': '저장성공'
+                'message': '저장성공',
+                'userInfo' : {
+                    'nickname' : user.nickname,
+                    'social' :user.social,
+                    'email' : user.email,
+                    'profile_url' : user.profile_image_url
+                }
             }
 
             print('response_data====', response_data)
@@ -140,16 +147,11 @@ def google_callback(request):
             return JsonResponse(response_data, status=status.HTTP_400_BAD_REQUEST)
         except:
             response_data = {
-                # 'refresh': str(refresh_token),
-                # 'access': str(refresh_token.access_token),
                 'message': '저장실패'
             }
             print('response_data====', response_data)
             # return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
             return JsonResponse(response_data, status=status.HTTP_400_BAD_REQUEST)
-    
-    # return Response(status=status.HTTP_400_BAD_REQUEST)
-
 
 @api_view(["POST"])
 # 회원가입은 email과 입력받은 이름으로 진행 
@@ -160,14 +162,14 @@ def registerUser(request):
     if request.method =='POST':
         request_data = request.data
         print('request_data===', request_data)
-        email = request_data.email
-        username = request_data.username
-        social = request_data.social
-        nickname = request_data.nickname
+        email = request_data["email"]
+        username = request_data["username"]
+        social = request_data["social"]
+        nickname = request_data["nickname"]
 
         if nickname == "":
             nickname = f"{random.choice(nickname_a)}{random.choice(nickname_b)}{random.randint(1000, 9999)}"
-            request_data.nickname = nickname
+            request_data["nickname"] = nickname
         if email == "" or username == "":
             response_data = {
                 'message' : '유저 데이터(이메일, 아이디)가 없습니다.'
@@ -194,15 +196,6 @@ def registerUser(request):
             }
             return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
     return Response(status=status.HTTP_400_BAD_REQUEST)
-    
-    # 에러 확인
-
-    # # 회원가입 완료 -> jwt 토큰 발급
-    # token = RefreshToken.for_user(user)         # 자체 jwt 발급
-    # return JsonResponse({
-    #     # JSON에 들어갈 내용
-    # }, status=status.HTTP_201_CREATED)
-
 
 
 # Creating tokens manually

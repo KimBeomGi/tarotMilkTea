@@ -8,8 +8,8 @@ urlpatterns = [
 
     # 소셜로그인
     # 구글 소셜로그인
-    path('google/login/', views.google_login, name='google_login'),
-    path('google/callback/', views.google_callback, name='google_callback'),
+    # path('google/login/', views.google_login, name='google_login'),
+    # path('google/callback/', views.google_callback, name='google_callback'),
     # path('dj-rest-auth/google/', GoogleLogin.as_view(), name='google_login'),
     # path('google/login/finish/', views.GoogleLogin.as_view(), name='google_login_todjango'),
     path('regist/', views.registerUser, name='account_register')
