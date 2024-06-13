@@ -221,17 +221,22 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 # dj_rest_atuh JWT(선택사항)
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAdminUser',
+        'rest_framework.permissions.AllowAny',
+        # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     )
 }
 REST_AUTH = {
     'USE_JWT': True,
     # 토큰의 만료시간 제한과 갱신을 위함.
-    'JWT_AUTH_COOKIE': 'tmt-auth',
-    'JWT_AUTH_REFRESH_COOKIE': 'tmt-refresh-token',
+    'JWT_AUTH_COOKIE': 'tmt_token',
+    'JWT_AUTH_REFRESH_COOKIE': 'tmt_refresh_token',
     'OLD_PASSWORD_FIELD_ENABLED': True,
     # 'JWT_AUTH_HTTPONLY': True,
     # 'JWT_AUTH_COOKIE_USE_CSRF': True,
@@ -244,6 +249,8 @@ AUTH_USER_MODEL = 'accounts.User'
 
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
 }

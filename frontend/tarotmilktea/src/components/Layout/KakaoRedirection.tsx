@@ -7,6 +7,7 @@ import { setProfileUrl, setNickname, setEmail } from "../../store/slices/account
 import axios from 'axios';
 import {getKakaoLoginCode} from '../../axios/homeAxios'
 import "./Redirection.css"
+import Cookies from 'js-cookie';
 
 
 function KakaoRedirection() {
@@ -22,7 +23,7 @@ function KakaoRedirection() {
   const code = params.get("code");
 
   useEffect(() => {
-    console.log('code :',code)
+    console.log('kakaoCode :',code)
     if(code){
       handleGetKakaoLoginCode(code)
     }
@@ -32,24 +33,22 @@ function KakaoRedirection() {
     try {
       const respose = await getKakaoLoginCode(code);
       const responseData = respose?.data
-      const tmt_ACCESS_TOKEN = responseData.tmt_ACCESS_TOKEN
-      const kakao_ACCESS_TOKEN = responseData.kakao_ACCESS_TOKEN
-      const nickname = responseData.nickname
-      const profile_url = responseData.profile_url
-      const email = responseData.email
-      window.localStorage.setItem("tmt_ACCESS_TOKEN", tmt_ACCESS_TOKEN)
-      window.localStorage.setItem("provide_ACCESS_TOKEN", kakao_ACCESS_TOKEN)
-      window.localStorage.setItem("provide", 'kakao')
-      window.localStorage.setItem("userinfo",JSON.stringify({
-        "profile_url": profile_url,
-        "nickname":nickname,
-        "email":email
-      }))
-      dispatch(setProfileUrl(profile_url))
-      dispatch(setNickname(nickname))
-      dispatch(setEmail(email))
+      console.log(responseData)
+      const tmt_token = responseData.access
+      const tmt_refresh_token = responseData.refresh
+      const nickname = responseData.userInfo.nickname
+      const social = responseData.userInfo.social
+      const email = responseData.userInfo.email
+      const profile_image_url = responseData.userInfo.profile_image_url
+      Cookies.set('tmt_token', tmt_token);
+      Cookies.set('tmt_refresh_token', tmt_refresh_token);
+      Cookies.set('provide', social);
+      Cookies.set('userinfo', JSON.stringify({
+        profile_image_url: profile_image_url,
+        nickname: nickname,
+        email: email
+      }));
       navigate('/')
-
     } catch (error) {
       console.log(error);
     }

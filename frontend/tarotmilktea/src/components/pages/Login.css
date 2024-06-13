@@ -24,6 +24,15 @@
 .bgGithub{
   background-color: #0D1117;
 }
+.githubTextColor{
+  color: #ffffff;
+}
+.bgGoogle{
+  background-color: #ffffff;
+}
+.googleTextColor{
+  color: #000000;
+}
 .btnImg{
   width: 100%;
 }
@@ -35,8 +44,8 @@
 .loginBtnFont{
   font-size: 1.25rem;
   /* font-weight: 600; */
-  color: #ffffff;
-}
+  }
+
 .flexCenter{
   display: flex;
   flex-direction: column;

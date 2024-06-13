@@ -5,6 +5,7 @@ import "./Navbar.css"
 import { FaBars } from "react-icons/fa6";
 import { useAppSelector } from '../../store/hooks';
 
+import Cookies from 'js-cookie';
 
 function Navbar() {
   // const profileUrl = useAppSelector((state) =>state.account.profileUrl)
@@ -22,17 +23,17 @@ function Navbar() {
   }
 
   const getUserInfo = () =>{
-    const userInfoString = window.localStorage.getItem("userinfo")
+    const userInfoString = Cookies.get('userinfo')
     if (userInfoString) {
       try {
         const userInfo = JSON.parse(userInfoString)
         setNickname(userInfo.nickname)
-        setProfileUrl(userInfo.profile_url)
+        setProfileUrl(userInfo.profile_image_url)
       } catch (error) {
-        console.error("Failed to parse userinfo from localStorage:", error)
+        console.error("Failed to parse userinfo from cookies:", error)
       }
     } else {
-      console.log("No userinfo found in localStorage")
+      console.log("No userinfo found in cookies")
     }
   }
   

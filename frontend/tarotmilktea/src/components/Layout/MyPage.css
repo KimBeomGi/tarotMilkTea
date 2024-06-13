@@ -44,9 +44,9 @@
   text-align: end;
   cursor: pointer;
 }
-.logoutP:hover{
+.logoutP>span:hover{
   color: red;
 }
-.logoutP:active{
+.logoutP>span:active{
   color: blue;
 }

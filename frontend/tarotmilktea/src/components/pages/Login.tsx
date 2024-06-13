@@ -79,14 +79,16 @@ function Login() {
             onClick={() => {navigateGithubLogin()}}
             >
               <img src={process.env.PUBLIC_URL+"images/githubLogo1.png"} alt="" className='btnLogoImg'/>
-              <span className='loginBtnFont'>Github 로그인</span>
+              <span className='loginBtnFont githubTextColor'>Github 로그인</span>
               <div className='btnLogoImg'></div>
           </div>
           <div
-            className='loginButton spacebetween loginButtonBorder bgGithub'
+            className='loginButton spacebetween loginButtonBorder bgGoogle'
             onClick={() => {navigateGoogleLogin()}}
-          >
-            <span className='loginBtnFont'>Google 로그인</span>
+            >
+              <img src={process.env.PUBLIC_URL+"images/googleLogo.png"} alt="" className='btnLogoImg'/>
+              <span className='loginBtnFont googleTextColor'>Google 로그인</span>
+              <div className='btnLogoImg'></div>
           </div>
           <Link to="/" className='nodecoration'>메인 페이지로 이동</Link>
         </div>

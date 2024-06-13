@@ -12,6 +12,7 @@ import { ReactComponent as Like } from "../../assets/images/like.svg";
 import { ReactComponent as Suitcase } from "../../assets/images/suitcase.svg";
 import { ReactComponent as TMT_Logo } from "../../assets/images/TMT_Logo.svg";
 
+import Cookies from 'js-cookie';
 
 function Home() {
   // const count = useAppSelector((state) => state.counter.value)
