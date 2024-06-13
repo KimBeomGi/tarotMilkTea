@@ -356,3 +356,13 @@ def registerUser(request):
 #         'refresh': str(refresh),
 #         'access': str(refresh.access_token),
 #     }
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def test1(reqeust):
+    try:
+        print(reqeust.data)
+        return Response(reqeust.data, status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+        
