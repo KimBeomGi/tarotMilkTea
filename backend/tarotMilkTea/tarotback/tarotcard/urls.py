@@ -8,8 +8,8 @@ urlpatterns = [
     path('', views.tarot_list, name='tarot_list'),    # 카드 목록(일반) 가져오기
     path('detail_list/', views.tarot_detail_list, name='tarot_detail_list'),    # 카드 목록(상세) 가져오기
     path('major_list/', views.tarot_major_list, name='tarot_major_list'),    # 카드 목록(메이저 상세) 가져오기
-    # path('minor_list/', views.tarot_minor_list, name='tarot_minor_list'),    # 카드 목록(마이너 상세) 가져오기
-    # path('detail/<int:tarot_num>/', views.tarot_detail, name='tarot_detail'),   # 카드 세부(상세) 가져오기
+    path('minor_list/', views.tarot_minor_list, name='tarot_minor_list'),    # 카드 목록(마이너 상세) 가져오기
+    path('detail/<int:tarot_num>/', views.tarot_detail, name='tarot_detail'),   # 카드 세부(상세) 가져오기
     
     # 데이터 기입
     path('addtarot/', views.addtarot, name='addtarot'),    # 타로 카드 추가 기입

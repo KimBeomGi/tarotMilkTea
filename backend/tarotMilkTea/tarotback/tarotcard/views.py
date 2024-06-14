@@ -492,3 +492,40 @@ def tarot_major_list(request):
         "data":"비관리 메서드데이터"
     }
     return Response(response_data)
+################################################################################
+# 카드 목록(마이너 상세) 가져오기
+@api_view(["GET"])
+def tarot_minor_list(request):
+    if request.method =="GET":
+        try:
+            cards = get_list_or_404(TarotCard, is_major__in=[False])
+            serializer = TarotMinorListSerializer(cards, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            Response({"error": str(e)}, status=500)
+    elif request.method =="POST":
+        response_data = {
+            "data":"POST 요청데이터"
+        }
+        return Response(response_data)
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
+################################################################################
+# 카드 세부(상세) 가져오기
+@api_view(["GET"])
+def tarot_detail(request, tarot_num):
+    if request.method =="GET":
+        try:
+            # tarot_num에 해당하는 카드 가져오기
+            card = TarotCard.objects.get(card_num=tarot_num)
+            serializer = TarotDetaliSerializer(card)
+            return Response(serializer.data)
+        except Exception as e:
+            Response({"error": str(e)}, status=500)
+        
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
