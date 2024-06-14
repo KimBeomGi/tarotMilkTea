@@ -271,3 +271,64 @@ def tarot_picture(request):
         "data":"비관리 메서드데이터"
     }
     return Response(response_data)
+###############################################################################
+#TarotMeanExplainSerializer 데이터 기입
+# json 파일의 경로를 설정
+json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cardExplain.json')
+
+# 파일을 열고 내용을 읽기;.
+with open(json_path, 'r', encoding='utf-8') as f:
+    explain_data = json.load(f)
+
+explainD = explain_data["cards"]
+
+# 카드 설명 의미 기입
+@api_view(["POST", "PUT"])
+def tarot_explain(request):
+    if request.method =="POST":
+        response_data = []
+        for i in range(len(explainD)):
+            tarot_card = TarotCard.objects.get(card_num = i)
+            explain = explainD[i]
+            for j in range(len(explain)):
+                explain[j]
+                data={
+                    "explain" : explain[j],
+                    "tarotcard" : tarot_card.id
+                }
+                serializer = TarotMeanExplainSerializer(data = data)
+                if serializer.is_valid():
+                    serializer.save()
+                    print(str(tarot_card.id))
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            print(tarot_card.id)
+            response_data.append(tarot_card.id)
+        return Response(response_data, status=status.HTTP_201_CREATED)
+        # request_data = request.data
+        # card_num = request_data.card_num
+
+        # tarotcard = TarotCard.objects.get(card_num=card_num)
+        # data = {
+        #     "explain" : '0',
+        #     "tarotcard" : tarotcard._id
+        # }
+        # serializer = TarotMeanExplainSerializer(data=data)
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     response_data = {
+        #         "message" : "성공"
+        #     }
+        #     return Response(response_data)
+        # else:
+        #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    elif request.method =="PUT":
+        response_data = {
+            "data":"PUT 요청데이터"
+        }
+        return Response(response_data)
+    response_data = {
+        "data":"비관리 메서드데이터"
+    }
+    return Response(response_data)
