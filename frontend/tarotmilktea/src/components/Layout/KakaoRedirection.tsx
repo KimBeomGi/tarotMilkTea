@@ -51,6 +51,8 @@ function KakaoRedirection() {
       navigate('/')
     } catch (error) {
       console.log(error);
+      alert("로그인에 실패했습니다.")
+      navigate('/')
     }
   }
   ///////////////////////////////////////////////////////////////

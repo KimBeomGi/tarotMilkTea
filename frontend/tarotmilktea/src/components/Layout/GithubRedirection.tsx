@@ -49,27 +49,10 @@ function GithubRedirection() {
         email: email
       }));
       navigate('/')
-    
-      // const tmt_ACCESS_TOKEN = responseData.tmt_ACCESS_TOKEN
-      // const github_ACCESS_TOKEN = responseData.github_ACCESS_TOKEN
-      // const nickname = responseData.nickname
-      // const profile_url = responseData.profile_url
-      // const email = responseData.email
-      // window.localStorage.setItem("tmt_ACCESS_TOKEN", tmt_ACCESS_TOKEN)
-      // window.localStorage.setItem("provide_ACCESS_TOKEN", github_ACCESS_TOKEN)
-      // window.localStorage.setItem("provide", 'github')
-      // window.localStorage.setItem("userinfo",JSON.stringify({
-      //   "profile_url": profile_url,
-      //   "nickname":nickname,
-      //   "email":email
-      // }))
-      // dispatch(setProfileUrl(profile_url))
-      // dispatch(setNickname(nickname))
-      // dispatch(setEmail(email))
-      // navigate('/')
-
     } catch (error) {
       console.log(error);
+      alert("로그인에 실패했습니다.")
+      navigate('/')
     }
   }
   ///////////////////////////////////////////////////////////////

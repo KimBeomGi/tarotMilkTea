@@ -115,6 +115,7 @@ export async function getGoogleLogout(tmt_token: string) {
       }
   }
 }
+
 // 토큰 로그아웃
 export async function getTokenLogout(tmt_token: string) {
   console.log('getGoogleLogout===', tmt_token);
