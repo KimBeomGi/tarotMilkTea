@@ -115,6 +115,7 @@ function ReadCard2() {
         const reresponse = await saveTarotResult(sendData)
         if(reresponse?.status == 200){
           setIsSaveAnswer(true)
+          alert('저장에 성공했어요😊')
         }
       } catch (error) {
         alert('저장에 실패했어요...😥 다음에 다시 시도해주세요.')
