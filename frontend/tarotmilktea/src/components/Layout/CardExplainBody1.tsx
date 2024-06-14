@@ -105,14 +105,14 @@ function CardExplainBody1() {
           </div>
           <div className='cEB1-shape-history-content-paragraphdiv' ref={historyPDiv}>
             {aboutTarot[0].tarotHistory.map((v1, i1) => (
-              <p key={i1}>{v1}</p>
+              <p key={i1} className='mainP'>{v1}</p>
             ))}
           </div>
         </div>
         <h1>타로 카드 구성</h1>
         <div>
           {aboutTarot[0].tarotConfiguration.map((v2, i2) => (
-              <p key={i2}>{v2}</p>
+              <p key={i2} className='mainP'>{v2}</p>
           ))}
         </div>
         <h1>타로 카드별 의미</h1>

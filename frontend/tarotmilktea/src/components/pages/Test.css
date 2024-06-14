@@ -1,0 +1,17 @@
+/* Yeon Sung 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
+/* Jua 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+
+
+.here1{
+  font-family: "Yeon Sung", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+.here2{
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}

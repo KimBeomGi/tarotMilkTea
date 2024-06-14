@@ -1,10 +1,21 @@
+/* Yeon Sung 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
+/* Jua 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
 .ReadCard1{
   display: flex;
   justify-content: center;
+  font-family: "Yeon Sung", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
 .ReadCard1 h2{
   font-size: 1.5rem;
   margin: 0rem;
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .RC-left{

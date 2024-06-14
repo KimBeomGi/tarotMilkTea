@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from accounts.models import User
 
 # 타로카드 기본
 class TarotCard(models.Model):
@@ -34,3 +35,18 @@ class TarotPictureMean(models.Model):
 class TarotMeanExplain(models.Model):
     explain = models.TextField()
     tarotcard = models.ForeignKey(TarotCard, on_delete=models.CASCADE)
+
+
+# 카드 결과
+class TarotResult(models.Model):
+    greeting = models.TextField()
+    past = models.TextField()
+    present = models.TextField()
+    future = models.TextField()
+    advice = models.TextField()
+    conclusion = models.TextField()
+    selected_cards = models.JSONField()
+    selected_cards_name = models.JSONField()
+    subject = models.CharField(max_length=255)
+    consulValue = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

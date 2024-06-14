@@ -1,12 +1,16 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework_simplejwt.authentication import JWTAuthentication   # 발급한 토큰으로 유저찾기
 from .serializer import TarotCardSerializer, TarotCardForwardMeaningSerializer, TarotCardReverseMeaningSerializer, GETTarotCardForwardMeaningSerializer, TarotNumerologyMeanSerializer, TarotPictureMeanSerializer, TarotMeanExplainSerializer
 # 목록 및 세부 가져오기 serializer 
-from .serializer import TarotGeneralListSerializer, TarotDetailListSerializer, TarotMajorListSerializer, TarotMinorListSerializer, TarotDetaliSerializer
+from .serializer import TarotGeneralListSerializer, TarotDetailListSerializer, TarotMajorListSerializer, TarotMinorListSerializer, TarotDetaliSerializer, TarotResultSerializer
 from .models import TarotCard, TarotCardForwardMeaning, TarotCardReverseMeaning, TarotNumerologyMean, TarotPictureMean, TarotMeanExplain
 import json
+
+
 
 # 구글 gemini api이용
 import os
@@ -529,3 +533,63 @@ def tarot_detail(request, tarot_num):
         "data":"비관리 메서드데이터"
     }
     return Response(response_data)
+
+#############################################################################
+# 타로 카드를 저장 하면서 유저에게 기록
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def tarot_save_result(request):
+    try:
+        # request_data = request.data
+        request_data = request.data["sendData"]
+        # print(request_data)
+        # print(request_data.geminiAnswer)
+        # print(request_data.selectedCards)
+
+        # 토큰으로 유저 정보 가져오기
+        jwt_auth = JWTAuthentication()
+        user, tokenObject = jwt_auth.authenticate(request)
+        # user_data = {
+        #     'id' : user.id,
+        #     'email' : user.email,
+        #     'profile_image_url' : user.profile_image_url,
+        #     'social' : user.social,
+        #     'social_id' : user.social_id
+        # }
+
+        geminiAnswer = request_data["geminiAnswer"]
+        selectedCards = request_data["selectedCards"]
+        selectedCardsName = request_data["selectedCardsName"]
+        subject = request_data["subject"]
+        consulValue = request_data["consulValue"]
+        data = {
+            "greeting" : geminiAnswer["greeting"],
+            "past" : geminiAnswer["past"],
+            "present" : geminiAnswer["present"],
+            "future" : geminiAnswer["future"],
+            "advice" : geminiAnswer["advice"],
+            "conclusion" : geminiAnswer["conclusion"],
+            "selected_cards" : selectedCards,
+            "selected_cards_name" : selectedCardsName,
+            "subject" : subject,
+            "consulValue" : consulValue,
+            "user": user.id
+        }
+        print(user.id, user.email)
+        print('되나1')
+        serializer = TarotResultSerializer(data=data)
+        print('되나2')
+        if serializer.is_valid():
+            print('되나3')
+            serializer.save()
+            print('되나4')
+            return Response(status=status.HTTP_200_OK)
+        else:
+            print('안되나...')
+            print(serializer.errors)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        # print(data)
+        # return Response(status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response(status=status.HTTP_400_BAD_REQUEST)

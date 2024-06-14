@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 
+from rest_framework_simplejwt.authentication import JWTAuthentication   # 발급한 토큰으로 유저찾기
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 
@@ -485,4 +486,19 @@ def test1(request):
         return Response(request.data, status=status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
-        
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def find_user(request):
+    try:
+        jwt_auth = JWTAuthentication()
+        user, tokenObject = jwt_auth.authenticate(request)
+        data = {
+            'email' : user.email,
+            'profile_image_url' : user.profile_image_url,
+            'social' : user.social,
+            'social_id' : user.social_id
+        }
+        return Response(data, status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)

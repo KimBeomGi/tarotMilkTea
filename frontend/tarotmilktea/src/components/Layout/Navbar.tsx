@@ -15,6 +15,23 @@ function Navbar() {
   const [clickHamburger, setClickHamburger] = useState<boolean>(false)
   const [isSPhone, setIsSPhone] = useState<boolean>(false)
   const navigate = useNavigate();
+  
+  //////////////////////////////////////////////////////////////////////
+  const [browerWidth, setBrowerWidth] = useState<number>(window.innerWidth)
+  const [browerHeight, setBrowerHeight] = useState<number>(window.innerHeight)
+  // 브라우저 사이즈
+  useEffect(() => {
+    const handleResize = () => {
+      setBrowerWidth(window.innerWidth)
+      setBrowerHeight(window.innerHeight)
+    }
+    window.addEventListener('resize', handleResize)
+    return() => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+  //////////////////////////////////////////////////////////////////////
+
 
   function treatSPhoneNavbar():void {
     if(isSPhone){
@@ -78,7 +95,11 @@ function Navbar() {
               onClick={()=>{navigate('mypage')}}
               >
               <img src={profileUrl} alt="" className='profileImg'/>
-              <span className='nickname'>{nickname}</span>
+              {browerWidth > 768
+              ? <span className='nickname'>{nickname}</span>
+              : ""
+              }
+              
             </div>
           :
             <div className="nav-logo2">

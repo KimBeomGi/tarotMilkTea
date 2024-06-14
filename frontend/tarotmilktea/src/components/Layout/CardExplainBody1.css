@@ -1,13 +1,31 @@
+/* Yeon Sung 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
+/* Jua 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+
 .CardExplainBody1{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: "Yeon Sung", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
+.CardExplainBody1 h1, h2{
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 
 .cEB1-shape{
   width: 85%;
   object-fit: contain;
+}
+.cEB1-shape p {
+  font-size : 1.125rem
 }
 
 .cEB1-shape-history-content{
@@ -117,7 +135,7 @@
     font-size: 1.25rem;
   }
   .cEB1-shape p {
-    font-size : 0.75rem
+    font-size : 1rem
   }
 
   .majorTarot-table-div > table {
@@ -141,7 +159,7 @@
     font-size: 1rem;
   }
   .cEB1-shape p {
-    font-size : 0.5rem
+    font-size : 0.825rem
   }
 
   .majorTarot-table-div > table {

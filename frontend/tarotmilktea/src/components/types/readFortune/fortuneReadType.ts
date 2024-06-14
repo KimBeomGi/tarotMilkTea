@@ -23,3 +23,12 @@ export interface GeminiAnsewrType {
   "advice" : string
   "conclusion" : string
 }
+
+export interface SaveTarotResultType{
+  "tmt_token" : string
+  "geminiAnswer" : GeminiAnsewrType
+  "selectedCards" : number[]
+  "selectedCardsName" : string[]
+  "subject" : string
+  "consulValue" : string
+}

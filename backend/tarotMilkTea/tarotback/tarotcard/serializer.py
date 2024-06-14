@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import TarotCard, TarotCardForwardMeaning, TarotCardReverseMeaning, TarotNumerologyMean, TarotPictureMean, TarotMeanExplain
+from .models import TarotCard, TarotCardForwardMeaning, TarotCardReverseMeaning, TarotNumerologyMean, TarotPictureMean, TarotMeanExplain, TarotResult
 
 # 카드 입력 Serializer
 class TarotCardSerializer(serializers.ModelSerializer):
@@ -154,3 +154,8 @@ class TarotDetaliSerializer(serializers.ModelSerializer):
         card_explaindata = TarotMeanExplain.objects.filter(tarotcard=obj)
         return [explainD.explain for explainD in card_explaindata]
 #########################################################################
+# 타로점 결과 저장 Serializer
+class TarotResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TarotResult
+        fields = '__all__'

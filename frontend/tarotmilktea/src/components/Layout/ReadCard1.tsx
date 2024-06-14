@@ -9,6 +9,9 @@ import "./ReadCard1.css"
 import TarotNumbers from "./TarotNumber.json"
 // import {getTarotCard, getReadTarotByGemini} from "../../axios/TarotCardAxios"
 import {TarotNumbersType} from "../types/explainCards/explainCardsType"
+import {getTokenRefresh} from "../../axios/homeAxios"
+import Cookies from 'js-cookie';
+
 // import { RxTriangleDown } from "react-icons/rx";
 
 
@@ -29,10 +32,20 @@ function ReadCard1() {
   const [selectedCards, setSelectedCards] = useState<number[]>([])
   const [selectedCardsName, setSelectedCardsName] = useState<string[]>([])
   const [clickMix, setClickMix] = useState<boolean>(false)
+  const [isLogin, setIsLogin] = useState<boolean>(false)  // 로그인 여부 확인
 
   useEffect(() => {
     // handleGetTarotCard()
     dispatch(falseIsSelectcomplete())
+    // 토큰이 있는지 확인
+    const tmt_token = Cookies.get('tmt_token')
+    const tmt_refresh_token = Cookies.get('tmt_refresh_token')
+    if(tmt_token && tmt_refresh_token){
+      getTokenRefresh(tmt_refresh_token)
+      setIsLogin(true)
+    }else{
+      setIsLogin(false)
+    }
   }, [])
 
   // custom select태그
@@ -126,7 +139,7 @@ function ReadCard1() {
       {/* 보고싶은 운세 */}
       <div className="RC-left">
         <div className="RC-left-select">
-          <h2>지금 내가 생각하는 일은 어떻게 될까요?<br/>타로와 함께 고민을 덜어봅시다.</h2>
+          <h2>지금 내가 생각하는 일은 어떻게 될까요?<br/>타로와 함께 고민을 덜어봐요.</h2>
           <div className='CS-div'>
             <p>보려는 운세를 선택해 주세요.</p>
             <div className="custom-select-large">
@@ -157,8 +170,9 @@ function ReadCard1() {
         
         <div className='RC-left-explain'>
           <h2>타로밀크티의 타로 소개</h2>
-          <p>상담사별로 뒤죽박죽이던 카드 해석을 인공지능을 통해 일관된 해석으로 고민을 해결해보세요.</p>
-          <p>먼저, 고민하고 있는 주제를 선택하고 고민 내용을 100자 이내로 적어주세요.</p>
+          <p>상담사별로 뒤죽박죽이던 카드 해석을 인공지능을 통해 일관된 해석으로 고민을 해결해봐요.</p>
+          <p>먼저, 로그인을 해주세요.</p>
+          <p>고민하고 있는 주제를 선택하고 고민 내용을 100자 이내로 적어주세요.</p>
           <p>이제 78장의 카드 중 30장이 보여질 거에요. 이 중에서 5장의 카드를 뽑아주세요.</p>
           <p>카드를 뽑은 후, '운세보기' 버튼을 클릭해주세요.</p>
           <p>카드를 섞고 싶다면, '카드 섞기' 버튼을 눌러서 카드를 섞은 후 다시 선택해보세요.</p>
@@ -205,7 +219,11 @@ function ReadCard1() {
           <div className={`RC-right-btn ${selectedCards.length == 5 && selectedOption !== "운세 선택하기" ? "RC-right-btn-read": ""}`}
             tabIndex={0}
             onClick={() => {
-              goReadTarot()
+              if(isLogin === true){
+                goReadTarot()
+              }else{
+                alert('로그인을 먼저 해주세요.')
+              }
               
             }}
           >

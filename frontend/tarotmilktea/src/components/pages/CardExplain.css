@@ -1,3 +1,8 @@
+/* Yeon Sung 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
+/* Jua 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
 .CardExplain{}
 .card-category-contain h1{
   font-size: 1.75rem;
@@ -6,6 +11,9 @@
   padding: 0rem;
   text-wrap: nowrap;
   z-index: 1;
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 .card-category-contain h2{
   font-size: 1.5rem;
@@ -13,6 +21,9 @@
   margin: 0rem;
   padding: 0rem;
   text-wrap: nowrap;
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 .card-category-contain h3{
   font-size: 1.25rem;
@@ -20,6 +31,9 @@
   margin: 0rem;
   padding: 0rem;
   text-wrap: nowrap;
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 .card-category-contain {
   position: fixed;
@@ -37,6 +51,9 @@
   overflow:scroll;
   width: calc(100vw * 0.33);
   opacity: 0;
+  font-family: "Yeon Sung", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .card-category-active {

@@ -1,4 +1,5 @@
 import axios from "axios";
+import {SaveTarotResultType} from "../components/types/readFortune/fortuneReadType"
 
 const base_url = "http://127.0.0.1:8000/"
 
@@ -18,10 +19,10 @@ export async function getReadTarotByGemini(sendData:any) {
   try {
   // POST 요청은 body에 실어 보냄
     const response = await axios.post(`${base_url}tarotcard/gemini/`, {
-        subject: sendData.subject,
-        concern: sendData.concern,
-        selectedCard: sendData.selectedCard
-      });
+      subject: sendData.subject,
+      concern: sendData.concern,
+      selectedCard: sendData.selectedCard
+    });
     
     return response
     
@@ -75,6 +76,20 @@ export async function getTarotMinorList() {
 export async function getTarotDetail(cardId:number) {
   try {
     const response = await axios.get(`${base_url}tarotcard/detail/${cardId}/`);
+    
+    return response;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+
+// 카드 결과 저장하기
+export async function saveTarotResult(sendData:SaveTarotResultType) {
+  try {
+    const response = await axios.post(`${base_url}tarotcard/save_result/`,{sendData}, {
+      headers : {Authorization: `Bearer ${sendData.tmt_token}`,},
+    });
     
     return response;
   } catch (e) {
