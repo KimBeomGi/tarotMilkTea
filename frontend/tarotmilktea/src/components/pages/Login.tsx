@@ -42,9 +42,9 @@ function Login() {
     "redirect_uri" : githubRedirectUri,
     "scope" : "read:user, user:email",
   }
-  const gParams = new URLSearchParams(githubParams).toString()
+  const gitParams = new URLSearchParams(githubParams).toString()
   function navigateGithubLogin(){
-    window.location.href = `https://github.com/login/oauth/authorize?${gParams}`
+    window.location.href = `https://github.com/login/oauth/authorize?${gitParams}`
   }
   //////////////////////////////////////////////////////////////////////////////////////
   // google Login을 위한 코드

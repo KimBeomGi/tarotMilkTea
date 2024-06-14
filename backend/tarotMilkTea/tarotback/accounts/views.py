@@ -134,20 +134,22 @@ def google_callback(request):
                 user.save()
                 print('저장성공')
                 user = User.objects.get(username=data.username, social=data.social, email=email)
+                print('꺼내기성공')
                 refresh_token = RefreshToken.for_user(user)         # 자체 jwt 발급    
+                print('토큰 발급 성공')
 
                 response_data = {
                     'refresh': str(refresh_token),
                     'access': str(refresh_token.access_token),
                     'message': '저장성공',
                     'userInfo' : {
-                        'nickname' : user.nickname,
-                        'social' :user.social,
-                        'email' : user.email,
+                        'nickname' : data.get("nickname"),
+                        'social' :data.get("social"),
+                        'email' : data.get("email"),
                         'profile_image_url' : user.profile_image_url
                     }
                 }
-
+                print('완전 성공')
                 print('response_data2====', response_data)
 
                 return Response(response_data, status=status.HTTP_201_CREATED)
@@ -164,15 +166,16 @@ def google_callback(request):
     }
     return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
+# 카카오 로그인
 @api_view(["POST"])
-def kakao_login(reqeust):
+def kakao_login(request):
     client_id = os.environ.get("SOCIAL_AUTH_KAKAO_CLIENT_ID")
     redirect_uri = os.environ.get("SOCIAL_AUTH_KAKAO_REDIRECT_URI")
     # 시도해보자
     try:
-        reqeust_data = reqeust.data
+        request_data = request.data
         # request에서 code 꺼내기
-        code = reqeust_data.get("code")
+        code = request_data.get("code")
         # 카카오에서  토큰 받아오기
         kakao_token_response = requests.post(
             'https://kauth.kakao.com/oauth/token',
@@ -202,11 +205,11 @@ def kakao_login(reqeust):
         email = kakao_account.get("email")
         nickname = kakao_account["profile"]["nickname"]
         profile_image_url = kakao_account["profile"]["profile_image_url"]
-        print("kakao_account:", kakao_account)
-        print("social_id", social_id)
-        print("email", email)
-        print("nickname", nickname)
-        print("profile_image_url", profile_image_url)
+        # print("kakao_account:", kakao_account)
+        # print("social_id", social_id)
+        # print("email", email)
+        # print("nickname", nickname)
+        # print("profile_image_url", profile_image_url)
         # user데이터가 있으면 token과 데이터 가져오기
         try:
             user = User.objects.get(email=email, social='kakao')
@@ -260,26 +263,143 @@ def kakao_login(reqeust):
                     'access': str(refresh_token.access_token),
                     'message': '저장성공',
                     'userInfo' : {
-                        'nickname' : user.nickname,
-                        'social' :user.social,
-                        'email' : user.email,
-                        'profile_image_url' : user.profile_image_url
+                        'nickname' : data.get("nickname"),
+                        'social' : data.get("social"),
+                        'email' : data.get("email"),
+                        'profile_image_url' : data.get("profile_image_url")
                     }
                 }
 
                 return Response(response_data, status=status.HTTP_201_CREATED)
             except:
                 response_data = {
-                    'message': '저장실패'
+                    'message': '연결되고 유저생성 실패'
                 }
                 return Response(status=status.HTTP_400_BAD_REQUEST)
     # 이게 안되네...
     except:
         response_data = {
-            'message': '실패'
+            'message': '로그인 시도 실패'
         }
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+# 깃허브 로그인
+@api_view(["POST"])
+def github_login(request):
+    if request.method == "POST":
+        client_id = os.environ.get("SOCIAL_AUTH_GITHUB_CLIENT_ID")
+        redirect_uri = os.environ.get("SOCIAL_AUTH_GITHUB_REDIRECT_URI")
+        client_secret = os.environ.get("SOCIAL_AUTH_GITHUB_CLIENT_SECRET")
+        # 로그인 시도
+        try:
+            # 토큰과 유저정보 받아오기
+            request_data = request.data
+            code = request_data.get("code")
+            print('code===',code)
+            # 유저 토큰 가져오기
+            github_token = requests.post(f"https://github.com/login/oauth/access_token?code={code}&client_id={client_id}&client_secret={client_secret}&redirect_uri={redirect_uri}",
+                headers={"Accept": "application/json"},
+            )
+            access_token = github_token.json().get("access_token")
+            # 유저 정보 데이터 가져오기
+            user_data = requests.get("https://api.github.com/user",
+                headers={"Authorization": f"Bearer {access_token}"}
+            )
+            user_data = user_data.json()
+            # 유저 이메일 데이터 가져오기
+            user_emails = requests.get("https://api.github.com/user/emails",
+                headers={
+                    "Authorization" : f"Bearer {access_token}",
+                    "Accept" : "application/json"
+                }
+            )
+            user_emails = user_emails.json()
+            # print("user_emails===", user_emails)
+            email = user_emails[0].get('email')
+            social_id= user_data.get("id")
+            social = "github"
+            # email
+            nickname = user_data.get("login")
+            profile_image_url = user_data.get("avatar_url")
+            # DB에 유저가 있는지 확인
+            try:
+                user = User.objects.get(email=email, social="github")
+                refresh_token = RefreshToken.for_user(user) # jwt발급
+
+                response_data =  {
+                    'refresh': str(refresh_token),
+                    'access': str(refresh_token.access_token),
+                    'message': '가져오기 성공',
+                    'userInfo' : {
+                        'nickname' : nickname or user.nickname,
+                        'social' :user.social,
+                        'email' : user.email,
+                        'profile_image_url' : profile_image_url or user.profile_image_url
+                    }
+                }
+                return Response(response_data, status=status.HTTP_200_OK)
+            # DB에 유저가 없으면
+            except User.DoesNotExist:
+                # 닉네임이 없으면 닉네임을 설정
+                if not nickname:
+                    nickname = f"{random.choice(nickname_a)}{random.choice(nickname_b)}{random.randint(1000, 9999)}"
+                data = {
+                    'email' : email,
+                    'username' : email + str(random.randint(100000, 1000000)),
+                    'nickname' : nickname,
+                    'social' : 'github',
+                    'social_id' : str(social_id),
+                    'profile_image_url' : profile_image_url
+                }
+                # DB에 유저 생성
+                try:
+                    # user 생성
+                    user = User.objects.create(
+                        email=data.get("email"),
+                        username=data.get("username"),
+                        nickname=data.get("nickname"),
+                        social=data.get("social"),
+                        social_id=data.get("social_id"),
+                        profile_image_url=data.get("profile_image_url")
+                    )
+                    user.set_unusable_password()    # 소셜로그인이니까 No password!
+                    user.save() # user 저장
+                    print('저장성공')
+                    # user꺼내기
+                    user = User.objects.get(username=data.username, social=data.social, email=email)
+                    print('꺼내기성공')
+                    refresh_token = RefreshToken.for_user(user) # 자체 jwt 발급
+                    print('토큰 발급성공')
+
+                    response_data = {
+                        'refresh': str(refresh_token),
+                        'access': str(refresh_token.access_token),
+                        'message': '저장성공',
+                        'userInfo' : {
+                            'nickname' : data.get("nickname"),
+                            'social' : data.get("social"),
+                            'email' : data.get("email"),
+                            'profile_image_url' : data.get("profile_image_url")
+                        }
+                    }
+                    print('완전 성공')
+                    return Response(response_data, status=status.HTTP_201_CREATED)
+                # DB에서 유저 생성 실패
+                except:
+                    response_data = {
+                        'message': '연결되고 유저생성 실패'
+                    }
+                    return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+        # 로그인 시도 실패
+        except:
+            response_data = {
+                'message': '로그인 시도 실패'
+            }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+    response_data = {
+        'message': '로그인 실패'
+    }
+    return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 # 회원 로그아웃
@@ -359,10 +479,10 @@ def registerUser(request):
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def test1(reqeust):
+def test1(request):
     try:
-        print(reqeust.data)
-        return Response(reqeust.data, status=status.HTTP_200_OK)
+        print(request.data)
+        return Response(request.data, status=status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
         

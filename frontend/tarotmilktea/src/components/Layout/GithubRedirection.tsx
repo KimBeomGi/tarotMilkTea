@@ -7,13 +7,14 @@ import { setProfileUrl, setNickname, setEmail } from "../../store/slices/account
 import axios from 'axios';
 import {getGithubLoginCode} from '../../axios/homeAxios'
 import "./Redirection.css"
+import Cookies from 'js-cookie';
 
 function GithubRedirection() {
   // const profileUrl = useAppSelector((state) =>state.account.profileUrl)
   // const nickname = useAppSelector((state) =>state.account.nickname)
   const dispatch = useAppDispatch()
 
-  // 카카오 로그인을 위한 코드///////////////////////////////////////////////////////////////
+  // 깃허브 로그인을 위한 코드///////////////////////////////////////////////////////////////
   // const code = window.location.search;
   const navigate = useNavigate();
   const { search } = useLocation();
@@ -21,7 +22,7 @@ function GithubRedirection() {
   const code = params.get("code");
 
   useEffect(() => {
-    console.log('code :',code)
+    console.log('githubCode :',code)
     if(code){
       handleGetGithubLoginCode(code)
     }
@@ -32,23 +33,40 @@ function GithubRedirection() {
     try {
       const respose = await getGithubLoginCode(code);
       const responseData = respose?.data
-      const tmt_ACCESS_TOKEN = responseData.tmt_ACCESS_TOKEN
-      const github_ACCESS_TOKEN = responseData.github_ACCESS_TOKEN
-      const nickname = responseData.nickname
-      const profile_url = responseData.profile_url
-      const email = responseData.email
-      window.localStorage.setItem("tmt_ACCESS_TOKEN", tmt_ACCESS_TOKEN)
-      window.localStorage.setItem("provide_ACCESS_TOKEN", github_ACCESS_TOKEN)
-      window.localStorage.setItem("provide", 'github')
-      window.localStorage.setItem("userinfo",JSON.stringify({
-        "profile_url": profile_url,
-        "nickname":nickname,
-        "email":email
-      }))
-      dispatch(setProfileUrl(profile_url))
-      dispatch(setNickname(nickname))
-      dispatch(setEmail(email))
+      console.log(responseData)
+      const tmt_token = responseData.access
+      const tmt_refresh_token = responseData.refresh
+      const nickname = responseData.userInfo.nickname
+      const social = responseData.userInfo.social
+      const email = responseData.userInfo.email
+      const profile_image_url = responseData.userInfo.profile_image_url
+      Cookies.set('tmt_token', tmt_token);
+      Cookies.set('tmt_refresh_token', tmt_refresh_token);
+      Cookies.set('provide', social);
+      Cookies.set('userinfo', JSON.stringify({
+        profile_image_url: profile_image_url,
+        nickname: nickname,
+        email: email
+      }));
       navigate('/')
+    
+      // const tmt_ACCESS_TOKEN = responseData.tmt_ACCESS_TOKEN
+      // const github_ACCESS_TOKEN = responseData.github_ACCESS_TOKEN
+      // const nickname = responseData.nickname
+      // const profile_url = responseData.profile_url
+      // const email = responseData.email
+      // window.localStorage.setItem("tmt_ACCESS_TOKEN", tmt_ACCESS_TOKEN)
+      // window.localStorage.setItem("provide_ACCESS_TOKEN", github_ACCESS_TOKEN)
+      // window.localStorage.setItem("provide", 'github')
+      // window.localStorage.setItem("userinfo",JSON.stringify({
+      //   "profile_url": profile_url,
+      //   "nickname":nickname,
+      //   "email":email
+      // }))
+      // dispatch(setProfileUrl(profile_url))
+      // dispatch(setNickname(nickname))
+      // dispatch(setEmail(email))
+      // navigate('/')
 
     } catch (error) {
       console.log(error);
@@ -70,7 +88,7 @@ function GithubRedirection() {
   }, []);
 
   return (
-    <div className="KakaoRedirection redirectionContainer">
+    <div className="GithubRedirection redirectionContainer">
       <div className="redirectionDiv">
         <div>
           <h1>로그인 중입니다.{'.'.repeat(count)}</h1>

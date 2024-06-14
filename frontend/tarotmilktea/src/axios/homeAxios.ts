@@ -55,14 +55,14 @@ export async function getKakaoLogout(tmt_token: string) {
 
 // 깃허브 로그인을 위한 
 export async function getGithubLoginCode(code:string) { // async, await을 사용하는 경우
-  console.log(code)
+  console.log('getGithubLoginCode: ',code)
   try {
-    const response = await axios.post(`${base_url}users/github/login/`, {code}) // Backtick(`)을 이용해 이렇게 요청할 수도 있다.
-    console.log(response)
+    const response = await axios.post(`${base_url}accounts/github/login/`, {code}) // Backtick(`)을 이용해 이렇게 요청할 수도 있다.
+    console.log("response===", response)
     return response
-  } catch (e) {
+  } catch (e:any) {
     // 실패 시 처리
-    console.error(e);
+    console.error(e.response.status);
   }
 }
 
@@ -101,6 +101,22 @@ export async function getGoogleLoginCode(code:string) { // async, await을 사�
 
 // 구글 로그아웃
 export async function getGoogleLogout(tmt_token: string) {
+  console.log('getGoogleLogout===', tmt_token);
+  try {
+      const response = await axios.post(`${base_url}accounts/dj-rest-auth/logout/`)
+      console.log('response.status==', response.status)
+      console.log('response.data==', response.data)
+      return response;
+  } catch (e: any) {
+      const response = e.response;
+      console.log(response.status);
+      if (response.status === 401) {
+          console.log('다시')
+      }
+  }
+}
+// 토큰 로그아웃
+export async function getTokenLogout(tmt_token: string) {
   console.log('getGoogleLogout===', tmt_token);
   try {
       const response = await axios.post(`${base_url}accounts/dj-rest-auth/logout/`)

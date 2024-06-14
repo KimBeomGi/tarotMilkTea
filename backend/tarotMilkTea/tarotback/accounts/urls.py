@@ -12,8 +12,10 @@ urlpatterns = [
     path('google/callback/', views.google_callback, name='google_callback'),
     # path('dj-rest-auth/google/', GoogleLogin.as_view(), name='google_login'),
     # path('google/login/finish/', views.GoogleLogin.as_view(), name='google_login_todjango'),
-    # 카카오 쇼셜로그인
+    # 카카오 소셜로그인
     path('kakao/login/', views.kakao_login, name='kakao_login'),
+    # 깃허브 소셜로그인
+    path('github/login/', views.github_login, name='github_login'),
 
 
     path('regist/', views.registerUser, name='account_register'),

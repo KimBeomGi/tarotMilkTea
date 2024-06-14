@@ -4,7 +4,7 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { decrement, increment, incrementByAmount, decrementByAmount } from '../../store/slices/counter/counterSlice'
 import "./MyPage.css"
-import {getKakaoLogout, getGithubLogout, getGoogleLogout, getTokenRefresh, isTokenVerify} from '../../axios/homeAxios'
+import {getKakaoLogout, getGithubLogout, getGoogleLogout, getTokenRefresh, isTokenVerify, getTokenLogout} from '../../axios/homeAxios'
 
 import Cookies from 'js-cookie';
 import { ScriptElementKindModifier } from 'typescript';
@@ -116,7 +116,7 @@ function MyPage() {
     // }
     if(provide === "google" && tmt_token){
       try {
-        const response = await getGoogleLogout(tmt_token)
+        const response = await getTokenLogout(tmt_token)
         console.log('response?.status===',response?.status)
         // 쿠키에 있는 토큰과 정보 초기화
 
@@ -132,7 +132,23 @@ function MyPage() {
     }else if(provide === "kakao" && tmt_token){
       // kakao의 토큰 로그아웃도 있지만, 현재는 tmt에서만의 로그아웃을 구현
       try {
-        const response = await getGoogleLogout(tmt_token)
+        const response = await getTokenLogout(tmt_token)
+        console.log('response?.status===',response?.status)
+        // 쿠키에 있는 토큰과 정보 초기화
+
+        Cookies.remove('tmt_token');
+        Cookies.remove('tmt_refresh_token');
+        Cookies.remove('provide');
+        Cookies.remove('userinfo');
+        // navigate('/')
+        window.location.href = 'http://127.0.0.1:3000/'
+      } catch (error) {
+        console.log(error)
+      }
+    }else if(provide === "github" && tmt_token){
+      // kakao의 토큰 로그아웃도 있지만, 현재는 tmt에서만의 로그아웃을 구현
+      try {
+        const response = await getTokenLogout(tmt_token)
         console.log('response?.status===',response?.status)
         // 쿠키에 있는 토큰과 정보 초기화
 
