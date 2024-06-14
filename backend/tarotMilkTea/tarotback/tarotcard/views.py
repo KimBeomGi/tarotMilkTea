@@ -6,8 +6,9 @@ from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication   # 발급한 토큰으로 유저찾기
 from .serializer import TarotCardSerializer, TarotCardForwardMeaningSerializer, TarotCardReverseMeaningSerializer, GETTarotCardForwardMeaningSerializer, TarotNumerologyMeanSerializer, TarotPictureMeanSerializer, TarotMeanExplainSerializer
 # 목록 및 세부 가져오기 serializer 
-from .serializer import TarotGeneralListSerializer, TarotDetailListSerializer, TarotMajorListSerializer, TarotMinorListSerializer, TarotDetaliSerializer, TarotResultSerializer
-from .models import TarotCard, TarotCardForwardMeaning, TarotCardReverseMeaning, TarotNumerologyMean, TarotPictureMean, TarotMeanExplain
+from .serializer import TarotGeneralListSerializer, TarotDetailListSerializer, TarotMajorListSerializer, TarotMinorListSerializer, TarotDetaliSerializer, TarotResultSerializer, TarotResultListSerializer, TarotResultDetailSerializer 
+from .models import TarotCard, TarotCardForwardMeaning, TarotCardReverseMeaning, TarotNumerologyMean, TarotPictureMean, TarotMeanExplain, TarotResult
+from accounts.models import User
 import json
 
 
@@ -592,4 +593,48 @@ def tarot_save_result(request):
         # return Response(status=status.HTTP_200_OK)
     except Exception as e:
         print(e)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+#############################################################################
+# 유저에게 저장된 타로결과 리스트 가져오기
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def tarot_result_list(request):
+    try:
+        # # 토큰으로 유저 정보 가져오기
+        jwt_auth = JWTAuthentication()
+        user, tokenObject = jwt_auth.authenticate(request)
+        # user = User.objects.get(id=3)
+        results = TarotResult.objects.filter(user=user)
+        
+        
+        response_data = {
+            "user_id" : user.id,
+            "user_nickname" : user.nickname,
+            "user_email" : user.email,
+            # "results": TarotResultSerializer(results, many=True).data
+            "results": TarotResultListSerializer(results, many=True).data
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+#############################################################################
+# 유저에게 저장된 타로결과 1개 가져오기
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def tarot_result_list(request, result_id):
+    try:
+        # # 토큰으로 유저 정보 가져오기
+        # jwt_auth = JWTAuthentication()
+        # user, tokenObject = jwt_auth.authenticate(request)
+        # user = User.objects.get(id=3)
+        result = TarotResult.objects.get(id=result_id)
+        # TarotResultListSerializer
+        response_data = {
+            "result" : TarotResultDetailSerializer(result).data
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+    except:
         return Response(status=status.HTTP_400_BAD_REQUEST)

@@ -18,8 +18,12 @@ urlpatterns = [
     path('numeric/', views.tarot_numeric, name='tarot_numeric'),    # 카드 수비학적 의미 기입
     path('picture/', views.tarot_picture, name='tarot_picture'),    # 카드 회화적 의미 기입
     path('explain/', views.tarot_explain, name='tarot_explain'),    # 카드 설명 의미 기입
+ 
     # 유저가 뽑은 카드 점 기록
     path('save_result/', views.tarot_save_result, name='tarot_save_result'),    # 카드 점 기록
+    path('tarot_result/list/', views.tarot_result_list, name='tarot_result_list'),    # 유저의 타로결과 목록 가져오기
+    path('tarot_result/<int:result_id>/', views.tarot_result_list, name='tarot_result_list'),    # 유저의 타로결과 1개 가져오기
+
     
     # gemini_api
     path('gemini/', views.useGemini, name='useGemini'),   # Gemini API 호출

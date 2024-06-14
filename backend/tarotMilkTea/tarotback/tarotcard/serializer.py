@@ -159,3 +159,17 @@ class TarotResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = TarotResult
         fields = '__all__'
+
+#########################################################################
+# 타로점 결과리스트 가져오기 Serializer
+class TarotResultListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TarotResult
+        fields = ['id', 'selected_cards', 'subject', 'consulValue']
+#########################################################################
+# 타로점 결과 1개(세부) 가져오기 Serializer
+class TarotResultDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TarotResult
+        # fields = '__all__'
+        exclude = ['id', 'user']
