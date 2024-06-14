@@ -160,8 +160,8 @@ function ReadCard2() {
 
   return (
     <div className="ReadCard2">
-      {/* {isClickGoRead
-        ? */}
+      {isClickGoRead
+        ?
           <div className="container">
             <div className={"selected-div"}>
               {selectedCards.map((num,i) => (
@@ -210,12 +210,12 @@ function ReadCard2() {
             }
             
           </div>
-        {/* :
+        :
           <div>
             <h1>카드를 선택 후 운세보기 버튼을 클릭해주세요.</h1>
             <p>올바른 방법으로 입장하지 않을 시 답변을 확인할 수 없습니다.</p>
           </div>
-      } */}
+      }
     </div>
   );
 }
