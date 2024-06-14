@@ -609,9 +609,9 @@ def tarot_result_list(request):
         
         
         response_data = {
-            "user_id" : user.id,
-            "user_nickname" : user.nickname,
-            "user_email" : user.email,
+            # "user_id" : user.id,
+            # "user_nickname" : user.nickname,
+            # "user_email" : user.email,
             # "results": TarotResultSerializer(results, many=True).data
             "results": TarotResultListSerializer(results, many=True).data
         }
@@ -624,7 +624,7 @@ def tarot_result_list(request):
 # 유저에게 저장된 타로결과 1개 가져오기
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def tarot_result_list(request, result_id):
+def tarot_result_detail(request, result_id):
     try:
         # # 토큰으로 유저 정보 가져오기
         # jwt_auth = JWTAuthentication()

@@ -22,7 +22,7 @@ urlpatterns = [
     # 유저가 뽑은 카드 점 기록
     path('save_result/', views.tarot_save_result, name='tarot_save_result'),    # 카드 점 기록
     path('tarot_result/list/', views.tarot_result_list, name='tarot_result_list'),    # 유저의 타로결과 목록 가져오기
-    path('tarot_result/<int:result_id>/', views.tarot_result_list, name='tarot_result_list'),    # 유저의 타로결과 1개 가져오기
+    path('tarot_result/<int:result_id>/', views.tarot_result_detail, name='tarot_result_detail'),    # 유저의 타로결과 1개 가져오기
 
     
     # gemini_api
