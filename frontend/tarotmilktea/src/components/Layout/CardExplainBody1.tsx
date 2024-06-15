@@ -3,7 +3,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import AboutTarot from "./AboutTarot.json"
-import aboutTarotImg1 from "../../assets/images/aboutTarotImg1.png"
 
 import {getTarotMajorList, getTarotMinorList} from "../../axios/TarotCardAxios"
 import {TarotExplainDataType} from "../types/explainCards/explainCardsType"
@@ -98,7 +97,7 @@ function CardExplainBody1() {
             ref={historyImgDiv}
           >
             <img 
-              src={aboutTarotImg1} 
+              src={process.env.PUBLIC_URL+"/images/aboutTarotImg1.png"}
               alt="대중적인 웨이트 타로 카드" 
               className='cEB1-shape-history-content-img' 
             />

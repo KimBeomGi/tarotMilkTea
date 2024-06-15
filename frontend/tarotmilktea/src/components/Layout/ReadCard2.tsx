@@ -74,8 +74,7 @@ function ReadCard2() {
             {v1}
           </p>
         ))}
-        <img className='loadingIcon' src="/loadingicon.png" alt="로딩" />
-        
+        <img className='loadingIcon' src={process.env.PUBLIC_URL+"/loadingicon.png"} alt="로딩" />
       </div>
     );
   }
