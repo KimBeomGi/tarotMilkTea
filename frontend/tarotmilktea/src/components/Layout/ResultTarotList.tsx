@@ -53,46 +53,50 @@ function ResultTarotList() {
       <div>
         <h1>내 타로 결과 보관함</h1>
       </div>
-      <div className='resultListBody'>
-        {resultData.map(((v1, i1) => (
-          <div 
-            className='resultBody'
-            key={v1.id || i1}
-          >
-            <div>
+      {resultData.length 
+      ? 
+        <div className='resultListBody'>
+          {resultData.map(((v1, i1) => (
+            <div 
+              className='resultBody'
+              key={v1.id || i1}
+            >
               <div>
-                <p><strong>고민 주제</strong> : {v1.subject}</p>
-                <p><strong>고민 내용</strong> : {v1.consulValue}</p> 
-                <p><strong>고민 날짜</strong> : {v1.save_date} {v1.save_time}</p> 
-              </div>
-              <img className='parchmentImg'
-                src={process.env.PUBLIC_URL+"/images/parchment.png"} alt="" 
-                onClick={()=>{handleGoResultDetail(v1.id)}}
-              />
-            </div>
-            <div className="coverImageDiv">
-              {v1.selected_cards.map((v2,i2)=>(
-                <div key={i2}>
-                  <img 
-                    className='coverImage'
-                    onClick={() => {handleGoResultDetail(v1.id)}}
-                    src={`https://whalebigtarotmilktea.s3.ap-northeast-2.amazonaws.com/tarotCard${v2}.jpg`}
-                    alt={process.env.PUBLIC_URL+"/images/tarotCardBack.png"}
-                  />
+                <div>
+                  <p><strong>고민 주제</strong> : {v1.subject}</p>
+                  <p><strong>고민 내용</strong> : {v1.consulValue}</p> 
+                  <p><strong>고민 날짜</strong> : {v1.save_date} {v1.save_time}</p> 
                 </div>
-              ))}
+                <img className='parchmentImg'
+                  src={process.env.PUBLIC_URL+"/images/parchment.png"} alt="" 
+                  onClick={()=>{handleGoResultDetail(v1.id)}}
+                />
+              </div>
+              <div className="coverImageDiv">
+                {v1.selected_cards.map((v2,i2)=>(
+                  <div key={i2}>
+                    <img 
+                      className='coverImage'
+                      onClick={() => {handleGoResultDetail(v1.id)}}
+                      src={`https://whalebigtarotmilktea.s3.ap-northeast-2.amazonaws.com/tarotCard${v2}.jpg`}
+                      alt={process.env.PUBLIC_URL+"/images/tarotCardBack.png"}
+                    />
+                  </div>
+                ))}
+              </div>
+              <hr />
             </div>
-            <hr />
-          </div>
-        )))}
-        <div>
-          <h2>보관한 결과가 없습니다😣</h2>
-          <p
-            className='textCenter likeAtag'
-            onClick={() => {navigate('/fortune')}}
-          >운세보러 가기</p>
+          )))}
         </div>
-      </div>
+      :
+        <div className='textCenter'>
+          <h2>보관한 결과가 없습니다😣</h2>
+          <span
+            className='likeAtag'
+            onClick={() => {navigate('/fortune')}}
+          >운세보러 가기</span>
+        </div>
+      }
     </div>
   );
 }
