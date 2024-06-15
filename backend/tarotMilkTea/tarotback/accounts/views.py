@@ -115,10 +115,10 @@ def google_callback(request):
 
 
         except User.DoesNotExist:
-            nickname = f"{random.choice(nickname_a)}{random.choice(nickname_b)}{random.randint(1000, 9999)}"
+            nickname = f"{random.choice(nickname_a)}{random.choice(nickname_b)}{random.randint(10000, 99999)}"
             data = {
                 'email' : email,
-                'username' : email + str(random.randint(100000, 1000000)),
+                'username' : email + str(random.randint(1000000, 10000000)),
                 'nickname' : nickname,
                 'social' : 'google',
                 'social_id' : str(user_id),
@@ -134,7 +134,8 @@ def google_callback(request):
                 user.set_unusable_password()    # 소셜로그인이니까 No password!
                 user.save()
                 print('저장성공')
-                user = User.objects.get(username=data.username, social=data.social, email=email)
+                # user = User.objects.get(username=data.username, social=data.social, email=email)
+                user = User.objects.get(username=data.get("username"), social=data.get("social"), email=email)
                 print('꺼내기성공')
                 refresh_token = RefreshToken.for_user(user)         # 자체 jwt 발급    
                 print('토큰 발급 성공')
@@ -233,10 +234,10 @@ def kakao_login(request):
         except User.DoesNotExist:
             # 닉네임이 없으면 닉네임을 설정
             if not nickname:
-                nickname = f"{random.choice(nickname_a)}{random.choice(nickname_b)}{random.randint(1000, 9999)}"
+                nickname = f"{random.choice(nickname_a)}{random.choice(nickname_b)}{random.randint(10000, 99999)}"
             data = {
                 'email' : email,
-                'username' : email + str(random.randint(100000, 1000000)),
+                'username' : email + str(random.randint(1000000, 10000000)),
                 'nickname' : nickname,
                 'social' : 'kakao',
                 'social_id' : str(social_id),
@@ -256,7 +257,8 @@ def kakao_login(request):
                 user.save() # user 저장
                 print('저장성공')
                 # user 꺼내기                
-                user = User.objects.get(username=data.username, social=data.social, email=email)
+                # user = User.objects.get(username=data.username, social=data.social, email=email)
+                user = User.objects.get(username=data.get("username"), social=data.get("social"), email=email)
                 refresh_token = RefreshToken.for_user(user) # 자체 jwt 발급
 
                 response_data = {
@@ -343,17 +345,19 @@ def github_login(request):
             except User.DoesNotExist:
                 # 닉네임이 없으면 닉네임을 설정
                 if not nickname:
-                    nickname = f"{random.choice(nickname_a)}{random.choice(nickname_b)}{random.randint(1000, 9999)}"
+                    nickname = f"{random.choice(nickname_a)}{random.choice(nickname_b)}{random.randint(10000, 99999)}"
                 data = {
                     'email' : email,
-                    'username' : email + str(random.randint(100000, 1000000)),
+                    'username' : email + str(random.randint(1000000, 10000000)),
                     'nickname' : nickname,
                     'social' : 'github',
                     'social_id' : str(social_id),
                     'profile_image_url' : profile_image_url
                 }
                 # DB에 유저 생성
+                print('깃허브1')
                 try:
+                    print('깃허브2')
                     # user 생성
                     user = User.objects.create(
                         email=data.get("email"),
@@ -363,11 +367,16 @@ def github_login(request):
                         social_id=data.get("social_id"),
                         profile_image_url=data.get("profile_image_url")
                     )
+                    print('깃허브3')
                     user.set_unusable_password()    # 소셜로그인이니까 No password!
+                    print('깃허브4')
                     user.save() # user 저장
+                    print('깃허브5')
                     print('저장성공')
                     # user꺼내기
-                    user = User.objects.get(username=data.username, social=data.social, email=email)
+                    print('깃허브6')
+                    user = User.objects.get(username=data.get("username"), social=data.get("social"), email=email)
+                    print('깃허브7')
                     print('꺼내기성공')
                     refresh_token = RefreshToken.for_user(user) # 자체 jwt 발급
                     print('토큰 발급성공')
@@ -437,7 +446,7 @@ def registerUser(request):
         nickname = request_data["nickname"]
 
         if nickname == "":
-            nickname = f"{random.choice(nickname_a)}{random.choice(nickname_b)}{random.randint(1000, 9999)}"
+            nickname = f"{random.choice(nickname_a)}{random.choice(nickname_b)}{random.randint(10000, 99999)}"
             request_data["nickname"] = nickname
         if email == "" or username == "":
             response_data = {
@@ -498,3 +507,28 @@ def find_user(request):
         return Response(serializer.data, status=status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def getout_user(request):
+    try:
+        jwt_auth = JWTAuthentication()
+        user, tokenObject = jwt_auth.authenticate(request)
+        print(user.email, user.username, user.social_id)
+        email = user.email
+        username = user.username
+        social_id = user.social_id
+        user.delete()
+        response_data = {
+            'message' : "유저 삭제 성공",
+            "username" : username,
+            "social_id" : social_id,
+            "email" : email,
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+    except:
+        response_data = {
+            'message' : "유저 삭제 실패"
+        }
+        return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
