@@ -28,7 +28,7 @@ function ResultTarotDetail() {
           'tarotResultId' : tarotResultId 
         }
         const response =  await getTarotResultDetail(sendData)
-        console.log(response?.data)
+        // console.log(response?.data)
         setTarotResult(response?.data)
       } catch (error) {
         alert('결과를 불러올 수 없습니다. 나중에 다시 시도해주세요')

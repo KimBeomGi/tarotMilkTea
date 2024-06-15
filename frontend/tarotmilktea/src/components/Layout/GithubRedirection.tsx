@@ -22,7 +22,7 @@ function GithubRedirection() {
   const code = params.get("code");
 
   useEffect(() => {
-    console.log('githubCode :',code)
+    // console.log('githubCode :',code)
     if(code){
       handleGetGithubLoginCode(code)
     }
@@ -33,7 +33,7 @@ function GithubRedirection() {
     try {
       const respose = await getGithubLoginCode(code);
       const responseData = respose?.data
-      console.log(responseData)
+      // console.log(responseData)
       const tmt_token = responseData.access
       const tmt_refresh_token = responseData.refresh
       const nickname = responseData.userInfo.nickname
@@ -51,7 +51,7 @@ function GithubRedirection() {
       }));
       navigate('/')
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       alert("로그인에 실패했습니다.")
       navigate('/')
     }

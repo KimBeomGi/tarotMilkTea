@@ -35,7 +35,7 @@ function MyPage() {
         console.error("Failed to parse userinfo from localStorage:", error)
       }
     } else {
-      console.log("No userinfo found in localStorage")
+      // console.log("No userinfo found in localStorage")
       // navigate('/')
       window.location.href = 'http://127.0.0.1:3000/'
     }
@@ -85,7 +85,7 @@ function MyPage() {
     if(provide === "google" && tmt_token){
       try {
         const response = await getTokenLogout(tmt_token)
-        console.log('response?.status===',response?.status)
+        // console.log('response?.status===',response?.status)
         // 쿠키에 있는 토큰과 정보 초기화
 
         Cookies.remove('tmt_token');
@@ -101,7 +101,7 @@ function MyPage() {
       // kakao의 토큰 로그아웃도 있지만, 현재는 tmt에서만의 로그아웃을 구현
       try {
         const response = await getTokenLogout(tmt_token)
-        console.log('response?.status===',response?.status)
+        // console.log('response?.status===',response?.status)
         // 쿠키에 있는 토큰과 정보 초기화
 
         Cookies.remove('tmt_token');
@@ -117,7 +117,7 @@ function MyPage() {
       // kakao의 토큰 로그아웃도 있지만, 현재는 tmt에서만의 로그아웃을 구현
       try {
         const response = await getTokenLogout(tmt_token)
-        console.log('response?.status===',response?.status)
+        // console.log('response?.status===',response?.status)
         // 쿠키에 있는 토큰과 정보 초기화
 
         Cookies.remove('tmt_token');

@@ -50,7 +50,7 @@ function Navbar() {
         console.error("Failed to parse userinfo from cookies:", error)
       }
     } else {
-      console.log("No userinfo found in cookies")
+      // console.log("No userinfo found in cookies")
     }
   }
   

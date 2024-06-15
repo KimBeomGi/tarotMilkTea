@@ -23,7 +23,7 @@ function KakaoRedirection() {
   const code = params.get("code");
 
   useEffect(() => {
-    console.log('kakaoCode :',code)
+    // console.log('kakaoCode :',code)
     if(code){
       handleGetKakaoLoginCode(code)
     }
@@ -33,7 +33,7 @@ function KakaoRedirection() {
     try {
       const respose = await getKakaoLoginCode(code);
       const responseData = respose?.data
-      console.log(responseData)
+      // console.log(responseData)
       const tmt_token = responseData.access
       const tmt_refresh_token = responseData.refresh
       const nickname = responseData.userInfo.nickname
@@ -51,7 +51,7 @@ function KakaoRedirection() {
       }));
       navigate('/')
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       alert("로그인에 실패했습니다.")
       navigate('/')
     }

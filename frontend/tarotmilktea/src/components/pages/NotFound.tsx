@@ -6,7 +6,7 @@ function NotFound() {
   const navigate = useNavigate()
   const location = useLocation();
   const [currentUrl, setCurrentUrl] = useState(window.location.href)
-  console.log('Current URL:', window.location.href);
+  // console.log('Current URL:', window.location.href);
   const handleRefresh = () => {
     window.location.reload();
   }

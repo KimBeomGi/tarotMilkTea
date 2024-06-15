@@ -23,7 +23,7 @@ function GoogleRedirection() {
   const code = params.get("code");
 
   useEffect(() => {
-    console.log('code :',code)
+    // console.log('code :',code)
     // 이제 이 코드를 백으로 넘겨서 값을 받아와야함.
     if(code){
       handleGetGoogleLoginCode(code)
@@ -40,7 +40,7 @@ function GoogleRedirection() {
     try {
       const respose = await getGoogleLoginCode(code);
       const responseData = respose?.data
-      console.log(responseData)
+      // console.log(responseData)
       const tmt_token = responseData.access
       const tmt_refresh_token = responseData.refresh
       const nickname = responseData.userInfo.nickname
@@ -60,7 +60,7 @@ function GoogleRedirection() {
       navigate('/')
 
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       alert("로그인에 실패했습니다.")
       navigate('/')
     }

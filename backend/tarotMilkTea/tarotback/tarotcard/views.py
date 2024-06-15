@@ -76,11 +76,11 @@ def addtarot(request):
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
                 tmp_o += 1
-                print(card_name, '저장됨', tmp_o)
+                # print(card_name, '저장됨', tmp_o)
                 
             except:
                 tmp_x += 1
-                print(card_name, '실패함', tmp_x)
+                # print(card_name, '실패함', tmp_x)
 
         return Response(response_data)
     elif request.method =="PUT":
@@ -221,7 +221,7 @@ def tarot_numeric(request):
                     response_data.append(card_n_m)
                 else:
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            print(tarot_card.id)
+            # print(tarot_card.id)
         return Response(response_data, status=status.HTTP_201_CREATED)
     elif request.method =="PUT":
         response_data = {
@@ -263,7 +263,7 @@ def tarot_picture(request):
                     response_data.append(card_p_m)
                 else:
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            print(tarot_card.id)
+            # print(tarot_card.id)
         return Response(response_data, status=status.HTTP_201_CREATED)
     elif request.method =="PUT":
         response_data = {
@@ -302,10 +302,10 @@ def tarot_explain(request):
                 serializer = TarotMeanExplainSerializer(data = data)
                 if serializer.is_valid():
                     serializer.save()
-                    print(str(tarot_card.id))
+                    # print(str(tarot_card.id))
                 else:
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            print(tarot_card.id)
+            # print(tarot_card.id)
             response_data.append(tarot_card.id)
         return Response(response_data, status=status.HTTP_201_CREATED)
         # request_data = request.data
@@ -576,23 +576,14 @@ def tarot_save_result(request):
             "consulValue" : consulValue,
             "user": user.id
         }
-        print(user.id, user.email)
-        print('되나1')
         serializer = TarotResultSerializer(data=data)
-        print('되나2')
         if serializer.is_valid():
-            print('되나3')
             serializer.save()
-            print('되나4')
             return Response(status=status.HTTP_200_OK)
         else:
-            print('안되나...')
-            print(serializer.errors)
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        # print(data)
         # return Response(status=status.HTTP_200_OK)
     except Exception as e:
-        print(e)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 #############################################################################

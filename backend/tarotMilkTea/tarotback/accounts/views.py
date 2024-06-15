@@ -43,14 +43,12 @@ GOOGLE_CALLBACK_URI = 'http://127.0.0.1:3000/social/google'
 # @permission_classes([AllowAny])
 def google_callback(request):
     if request.method == 'POST':
-        print('request.data=-==',request.data)
         client_id = os.environ.get("SOCIAL_AUTH_GOOGLE_CLIENT_ID")
         client_secret = os.environ.get("SOCIAL_AUTH_GOOGLE_SECRET")
     
         # 사용자의 구글 코드
         # code = request.GET.get('code')
         code = request.data.get('code')
-        print('코드===', code)
 
         # 1. 받은 코드로 구글에 access token 요청
         token_req = requests.post(
@@ -60,8 +58,6 @@ def google_callback(request):
         token_req_json = token_req.json()
         error = token_req_json.get("error")
 
-        print(token_req)
-        print(token_req_json)
         ### 1-2. 에러 발생 시 종료
         if error is not None:
             raise JSONDecodeError(error)
@@ -84,12 +80,11 @@ def google_callback(request):
         email_req_json = email_req.json()
         email = email_req_json.get('email')
         user_id = email_req_json.get('user_id')
-        print('email_req ===', email_req)
-        print('email_req.json() ===', email_req.json())
-        print('email_req_status ===', email_req_status)
-        print('user_id ===', user_id)
+        # print('email_req ===', email_req)
+        # print('email_req.json() ===', email_req.json())
+        # print('email_req_status ===', email_req_status)
+        # print('user_id ===', user_id)
 
-        print('이건 작동함')
         # return JsonResponse({'access': access_token, 'email':email})
 
         # 유저 여부 확인 후 있으면 로그인, 없으면 회원가입 후 로그인
@@ -109,7 +104,6 @@ def google_callback(request):
                     'profile_image_url' : user.profile_image_url
                 }
             }
-            print('response_data1====', response_data)
             return Response(response_data, status=status.HTTP_202_ACCEPTED)
             # return JsonResponse(response_data, status=status.HTTP_202_ACCEPTED)
 
@@ -133,12 +127,10 @@ def google_callback(request):
                 )
                 user.set_unusable_password()    # 소셜로그인이니까 No password!
                 user.save()
-                print('저장성공')
+                # print('저장성공')
                 # user = User.objects.get(username=data.username, social=data.social, email=email)
                 user = User.objects.get(username=data.get("username"), social=data.get("social"), email=email)
-                print('꺼내기성공')
                 refresh_token = RefreshToken.for_user(user)         # 자체 jwt 발급    
-                print('토큰 발급 성공')
 
                 response_data = {
                     'refresh': str(refresh_token),
@@ -151,8 +143,6 @@ def google_callback(request):
                         'profile_image_url' : user.profile_image_url
                     }
                 }
-                print('완전 성공')
-                print('response_data2====', response_data)
 
                 return Response(response_data, status=status.HTTP_201_CREATED)
                 # return JsonResponse(response_data, status=status.HTTP_400_BAD_REQUEST)
@@ -160,7 +150,6 @@ def google_callback(request):
                 response_data = {
                     'message': '저장실패'
                 }
-                print('response_data3====', response_data)
                 return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
                 # return JsonResponse(response_data, status=status.HTTP_400_BAD_REQUEST)
     response_data = {
@@ -198,7 +187,6 @@ def kakao_login(request):
                 "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
             },
         )
-        print("kakao_user:", kakao_user)
         kakao_user = kakao_user.json()
         
         kakao_account = kakao_user.get("kakao_account")
@@ -255,7 +243,6 @@ def kakao_login(request):
                 )
                 user.set_unusable_password()    # 소셜로그인이니까 No password!
                 user.save() # user 저장
-                print('저장성공')
                 # user 꺼내기                
                 # user = User.objects.get(username=data.username, social=data.social, email=email)
                 user = User.objects.get(username=data.get("username"), social=data.get("social"), email=email)
@@ -298,7 +285,6 @@ def github_login(request):
             # 토큰과 유저정보 받아오기
             request_data = request.data
             code = request_data.get("code")
-            print('code===',code)
             # 유저 토큰 가져오기
             github_token = requests.post(f"https://github.com/login/oauth/access_token?code={code}&client_id={client_id}&client_secret={client_secret}&redirect_uri={redirect_uri}",
                 headers={"Accept": "application/json"},
@@ -317,7 +303,6 @@ def github_login(request):
                 }
             )
             user_emails = user_emails.json()
-            # print("user_emails===", user_emails)
             email = user_emails[0].get('email')
             social_id= user_data.get("id")
             social = "github"
@@ -355,9 +340,7 @@ def github_login(request):
                     'profile_image_url' : profile_image_url
                 }
                 # DB에 유저 생성
-                print('깃허브1')
                 try:
-                    print('깃허브2')
                     # user 생성
                     user = User.objects.create(
                         email=data.get("email"),
@@ -367,19 +350,11 @@ def github_login(request):
                         social_id=data.get("social_id"),
                         profile_image_url=data.get("profile_image_url")
                     )
-                    print('깃허브3')
                     user.set_unusable_password()    # 소셜로그인이니까 No password!
-                    print('깃허브4')
                     user.save() # user 저장
-                    print('깃허브5')
-                    print('저장성공')
                     # user꺼내기
-                    print('깃허브6')
                     user = User.objects.get(username=data.get("username"), social=data.get("social"), email=email)
-                    print('깃허브7')
-                    print('꺼내기성공')
                     refresh_token = RefreshToken.for_user(user) # 자체 jwt 발급
-                    print('토큰 발급성공')
 
                     response_data = {
                         'refresh': str(refresh_token),
@@ -392,7 +367,6 @@ def github_login(request):
                             'profile_image_url' : data.get("profile_image_url")
                         }
                     }
-                    print('완전 성공')
                     return Response(response_data, status=status.HTTP_201_CREATED)
                 # DB에서 유저 생성 실패
                 except:
@@ -439,7 +413,6 @@ def registerUser(request):
     # name = body['name']
     if request.method =='POST':
         request_data = request.data
-        print('request_data===', request_data)
         email = request_data["email"]
         username = request_data["username"]
         social = request_data["social"]
@@ -491,7 +464,6 @@ def registerUser(request):
 @permission_classes([IsAuthenticated])
 def test1(request):
     try:
-        print(request.data)
         return Response(request.data, status=status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -515,7 +487,6 @@ def getout_user(request):
     try:
         jwt_auth = JWTAuthentication()
         user, tokenObject = jwt_auth.authenticate(request)
-        print(user.email, user.username, user.social_id)
         email = user.email
         username = user.username
         social_id = user.social_id

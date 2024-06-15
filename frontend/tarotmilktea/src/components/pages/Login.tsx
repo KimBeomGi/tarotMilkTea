@@ -24,7 +24,7 @@ function Login() {
       // 이미 로그인 되어있음.
       if(tmt_token){
         response = await isTokenVerify(tmt_token)
-        console.log(response.status)
+        // console.log(response.status)
         alert('이미 로그인 되어있습니다.')
         navigate('/')
       }else{

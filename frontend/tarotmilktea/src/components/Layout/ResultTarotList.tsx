@@ -23,12 +23,12 @@ function ResultTarotList() {
       try {
         const response = await getTarotResultList(userToken)
         // console.log(response?.status)
-        console.log(response?.data)
-        console.log(response?.data[0])
+        // console.log(response?.data)
+        // console.log(response?.data[0])
         let results = response?.data
         setResultData(results)
       } catch (error:any) {
-        console.log(error)
+        // console.log(error)
       }
     }else{
       alert('로그인 후 이용해주세요.')
@@ -37,8 +37,7 @@ function ResultTarotList() {
 
   const handleGoResultDetail = (tarotResultId:number) => {
     if(userToken){
-      console.log('됨')
-      console.log(tarotResultId)
+      // console.log(tarotResultId)
       navigate('/tarot/result',{ state: { tarotResultId }})
     }else{
       alert('로그인 후 이용해주세요.')
