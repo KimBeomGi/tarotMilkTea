@@ -13,7 +13,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication   # 발급
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 
-from .serializer import RegistUserSerializer
+from .serializer import RegistUserSerializer, getUserSerializer
 
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
@@ -487,18 +487,14 @@ def test1(request):
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(["POST"])
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def find_user(request):
     try:
         jwt_auth = JWTAuthentication()
         user, tokenObject = jwt_auth.authenticate(request)
-        data = {
-            'email' : user.email,
-            'profile_image_url' : user.profile_image_url,
-            'social' : user.social,
-            'social_id' : user.social_id
-        }
-        return Response(data, status=status.HTTP_200_OK)
+        serializer = getUserSerializer(user)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)

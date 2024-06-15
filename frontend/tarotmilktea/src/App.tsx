@@ -16,6 +16,10 @@ import KakaoRedirection from './components/layout/KakaoRedirection'
 import GithubRedirection from './components/layout/GithubRedirection'
 import GoogleRedirection from './components/layout/GoogleRedirection'
 import MyPage from './components/layout/MyPage'
+import ResultTarotList from './components/layout/ResultTarotList'
+import ResultTarotDetail from './components/layout/ResultTarotDetail'
+
+
 import Test from './components/pages/Test'
 
 function App() {
@@ -36,6 +40,8 @@ function App() {
         <Route path='/board' element={<Board />} />
         <Route path='/tarotshop' element={<TarotShop />} />
         <Route path='/mypage' element={<MyPage />}/>
+        <Route path='/tarot/results' element={<ResultTarotList />}/>
+        <Route path='/tarot/result' element={<ResultTarotDetail />}/>
       </Route>
       <Route path='/login' element={<Login />}/>
       

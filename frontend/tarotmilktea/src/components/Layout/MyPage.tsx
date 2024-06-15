@@ -19,6 +19,7 @@ function MyPage() {
   const [profileImageUrl, setProfileImageUrl] = useState("")
   const [nickname, setNickname] = useState("")
   const [email, setEmail] = useState("")
+  const [provide, setProvide] = useState("")
 
   //정보 쿠키에서 가져옴////////////////////////////////////////////////////////////////////////
   const getUserInfo = () =>{
@@ -29,7 +30,7 @@ function MyPage() {
         setNickname(userInfo.nickname)
         setProfileImageUrl(userInfo.profile_image_url)
         setEmail(userInfo.email)
-        
+        setProvide(userInfo.provide)
       } catch (error) {
         console.error("Failed to parse userinfo from localStorage:", error)
       }
@@ -62,6 +63,10 @@ function MyPage() {
     }
   }
 
+  const handleGoResultList = () => {
+    navigate("/tarot/results")
+  }
+
   useEffect(() => {
     handleIsTokenVerify()
     getUserInfo()
@@ -74,46 +79,9 @@ function MyPage() {
     // const provide = window.localStorage.getItem("provide")
     const tmt_token = Cookies.get('tmt_token');
     const tmt_refresh_token = Cookies.get('tmt_refresh_token');
-    const provide = Cookies.get('provide');
+    // const provide = Cookies.get('userinfo').;
     const userinfo = JSON.parse(Cookies.get('userinfo') || '{}');
-
-    // if (provide === "kakao" && provide_ACCESS_TOKEN && tmt_ACCESS_TOKEN) {
-    //   try {
-    //     const Response = await getKakaoLogout(provide_ACCESS_TOKEN, tmt_ACCESS_TOKEN)
-    //     console.log(Response?.status)
-    //     // localStroage에 있는 토큰과 정보 초기화
-    //     window.localStorage.setItem("tmt_ACCESS_TOKEN", "")
-    //     window.localStorage.setItem("provide_ACCESS_TOKEN", "")
-    //     window.localStorage.setItem("provide", '')
-    //     window.localStorage.setItem("userinfo",JSON.stringify({
-    //       "profile_url": "",
-    //       "nickname":"",
-    //       "email":""
-    //     }))
-    //     // navigate('/')
-    //     window.location.href = 'http://127.0.0.1:3000/'
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // }else if(provide === "github" && provide_ACCESS_TOKEN && tmt_ACCESS_TOKEN){
-    //   try {
-    //     const Response = await getGithubLogout(provide_ACCESS_TOKEN, tmt_ACCESS_TOKEN)
-    //     console.log(Response?.status)
-    //     // localStroage에 있는 토큰과 정보 초기화
-    //     window.localStorage.setItem("tmt_ACCESS_TOKEN", "")
-    //     window.localStorage.setItem("provide_ACCESS_TOKEN", "")
-    //     window.localStorage.setItem("provide", '')
-    //     window.localStorage.setItem("userinfo",JSON.stringify({
-    //       "profile_url": "",
-    //       "nickname":"",
-    //       "email":""
-    //     }))
-    //     // navigate('/')
-    //     window.location.href = 'http://127.0.0.1:3000/'
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // }
+    
     if(provide === "google" && tmt_token){
       try {
         const response = await getTokenLogout(tmt_token)
@@ -181,6 +149,10 @@ function MyPage() {
               <td className="first-column">이메일</td>
               <td>{email}</td>
             </tr>
+            <tr>
+              <td className="first-column">연결앱</td>
+              <td>{provide}</td>
+            </tr>
           </tbody>
         </table>
           {/* <img src={profileImageUrl} alt="" /> */}
@@ -189,11 +161,12 @@ function MyPage() {
           <p>{email}</p>
         </div> */}
         <div>
+          
           <p 
             className='logoutP'
-            onClick={() => {handleGetLogout()}}
             >
-            <span>로그아웃</span>
+            <span onClick={() => {handleGoResultList()}}>결과 보관함</span>
+            <span onClick={() => {handleGetLogout()}}>로그아웃</span>
           </p>
           {/* <p
             onClick={() => {handleGetTokenRefresh()}}

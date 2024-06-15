@@ -1,0 +1,93 @@
+/* Yeon Sung 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
+/* Jua 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+.ResultTarotListBody{
+  font-family: "Yeon Sung", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+.ResultTarotListBody h1, h2{
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+}
+.ResultTarotListBody h1{
+  font-size: 2.25rem;
+}
+.ResultTarotListBody h2{
+  font-size: 1.75rem;
+}
+.ResultTarotListBody p{
+  font-size: 1.25rem;
+  width: calc(80vw - 50px);
+}
+.ResultTarotListBody strong{
+  font-size: 1.375rem;
+}
+
+.resultListBody{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.resultBody{
+  /* border-bottom: 2px black double; */
+}
+.resultBody>div:nth-child(1){
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.parchmentImg{
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+.coverImageDiv{
+  display: flex;
+  flex-direction: row;
+  width: 80vw;
+  justify-content: space-between;
+  
+}
+.coverImage{
+  width: 14vw;
+  cursor: pointer;
+}
+@media all and (max-width:768px) {
+  .ResultTarotListBody h1{
+    font-size: 2rem;
+  }
+  .ResultTarotListBody h2{
+    font-size: 1.5rem;
+  }
+  .ResultTarotListBody p{
+    font-size: 1rem;
+  }
+  .ResultTarotListBody strong{
+    font-size: 1.125rem;
+  }
+}
+@media all and (max-width:480px) {
+  .ResultTarotListBody h1{
+    font-size: 1.75rem;
+  }
+  .ResultTarotListBody h2{
+    font-size: 1.25rem;
+  }
+  .ResultTarotListBody p{
+    font-size: 0.75rem;
+    width: calc(80vw - 30px);
+  }
+  .ResultTarotListBody strong{
+    font-size: 0.875rem;
+  }
+  .parchmentImg{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+}

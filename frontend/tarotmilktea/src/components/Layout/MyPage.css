@@ -41,12 +41,22 @@
   background: #f3dbff;
 } */
 .logoutP{
-  text-align: end;
+  display: flex;
+  justify-content: space-between;
   cursor: pointer;
 }
-.logoutP>span:hover{
+/* .logoutP>span:hover{
+  color: red;
+} */
+/* .logoutP > span:first-child:hover {
+  color: red;
+} */
+.logoutP > span:nth-child(1):hover {
+  color: #FFC65A;
+}
+.logoutP > span:nth-child(2):hover {
   color: red;
 }
 .logoutP>span:active{
-  color: blue;
+  color: #007FFD !important;
 }

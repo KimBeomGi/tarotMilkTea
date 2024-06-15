@@ -97,7 +97,19 @@ export async function saveTarotResult(sendData:SaveTarotResultType) {
   }
 }
 
-
+// 타로 결과 리스트 받아오기
+export async function getTarotResultList(token:string) {
+  try {
+    const response = await axios.get(`${base_url}tarotcard/tarot_result/list/`, {
+      headers : {Authorization: `Bearer ${token}`,},
+    });
+    
+    return response;
+  } catch (e:any) {
+    // console.error(e.response);
+    return e.response;
+  }
+}
 
 
 // 예시

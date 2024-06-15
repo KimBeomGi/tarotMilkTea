@@ -32,3 +32,10 @@ export interface SaveTarotResultType{
   "subject" : string
   "consulValue" : string
 }
+
+export interface tarotResultDataListType{
+  "consulValue" : string
+  "id" : number
+  "selected_cards" : number[]
+  "subject" : string
+}

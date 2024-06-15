@@ -606,17 +606,16 @@ def tarot_result_list(request):
         user, tokenObject = jwt_auth.authenticate(request)
         # user = User.objects.get(id=3)
         results = TarotResult.objects.filter(user=user)
-        
-        
-        response_data = {
-            # "user_id" : user.id,
-            # "user_nickname" : user.nickname,
-            # "user_email" : user.email,
-            # "results": TarotResultSerializer(results, many=True).data
-            "results": TarotResultListSerializer(results, many=True).data
-        }
-
-        return Response(response_data, status=status.HTTP_200_OK)
+                
+        # response_data = {
+        #     # "user_id" : user.id,
+        #     # "user_nickname" : user.nickname,
+        #     # "user_email" : user.email,
+        #     # "results": TarotResultSerializer(results, many=True).data
+        #     "results": TarotResultListSerializer(results, many=True).data
+        # }
+        # return Response(response_data, status=status.HTTP_200_OK)
+        return Response(TarotResultListSerializer(results, many=True).data, status=status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -632,9 +631,10 @@ def tarot_result_detail(request, result_id):
         # user = User.objects.get(id=3)
         result = TarotResult.objects.get(id=result_id)
         # TarotResultListSerializer
-        response_data = {
-            "result" : TarotResultDetailSerializer(result).data
-        }
-        return Response(response_data, status=status.HTTP_200_OK)
+        # response_data = {
+        #     "result" : TarotResultDetailSerializer(result).data
+        # }
+        # return Response(response_data, status=status.HTTP_200_OK)
+        return Response(TarotResultDetailSerializer(result).data, status=status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)

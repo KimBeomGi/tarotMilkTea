@@ -42,11 +42,12 @@ function GithubRedirection() {
       const profile_image_url = responseData.userInfo.profile_image_url
       Cookies.set('tmt_token', tmt_token);
       Cookies.set('tmt_refresh_token', tmt_refresh_token);
-      Cookies.set('provide', social);
+      // Cookies.set('provide', social);
       Cookies.set('userinfo', JSON.stringify({
         profile_image_url: profile_image_url,
         nickname: nickname,
-        email: email
+        email: email,
+        provide : social
       }));
       navigate('/')
     } catch (error) {
