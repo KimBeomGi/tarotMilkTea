@@ -605,7 +605,7 @@ def tarot_result_list(request):
         jwt_auth = JWTAuthentication()
         user, tokenObject = jwt_auth.authenticate(request)
         # user = User.objects.get(id=3)
-        results = TarotResult.objects.filter(user=user)
+        results = TarotResult.objects.filter(user=user).order_by('-save_date', '-id')
                 
         # response_data = {
         #     # "user_id" : user.id,

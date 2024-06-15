@@ -1,0 +1,85 @@
+/* Yeon Sung 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
+/* Jua 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+.ResultTarotDetailBody{
+  font-family: "Yeon Sung", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ResultTarotDetailBody h1, h2{
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+}
+/* .ResultTarotDetailBody h1{
+  font-size: 2.25rem;
+} */
+.ResultTarotDetailBody h2{
+  font-size: 1.25rem;
+}
+.ResultTarotDetailBody p{
+  font-size: 1.25rem;
+}
+.ResultTarotDetailBody strong{
+  font-size: 1.375rem;
+}
+.answerDiv{
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.resultImgs{
+  width: 90vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+.resultImg{
+  width: 12vw;
+}
+
+@media all and (max-width:768px) {
+  /* .ResultTarotDetailBody h1{
+    font-size: 2rem;
+  } */
+  .ResultTarotDetailBody h2{
+    font-size: 1.125rem;
+  }
+  .ResultTarotDetailBody p{
+    font-size: 1rem;
+  }
+  .ResultTarotDetailBody strong{
+    font-size: 1.125rem;
+  }
+}
+@media all and (max-width:480px) {
+  /* .ResultTarotDetailBody h1{
+    font-size: 1.75rem;
+  }
+  .ResultTarotDetailBody h2{
+    font-size: 1.25rem;
+  } */
+  .ResultTarotDetailBody p{
+    font-size: 0.75rem;
+  }
+  .ResultTarotDetailBody strong{
+    font-size: 0.875rem;
+  }
+  
+  .resultImgs{
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+  .resultImg{
+    width: 25vw;
+  }
+}

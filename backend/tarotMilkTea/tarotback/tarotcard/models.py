@@ -49,4 +49,6 @@ class TarotResult(models.Model):
     selected_cards_name = models.JSONField()
     subject = models.CharField(max_length=255)
     consulValue = models.CharField(max_length=255)
+    save_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    

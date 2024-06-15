@@ -27,6 +27,18 @@
 .ResultTarotListBody strong{
   font-size: 1.375rem;
 }
+.textCenter{
+  text-align: center;
+}
+.likeAtag{
+  cursor: pointer;
+}
+.likeAtag:hover{
+  color: #007FFD;
+}
+.likeAtag:active{
+  color: #E358D2;
+}
 
 .resultListBody{
   display: flex;
@@ -57,6 +69,9 @@
   width: 14vw;
   cursor: pointer;
 }
+.contentDiv{
+  margin: 2em 0em 2em 0em;
+}
 @media all and (max-width:768px) {
   .ResultTarotListBody h1{
     font-size: 2rem;
@@ -76,7 +91,7 @@
     font-size: 1.75rem;
   }
   .ResultTarotListBody h2{
-    font-size: 1.25rem;
+    font-size: 1rem;
   }
   .ResultTarotListBody p{
     font-size: 0.75rem;

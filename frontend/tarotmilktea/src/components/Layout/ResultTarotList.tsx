@@ -35,6 +35,16 @@ function ResultTarotList() {
     }
   }
 
+  const handleGoResultDetail = (tarotResultId:number) => {
+    if(userToken){
+      console.log('됨')
+      console.log(tarotResultId)
+      navigate('/tarot/result',{ state: { tarotResultId }})
+    }else{
+      alert('로그인 후 이용해주세요.')
+    }
+  }
+
 
   useEffect(() => {
     handleGetTarotResultList()
@@ -49,16 +59,16 @@ function ResultTarotList() {
           <div 
             className='resultBody'
             key={v1.id || i1}
-            onClick={() => {console.log(v1.id)}}
           >
             <div>
               <div>
                 <p><strong>고민 주제</strong> : {v1.subject}</p>
                 <p><strong>고민 내용</strong> : {v1.consulValue}</p> 
+                <p><strong>고민 날짜</strong> : {v1.save_date} {v1.save_time}</p> 
               </div>
               <img className='parchmentImg'
                 src={process.env.PUBLIC_URL+"/images/parchment.png"} alt="" 
-                onClick={()=>{}}
+                onClick={()=>{handleGoResultDetail(v1.id)}}
               />
             </div>
             <div className="coverImageDiv">
@@ -66,6 +76,7 @@ function ResultTarotList() {
                 <div key={i2}>
                   <img 
                     className='coverImage'
+                    onClick={() => {handleGoResultDetail(v1.id)}}
                     src={`https://whalebigtarotmilktea.s3.ap-northeast-2.amazonaws.com/tarotCard${v2}.jpg`}
                     alt={process.env.PUBLIC_URL+"/images/tarotCardBack.png"}
                   />
@@ -75,6 +86,13 @@ function ResultTarotList() {
             <hr />
           </div>
         )))}
+        <div>
+          <h2>보관한 결과가 없습니다😣</h2>
+          <p
+            className='textCenter likeAtag'
+            onClick={() => {navigate('/fortune')}}
+          >운세보러 가기</p>
+        </div>
       </div>
     </div>
   );

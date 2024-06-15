@@ -163,13 +163,30 @@ class TarotResultSerializer(serializers.ModelSerializer):
 #########################################################################
 # 타로점 결과리스트 가져오기 Serializer
 class TarotResultListSerializer(serializers.ModelSerializer):
+    save_date = serializers.SerializerMethodField()
+    save_time = serializers.SerializerMethodField()
     class Meta:
         model = TarotResult
-        fields = ['id', 'selected_cards', 'subject', 'consulValue']
+        fields = ['id', 'selected_cards', 'subject', 'consulValue', 'save_date', 'save_time']
+    
+    def get_save_date(self, obj):
+        return obj.save_date.strftime('%Y-%m-%d')
+    def get_save_time(self,obj):
+        # return obj.save_date.strftime('%H:%M:%S')
+        return obj.save_date.strftime('%H:%M')
+
 #########################################################################
 # 타로점 결과 1개(세부) 가져오기 Serializer
 class TarotResultDetailSerializer(serializers.ModelSerializer):
+    save_date = serializers.SerializerMethodField()
+    save_time = serializers.SerializerMethodField()
     class Meta:
         model = TarotResult
         # fields = '__all__'
         exclude = ['id', 'user']
+    
+    def get_save_date(self, obj):
+        return obj.save_date.strftime('%Y-%m-%d')
+    def get_save_time(self,obj):
+        # return obj.save_date.strftime('%H:%M:%S')
+        return obj.save_date.strftime('%H:%M')

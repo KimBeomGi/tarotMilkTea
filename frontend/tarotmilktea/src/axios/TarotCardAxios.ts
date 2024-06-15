@@ -1,5 +1,5 @@
 import axios from "axios";
-import {SaveTarotResultType} from "../components/types/readFortune/fortuneReadType"
+import {SaveTarotResultType, GetTarotResultDetailDataType} from "../components/types/readFortune/fortuneReadType"
 
 const base_url = "http://127.0.0.1:8000/"
 
@@ -111,6 +111,22 @@ export async function getTarotResultList(token:string) {
   }
 }
 
+// 타로 결과 1개 받아오기
+export async function getTarotResultDetail(sendData:GetTarotResultDetailDataType) {
+
+  try {
+    const response = await axios.get(`${base_url}tarotcard/tarot_result/${sendData.tarotResultId}/`, {
+      headers : {Authorization: `Bearer ${sendData.token}`,},
+    });
+    
+    return response;
+  } catch (e:any) {
+    // console.error(e.response);
+    return e.response;
+  }
+}
+
+// tarot_result/<int:result_id>/
 
 // 예시
 // // GET
