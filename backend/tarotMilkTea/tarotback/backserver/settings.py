@@ -131,11 +131,12 @@ WSGI_APPLICATION = 'backserver.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tarotmilktea',
+        'NAME': 'TAROTMILKTEA',
         'USER': 'root',
         # 'PASSWORD': get_secret("MYSQL_PW"),
         'PASSWORD': env("MYSQL_PW"),
-        'HOST': '127.0.0.1',
+        # 'HOST': '127.0.0.1',
+        'HOST': 'tarotmilktea.cdys4oy4sye3.ap-northeast-2.rds.amazonaws.com',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
