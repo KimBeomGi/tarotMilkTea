@@ -123,6 +123,24 @@
 .RC-left-explain{
   margin-top: 2rem;
 }
+.pRedBlink {
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    color: rgb(191, 63, 63);
+  }
+  25% {
+    color: rgb(255,0,0);
+  }
+  50% {
+    color: rgb(191, 63, 63);
+  }
+  75% {
+    color: rgb(255,0,0);
+  }
+}
 
 .RC-right{
   width: calc(1024px * 0.47);

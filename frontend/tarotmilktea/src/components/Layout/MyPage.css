@@ -43,7 +43,6 @@
 .logoutP{
   display: flex;
   justify-content: space-between;
-  cursor: pointer;
 }
 /* .logoutP>span:hover{
   color: red;
@@ -51,6 +50,9 @@
 /* .logoutP > span:first-child:hover {
   color: red;
 } */
+.logoutP span{
+  cursor: pointer;
+}
 .logoutP > span:nth-child(1):hover {
   color: #FFC65A;
 }

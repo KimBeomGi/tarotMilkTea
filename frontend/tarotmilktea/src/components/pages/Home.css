@@ -175,8 +175,25 @@
   /* width: calc(3773/20px); */
   height: calc(5.208125rem + 5vw);
   width: calc(39.301875rem + 30vw);
+  cursor: pointer;
 }
-
+.TMT-logo:hover{
+  animation: leanTitle 2s infinite;
+}
+@keyframes leanTitle {
+  0%, 100% {
+    transform: rotate(-1deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  50% {
+    transform: rotate(-1deg);
+  }
+  75% {
+    transform: rotate(1deg);
+  }
+}
 /*  */
 /* 태블릿 이상 노트북 이하 */
 @media all and (min-width:480px) and (max-width:1023px) {

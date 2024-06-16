@@ -5,11 +5,11 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks'
 
 import "./Home.css"
 
-import { FaBeer } from "react-icons/fa";
-import { ReactComponent as Books } from "../../assets/images/books.svg";
-import { ReactComponent as Coins } from "../../assets/images/coins.svg";
-import { ReactComponent as Like } from "../../assets/images/like.svg";
-import { ReactComponent as Suitcase } from "../../assets/images/suitcase.svg";
+// import { FaBeer } from "react-icons/fa";
+// import { ReactComponent as Books } from "../../assets/images/books.svg";
+// import { ReactComponent as Coins } from "../../assets/images/coins.svg";
+// import { ReactComponent as Like } from "../../assets/images/like.svg";
+// import { ReactComponent as Suitcase } from "../../assets/images/suitcase.svg";
 import { ReactComponent as TMT_Logo } from "../../assets/images/TMT_Logo.svg";
 
 import Cookies from 'js-cookie';
@@ -137,25 +137,29 @@ function Home() {
             <div className='fortune-ex' style={{ opacity: calculateOpacityFortuneFig(0) }}>
               <p>연애</p>
               <span>
-                <Like className='fortune-ex-fig'/>
+                {/* <Like className='fortune-ex-fig'/> */}
+                <img className='fortune-ex-fig' src={process.env.PUBLIC_URL+"/images/like.svg"} alt="연애"/>
               </span>
             </div>
             <div className='fortune-ex' style={{ opacity: calculateOpacityFortuneFig(1) }}>
               <p>학업</p>
               <span>
-                <Books className='fortune-ex-fig'/>
+                {/* <Books className='fortune-ex-fig'/> */}
+                <img className='fortune-ex-fig' src={process.env.PUBLIC_URL+"/images/books.svg"} alt="학업"/>
               </span>
             </div>
             <div className='fortune-ex' style={{ opacity: calculateOpacityFortuneFig(2) }}>
               <p>직장</p>
               <span>
-                <Suitcase className='fortune-ex-fig'/>
+                {/* <Suitcase className='fortune-ex-fig'/> */}
+                <img className='fortune-ex-fig' src={process.env.PUBLIC_URL+"/images/suitcase.svg"} alt="직장"/>
               </span>
             </div>
             <div className='fortune-ex' style={{ opacity: calculateOpacityFortuneFig(3) }}>
               <p>금전</p>
               <span>
-                <Coins className='fortune-ex-fig'/>
+                {/* <Coins className='fortune-ex-fig'/> */}
+                <img className='fortune-ex-fig' src={process.env.PUBLIC_URL+"/images/coins.svg"} alt="금전"/>
               </span>
             </div>
           </div>
@@ -172,7 +176,16 @@ function Home() {
         <div className='HomeText6-contain' style={{ opacity: calculateOpacity(7.695) }}>
           <h2 className={`HomeText6`}>타로밀크티에서 여러분의 걱정을 덜어드릴게요</h2>
         </div>
-        <span><TMT_Logo className={`TMT-logo ${isVisibleLogo ? 'text-appear-ani2' : ''}`} ref={taliLogoRef}/></span>
+        <span>
+          {/* <TMT_Logo className={`TMT-logo ${isVisibleLogo ? 'text-appear-ani2' : ''}`} ref={taliLogoRef}/> */}
+          <img 
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'auto' });// 또는 smooth
+            }}
+            className={`TMT-logo ${isVisibleLogo ? 'text-appear-ani2' : ''}`} ref={taliLogoRef}
+            src={process.env.PUBLIC_URL+"/images/TMT_Logo.svg"} alt="TarotMilkTea"
+          />
+        </span>
       </div>
     </div>
   );

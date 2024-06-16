@@ -3,7 +3,6 @@ import React, {useEffect, useState, useSyncExternalStore} from 'react';
 import { Outlet, Link, AbortedDeferredError } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import "./TarotShop.css"
-import gpsImage from "../../assets/images/gpsImg.png"
 
 declare global {
   interface Window {
@@ -363,7 +362,7 @@ function TarotShop() {
         <span onClick={() => {zoomOut()}}><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"/></span>
       </div>
       <div className="custom_location radius_border">
-        <span onClick={() => {panTo()}}><img src={gpsImage} alt="현위치"/></span>
+        <span onClick={() => {panTo()}}><img src={process.env.PUBLIC_URL+"/images/gpsImg.png"} alt="현위치"/></span>
       </div>
       {/* <div>{mapInfo.level !== null && (
         <span>
