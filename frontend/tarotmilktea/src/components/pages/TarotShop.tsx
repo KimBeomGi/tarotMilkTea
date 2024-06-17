@@ -13,7 +13,6 @@ declare global {
 // const {kakao} :any = window
 
 function TarotShop() {
-  // const count = useAppSelector((state) => state.counter.value)
   const dispatch = useAppDispatch()
 
   const [browserWidth, setBrowserWidth] = useState<number>(window.innerWidth)
@@ -96,7 +95,6 @@ function TarotShop() {
         };
         createdMap = new window.kakao.maps.Map(container, options);
 
-        // map.setCenter(locPosition)
         createdMap.setCenter(locPosition)
         setGpsLocation([lat, lon])
         setMyLocation([lat, lon])
@@ -110,7 +108,6 @@ function TarotShop() {
         };
         createdMap = new window.kakao.maps.Map(container, options);
 
-        // createdMap.setCenter(locPosition);
         setMyLocation(defaultLoc);
         setMap(createdMap);
       });
@@ -123,8 +120,6 @@ function TarotShop() {
         };
         createdMap = new window.kakao.maps.Map(container, options);
 
-        // map.setCenter(locPosition)
-        // createdMap.setCenter(locPosition)
         setMyLocation(defaultLoc)
         setMap(createdMap)
     }
@@ -153,22 +148,6 @@ function TarotShop() {
     setTarotMarkers([]);
   }
 
-
-  // // 인포윈도우를 열 함수
-  // function markerInfoOpenListener (map :any, marker :any, infowindow :any) {
-  //   if(!selectedMarker ||selectedMarker != marker){
-  //     infowindow.close();
-  //   }
-  //   infowindow.open(map, marker);
-  //   setSelectedMarker(marker);
-  // }
-  // 인포윈도우를 닫을 함수
-  // function markerInfoCloseListener (infowindow :any) {
-  // function markerInfoCloseListener () {
-  //   // infowindow.close();
-  //   customOverlay.setMap(null)
-  // }
-
   // 검색 결과 목록과 마커를 표출하는 함수입니다
   function displayPlaces (places :any):any {
 
@@ -181,12 +160,6 @@ function TarotShop() {
       let placePosition = new window.kakao.maps.LatLng(places[i].y, places[i].x)
       let marker = addMarker(placePosition, i, places[i].place_name)
 
-      
-
-      // <div class="close" onclick="customOverlay.setMap(null)" title="닫기"></div>
-      // <div class="img">
-      // <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumnail.png" width="73" height="70">
-      // </div>
       let infoContent = `
         <div class="wrap">
           <div class="info">
@@ -208,8 +181,6 @@ function TarotShop() {
       // 마커에 클릭이벤트를 등록합니다
       window.kakao.maps.event.addListener(marker, 'click', function() {
         // // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-        // infowindow.setContent(infoContent);
-        // infowindow.open(map, marker);
         customOverlay.setMap(map)
         customOverlay.setPosition(placePosition)
         customOverlay.setContent(infoContent)
@@ -220,8 +191,6 @@ function TarotShop() {
         // infowindow.close();
         customOverlay.setMap(null)
       }
-      // window.kakao.maps.event.addListener(map, 'click', () => {markerInfoCloseListener(infowindow)});
-      // window.kakao.maps.event.addListener(map, 'dragstart', () => {markerInfoCloseListener(infowindow)});
       window.kakao.maps.event.addListener(map, 'click', () => {markerInfoCloseListener()});
       window.kakao.maps.event.addListener(map, 'dragstart', () => {markerInfoCloseListener()});
     }
@@ -241,7 +210,6 @@ function TarotShop() {
         mapContainer.innerHTML = '';
       }
       setMap(null)
-      // setTarotPositions([])
       removeMarker()
     }
   }, [])
@@ -278,7 +246,6 @@ function TarotShop() {
         // 검색 결과를 서버에서 받아오는 placesSearchCB()
         let placesSearchCB = function(result :any, status :any) {
           if (status === window.kakao.maps.services.Status.OK) {
-            // console.log(result)
             // 정상적으로 검색이 완료됐으면
             // 검색 목록과 마커를 표출합니다
             displayPlaces(result);
@@ -364,12 +331,6 @@ function TarotShop() {
       <div className="custom_location radius_border">
         <span onClick={() => {panTo()}}><img src={process.env.PUBLIC_URL+"/images/gpsImg.png"} alt="현위치"/></span>
       </div>
-      {/* <div>{mapInfo.level !== null && (
-        <span>
-          <p>지도 레벨은 {mapInfo.level} 이고</p>
-          <p>중심 좌표는 위도 {mapInfo.lat}, 경도 {mapInfo.lng}입니다</p>
-        </span>
-      )}</div> */}
     </div>
   );
 }

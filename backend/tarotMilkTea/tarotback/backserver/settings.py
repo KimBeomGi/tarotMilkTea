@@ -49,9 +49,11 @@ environ.Env.read_env(
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True  # 운영서버에서는 절대로 디버깅 모드를 사용하지 않아야함.
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []  # 빈 리스트일 경우 ['localhost', '127.0.0.1', '[::1]'] 의미가 된다. 즉, 로컬 호스트에서만 접속이 가능하다.
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']    #디버깅 모드를 끄면 일체 접속이 허용되지 않고 아래와 같이 명시적으로 지정한 호스트에만 접속할 수 있다.
 
 
 # Application definition
