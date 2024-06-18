@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./backend/tarotMilkTea/tarotback
+    env_file:
+      - ./backend/tarotMilkTea/tarotback/.env
+    volumes:
+      - static:/static
+  frontend:
+    build:
+      context: ./frontend/tarotmilktea
+      
+    env_file:
+      - ./frontend/tarotmilktea/.env
+    volumes:
+      - frontend:/var/www/frontend
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - static:/static
+      - frontend:/var/www/frontend
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  static:
+  frontend:
