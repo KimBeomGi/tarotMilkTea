@@ -53,7 +53,10 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = False
 
 # ALLOWED_HOSTS = []  # 빈 리스트일 경우 ['localhost', '127.0.0.1', '[::1]'] 의미가 된다. 즉, 로컬 호스트에서만 접속이 가능하다.
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '172.31.11.120']    #디버깅 모드를 끄면 일체 접속이 허용되지 않고 아래와 같이 명시적으로 지정한 호스트에만 접속할 수 있다.
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '172.31.11.120']    #디버깅 모드를 끄면 일체 접속이 허용되지 않고 아래와 같이 명시적으로 지정한 호스트에만 접속할 수 있다.
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '172.31.11.120']    #디버깅 모드를 끄면 일체 접속이 허용되지 않고 아래와 같이 명시적으로 지정한 호스트에만 접속할 수 있다.
+# ALLOWED_HOSTS = ['ec2 퍼블릭 IPv4 DNS', 'ec2퍼블릭 IPv4 주소', '로컬호스트주소']
+ALLOWED_HOSTS = ['ec2-54-180-43-235.ap-northeast-2.compute.amazonaws.com', '54.180.43.235','localhost', '127.0.0.1']    #디버깅 모드를 끄면 일체 접속이 허용되지 않고 아래와 같이 명시적으로 지정한 호스트에만 접속할 수 있다.
 
 
 # Application definition
@@ -138,7 +141,7 @@ DATABASES = {
         # 'PASSWORD': get_secret("MYSQL_PW"),
         'PASSWORD': env("MYSQL_PW"),
         # 'HOST': '127.0.0.1',
-        'HOST': 'tarotmilktea.cdys4oy4sye3.ap-northeast-2.rds.amazonaws.com',
+        'HOST': 'kbgdatabase.cdys4oy4sye3.ap-northeast-2.rds.amazonaws.com',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -192,7 +195,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #CORS 관련 추가
 # CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000','http://localhost:3000','원하는 포트번호']#(포트 지정)
-CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000','http://localhost:3000']#(포트 지정)
+# CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000','http://localhost:3000']#(포트 지정)
 CORS_ALLOW_ALL_ORIGINS = True #(모든 포트 허용)
 CORS_ALLOW_CREDENTIALS = True # <-쿠키가 cross-site HTTP 요청에 포함될 수 있다
 
