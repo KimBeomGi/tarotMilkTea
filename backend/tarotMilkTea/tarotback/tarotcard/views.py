@@ -631,32 +631,32 @@ def tarot_result_detail(request, result_id):
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
 
-# @api_view(["GET", "POST"])
-# @permission_classes([AllowAny])
-# def tarot_test(request):
-#     if request.method == "GET":
-#         try:
-#             res_data = {
-#                 'message' : 'GET됨'
-#             }
-#             return Response(res_data, status=status.HTTP_200_OK)
-#         except:
-#             res_data = {
-#                 'message' : 'GET안됨'
-#             }
-#             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
-#     elif request.method == "POST":
-#         try:
-#             res_data = {
-#                 'message' : 'POST됨'
-#             }
-#             return Response(res_data, status=status.HTTP_200_OK)
-#         except:
-#             res_data = {
-#                 'message' : 'POST안됨'
-#             }
-#             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
-#     res_data = {
-#         'message' : '안됨'
-#     }
-#     return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+@api_view(["GET", "POST"])
+@permission_classes([AllowAny])
+def tarot_test(request):
+    if request.method == "GET":
+        try:
+            res_data = {
+                'message' : 'GET됨'
+            }
+            return Response(res_data, status=status.HTTP_200_OK)
+        except:
+            res_data = {
+                'message' : 'GET안됨'
+            }
+            return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == "POST":
+        try:
+            res_data = {
+                'message' : 'POST됨'
+            }
+            return Response(res_data, status=status.HTTP_200_OK)
+        except:
+            res_data = {
+                'message' : 'POST안됨'
+            }
+            return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+    res_data = {
+        'message' : '안됨'
+    }
+    return Response(res_data, status=status.HTTP_400_BAD_REQUEST)

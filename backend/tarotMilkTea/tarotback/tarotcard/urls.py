@@ -29,5 +29,5 @@ urlpatterns = [
     path('gemini/', views.useGemini, name='useGemini'),   # Gemini API 호출
 
 
-    # path('test/', views.tarot_test, name='tarot_test'),# 작동테스트
+    path('test/', views.tarot_test, name='tarot_test'),# 작동테스트
 ]
