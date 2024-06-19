@@ -1,14 +1,25 @@
-FROM python:3.12
+FROM python:3.12.3
 
-RUN pip install --upgrade pip
+# set environment variables
 
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# set work directory
+# WORKDIR /app
+WORKDIR /usr/src/app
+
+
+# install dependencies
 COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache --upgrade pip
+RUN pip install --no-cache -r requirements.txt
+RUN pip install --no-cache gunicorn
 
-COPY . /app
-WORKDIR /app
+# copy django project
+COPY . .
+COPY .env ./server
 
-COPY .env /app/.env
-
-COPY ./entrypoint.sh .
-ENTRYPOINT ["sh", "/app/entrypoint.sh"]
+# COPY ./entrypoint.sh .
+# ENTRYPOINT ["sh", "/usr/src/app/entrypoint.sh"]
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
