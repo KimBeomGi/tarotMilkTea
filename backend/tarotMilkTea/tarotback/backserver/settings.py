@@ -56,7 +56,8 @@ DEBUG = False
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', '172.31.11.120']    #디버깅 모드를 끄면 일체 접속이 허용되지 않고 아래와 같이 명시적으로 지정한 호스트에만 접속할 수 있다.
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', '172.31.11.120']    #디버깅 모드를 끄면 일체 접속이 허용되지 않고 아래와 같이 명시적으로 지정한 호스트에만 접속할 수 있다.
 # ALLOWED_HOSTS = ['ec2 퍼블릭 IPv4 DNS', 'ec2퍼블릭 IPv4 주소', '로컬호스트주소']
-ALLOWED_HOSTS = ['ec2-54-180-43-235.ap-northeast-2.compute.amazonaws.com', '54.180.43.235','localhost', '127.0.0.1']    #디버깅 모드를 끄면 일체 접속이 허용되지 않고 아래와 같이 명시적으로 지정한 호스트에만 접속할 수 있다.
+# ALLOWED_HOSTS = ['ec2-54-180-43-235.ap-northeast-2.compute.amazonaws.com', '54.180.43.235','localhost', '127.0.0.1']    #디버깅 모드를 끄면 일체 접속이 허용되지 않고 아래와 같이 명시적으로 지정한 호스트에만 접속할 수 있다.
+ALLOWED_HOSTS = ['*']    #디버깅 모드를 끄면 일체 접속이 허용되지 않고 아래와 같이 명시적으로 지정한 호스트에만 접속할 수 있다.
 
 
 # Application definition

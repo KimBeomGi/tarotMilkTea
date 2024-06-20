@@ -1,17 +1,24 @@
 services:
   backend:
     build: ./backend/tarotMilkTea/tarotback
+    image: dyd1308/tarotmilkteabackend
     ports:
       - "8000:8000"
-      
+    env_file:
+      - ./backend/tarotMilkTea/tarotback/.env
   frontend:
     build: ./frontend/tarotmilktea
+    image: dyd1308/tarotmilkteafrontend
     ports:
       - "3000:3000"
     depends_on:
       - backend
+    env_file:
+      - ./frontend/tarotmilktea/.env
+    
   nginx:
     build: ./nginx
+    image: dyd1308/tarotmilkteanginx
     ports:
       - "80:80"
     depends_on:
