@@ -1,7 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const base_url = "http://127.0.0.1:8000/"
+// const base_url = "http://127.0.0.1:8000/"
+const base_url = "http://tarotmilkteakbg.site/api/"
 
 // 카카오 로그인을 위한 
 export async function getKakaoLoginCode(code:string) { // async, await을 사용하는 경우

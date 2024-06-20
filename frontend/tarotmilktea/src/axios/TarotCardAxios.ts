@@ -1,7 +1,8 @@
 import axios from "axios";
 import {SaveTarotResultType, GetTarotResultDetailDataType} from "../components/types/readFortune/fortuneReadType"
 
-const base_url = "http://127.0.0.1:8000/"
+// const base_url = "http://127.0.0.1:8000/"
+const base_url = "http://tarotmilkteakbg.site/api/"
 
 export async function getTarotCard() { // async, await을 사용하는 경우
   try {

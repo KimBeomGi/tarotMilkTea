@@ -21,6 +21,8 @@ function MyPage() {
   const [email, setEmail] = useState("")
   const [provide, setProvide] = useState("")
 
+  // baseurl
+  const [base_url, setbase_url] = useState<string>("http://tarotmilkteakbg.site/")
   //정보 쿠키에서 가져옴////////////////////////////////////////////////////////////////////////
   const getUserInfo = () =>{
     const userInfoString = Cookies.get('userinfo')
@@ -37,7 +39,8 @@ function MyPage() {
     } else {
       // console.log("No userinfo found in localStorage")
       // navigate('/')
-      window.location.href = 'http://127.0.0.1:3000/'
+      window.location.href = base_url
+      // window.location.href = 'http://127.0.0.1:3000/'
     }
   }
 
@@ -59,7 +62,8 @@ function MyPage() {
       }
       // return response.status
     }else{
-      window.location.href = 'http://127.0.0.1:3000/' 
+      window.location.href = base_url
+      // window.location.href = 'http://127.0.0.1:3000/' 
     }
   }
 
@@ -93,7 +97,8 @@ function MyPage() {
         Cookies.remove('provide');
         Cookies.remove('userinfo');
         // navigate('/')
-        window.location.href = 'http://127.0.0.1:3000/'
+        window.location.href = base_url
+        // window.location.href = 'http://127.0.0.1:3000/'
       } catch (error) {
         console.log(error)
       }
@@ -109,7 +114,8 @@ function MyPage() {
         Cookies.remove('provide');
         Cookies.remove('userinfo');
         // navigate('/')
-        window.location.href = 'http://127.0.0.1:3000/'
+        window.location.href = base_url
+        // window.location.href = 'http://127.0.0.1:3000/'
       } catch (error) {
         console.log(error)
       }
@@ -125,7 +131,8 @@ function MyPage() {
         Cookies.remove('provide');
         Cookies.remove('userinfo');
         // navigate('/')
-        window.location.href = 'http://127.0.0.1:3000/'
+        window.location.href = base_url
+        // window.location.href = 'http://127.0.0.1:3000/'
       } catch (error) {
         console.log(error)
       }

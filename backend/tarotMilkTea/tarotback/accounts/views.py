@@ -31,7 +31,8 @@ nickname_c = 1029
 # GOOGLE 소셜로그인
 state = os.environ.get("STATE")
 # GOOGLE_CALLBACK_URI = BASE_URL + 'accounts/google/callback/'
-GOOGLE_CALLBACK_URI = 'http://127.0.0.1:3000/social/google'
+# GOOGLE_CALLBACK_URI = 'http://127.0.0.1:3000/social/google'
+GOOGLE_CALLBACK_URI = 'http://tarotmilkteakbg.site/social/google'   # 도메인으로 변경
 ## 1번
 # def google_login(request):
 #     scope = "https://www.googleapis.com/auth/userinfo.email"
