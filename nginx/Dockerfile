@@ -1,7 +1,5 @@
-FROM nginx:1.24
+FROM nginx:alpine
 
-RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY nginx.conf /etc/nginx/conf.d
-
-WORKDIR /usr/src/app
+EXPOSE 80
