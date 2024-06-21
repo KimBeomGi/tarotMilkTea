@@ -22,7 +22,7 @@ function MyPage() {
   const [provide, setProvide] = useState("")
 
   // baseurl
-  const [base_url, setbase_url] = useState<string>("http://tarotmilkteakbg.site/")
+  const [base_url, setbase_url] = useState<string>("https://tarotmilkteakbg.site/")
   //정보 쿠키에서 가져옴////////////////////////////////////////////////////////////////////////
   const getUserInfo = () =>{
     const userInfoString = Cookies.get('userinfo')
