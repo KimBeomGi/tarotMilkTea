@@ -89,6 +89,26 @@
 3. 홈 화면의 스크롤 이벤트에 따른 애니메이션 구현으로 사용자의 흥미 유도![타로밀크티홈화면스크롤](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/84a32e5d-59a0-49d1-baac-6063fa46f0e3)
 
 4. leonardo.ai를 통해 유니버설 타로 카드를 비롯한 기존의 타로 카드를 대신한 타로밀크티만의 타로 카드 이미지 제공![스크린샷 2024-06-26 214921](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/079b3641-21f1-4646-8127-04d1450c77cc)
+5. 반응형 웹 사이트로, 다양한 디바이스(휴대폰, 태블릿, PC)에서 각기 다른 최적화된 UI를 제공합니다.
+
+   | 홈 화면 | 카드 설명 | 운세 보기 |
+   |------------|------------|------------|
+   | ![Screenshot_20240626_222003_Samsung Internet](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/eb8d2f83-8816-4c66-9b10-8174b4edd480) | ![Screenshot_20240626_222010_Samsung Internet](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/e30ce96d-d548-42eb-9eff-5408d8b06db0) | ![Screenshot_20240626_222016_Samsung Internet](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/3481b4d6-fca0-4827-80fd-617aca71be90) |
+
+   <br>
+
+   | AI 답변 대기 | AI 답변 수령 | 주변 점집 |
+   |------------|------------|------------|
+   | ![Screenshot_20240626_222130_Samsung Internet](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/9d98fe83-8ebc-435d-aa6d-e4caef37594c) | ![Screenshot_20240626_222147_Samsung Internet](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/3727cb26-4f05-4c13-a9a1-4cfd5d3cb7f0) | ![Screenshot_20240626_222022_Samsung Internet](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/011a70ba-ce80-40f6-8aa5-3e946768e23a) |
+
+   <br>
+
+   | 로그인 | 마이페이지 | 결과보관함 |
+   |------------|------------|------------|
+   | ![Screenshot_20240626_222027_Samsung Internet](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/a078ff11-bc85-4121-b158-c37921815cc8) | ![Screenshot_20240626_222049_Samsung Internet](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/96d91037-288c-42ca-a60d-49c278c866bf) | ![Screenshot_20240626_222055_Samsung Internet](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/17bbbf3f-52a4-4041-91eb-097a43b43de5) |
+
+   <br>
+
 
 
 # 📈기술 스택
