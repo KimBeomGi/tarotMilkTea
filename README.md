@@ -21,6 +21,8 @@
 
 [📚ERD](#ERD)
 
+[📁폴더 구조](#폴더-구조)
+
 [📒회고](#회고)
 
 
@@ -178,6 +180,42 @@ Docker를 이용해 이미지 빌드 후, 이를 AWS EC2 인스턴에서 실행.
 
 # 📚ERD
 ![tarotmilkteaERD](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/5333f81b-95a9-496b-a0db-aff00f055fb2)
+
+# 📁폴더 구조
+**Backend**
+```
+tarotMilkTea/
+├── backend/
+│   └── tarotMilkTea/
+│       └── tarotback/
+│           ├── accounts/
+│           ├── backserver/
+│           ├── tarotcards/
+│           ├── .env
+│           ├── Dockerfile
+│           ├── entrypoint.sh
+│           └── manage.py
+├── frontend/
+│   └── tarotmilktea/
+│       ├── node_modules/
+│       ├── public/
+│       └── src/
+│           ├── assets/
+│           ├── axios/
+│           ├── components/
+│           ├── store/
+│           ├── App.tsx
+│           └── index.tsx
+│       ├── .env
+│       ├── Dockerfile
+│       ├── package.json
+│       ├── package-lock.json
+│       └── tsconfig
+├── nginx/
+│   ├── Dockerfile
+│   └── nginx.conf
+└── docker-compose.yml
+```
 
 # 📒회고
 
