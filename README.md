@@ -118,7 +118,7 @@
 <img src="https://img.shields.io/badge/Redux Toolkit-5C2D91?style=for-the-badge&logo=reduxtoolkit&logoColor=ffffff"/>
 <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=ffffff"/>
 <img src="https://img.shields.io/badge/gunicorn-499848?style=for-the-badge&logo=gunicorn&logoColor=ffffff"/>
-<img src="https://img.shields.io/badge/PyJWT-3776AB?style=for-the-badge&logo=PyJWT&logoColor=ffffff"/>
+<img src="https://img.shields.io/badge/JWT-3776AB?style=for-the-badge&logo=JWT&logoColor=ffffff"/>
 <img src="https://img.shields.io/badge/django%20allauth-3776AB?style=for-the-badge&logo=django%20allauth&logoColor=ffffff" />
 <img src="https://img.shields.io/badge/google%20gemini-8E75B2?style=for-the-badge&logo=google%20gemini&logoColor=ffffff" />
 </td>
