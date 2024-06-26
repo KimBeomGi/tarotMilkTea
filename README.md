@@ -42,8 +42,10 @@
 
 
 # 🧩아키텍처
+![tarotmilktea 아키텍쳐](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/17972d01-0a73-44bb-8e3f-8c7b961f853d)
 
 # 📚ERD
+![tarotmilkteaERD](https://github.com/KimBeomGi/tarotMilkTea/assets/128961042/5333f81b-95a9-496b-a0db-aff00f055fb2)
 
 # 📒회고
 
