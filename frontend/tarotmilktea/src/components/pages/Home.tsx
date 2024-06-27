@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 
 import "./Home.css"
@@ -16,6 +16,7 @@ import Cookies from 'js-cookie';
 
 function Home() {
   // const count = useAppSelector((state) => state.counter.value)
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const textHead1Ref = useRef(null)
   const taliLogoRef = useRef(null)
@@ -134,28 +135,52 @@ function Home() {
             <h2 className={`HomeText3`} style={{ opacity: calculateOpacityFortuneFig(-0.5) }}>지금 생각 하는 일은 어떻게 될까요?</h2>
           </div>
           <div className='fortune-ex-contain'>
-            <div className='fortune-ex' style={{ opacity: calculateOpacityFortuneFig(0) }}>
+            <div className={`fortune-ex ${calculateOpacityFortuneFig(0)>=0.33 ? "fortune-ex-clickable" : ""}`} style={{ opacity: calculateOpacityFortuneFig(0) }}
+              onClick={() => {
+                if (calculateOpacityFortuneFig(0) >= 0.33) {
+                  navigate('/fortune');
+                }
+              }}
+            >
               <p>연애</p>
               <span>
                 {/* <Like className='fortune-ex-fig'/> */}
                 <img className='fortune-ex-fig' src={process.env.PUBLIC_URL+"/images/like.svg"} alt="연애"/>
               </span>
             </div>
-            <div className='fortune-ex' style={{ opacity: calculateOpacityFortuneFig(1) }}>
+            <div className={`fortune-ex ${calculateOpacityFortuneFig(1)>=0.33 ? "fortune-ex-clickable" : ""}`} style={{ opacity: calculateOpacityFortuneFig(1) }}
+              onClick={() => {
+                if (calculateOpacityFortuneFig(1) >= 0.33) {
+                  navigate('/fortune');
+                }
+              }}
+            >
               <p>학업</p>
               <span>
                 {/* <Books className='fortune-ex-fig'/> */}
                 <img className='fortune-ex-fig' src={process.env.PUBLIC_URL+"/images/books.svg"} alt="학업"/>
               </span>
             </div>
-            <div className='fortune-ex' style={{ opacity: calculateOpacityFortuneFig(2) }}>
+            <div className={`fortune-ex ${calculateOpacityFortuneFig(2)>=0.33 ? "fortune-ex-clickable" : ""}`} style={{ opacity: calculateOpacityFortuneFig(2) }}
+              onClick={() => {
+                if (calculateOpacityFortuneFig(2) >= 0.33) {
+                  navigate('/fortune');
+                }
+              }}
+            >
               <p>직장</p>
               <span>
                 {/* <Suitcase className='fortune-ex-fig'/> */}
                 <img className='fortune-ex-fig' src={process.env.PUBLIC_URL+"/images/suitcase.svg"} alt="직장"/>
               </span>
             </div>
-            <div className='fortune-ex' style={{ opacity: calculateOpacityFortuneFig(3) }}>
+            <div className={`fortune-ex ${calculateOpacityFortuneFig(3)>=0.33 ? "fortune-ex-clickable" : ""}`} style={{ opacity: calculateOpacityFortuneFig(3) }}
+              onClick={() => {
+                if (calculateOpacityFortuneFig(3) >= 0.33) {
+                  navigate('/fortune');
+                }
+              }}
+            >
               <p>금전</p>
               <span>
                 {/* <Coins className='fortune-ex-fig'/> */}
@@ -180,7 +205,8 @@ function Home() {
           {/* <TMT_Logo className={`TMT-logo ${isVisibleLogo ? 'text-appear-ani2' : ''}`} ref={taliLogoRef}/> */}
           <img 
             onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'auto' });// 또는 smooth
+              // window.scrollTo({ top: 0, behavior: 'auto' });// 또는 smooth
+              navigate('/fortune')
             }}
             className={`TMT-logo ${isVisibleLogo ? 'text-appear-ani2' : ''}`} ref={taliLogoRef}
             src={process.env.PUBLIC_URL+"/images/TMT_Logo.svg"} alt="TarotMilkTea"

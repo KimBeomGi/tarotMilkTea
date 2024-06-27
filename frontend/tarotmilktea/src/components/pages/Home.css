@@ -126,6 +126,10 @@
 
 .fortune-ex{
   margin: 0rem 3rem;
+  cursor: default;
+}
+.fortune-ex-clickable{
+  cursor: pointer;
 }
 .fortune-ex > p{
   font-size: 2rem;

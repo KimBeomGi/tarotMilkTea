@@ -188,10 +188,12 @@ function ReadCard1() {
               key={i}
               className={`drawcard-img-div`}
               onClick={() => {
-                if(selectedCards.length < 5 && !selectedCards.includes(num)){
+                if( isLogin === true && selectedCards.length < 5 && !selectedCards.includes(num) ){
                   setSelectedCards((prev) => [...prev, num])
                   const name = tarotNumbersDict.cards[num]
                   setSelectedCardsName((prev) => [...prev, name])
+                }else{
+                  alert("로그인을 먼저 해주세요.")
                 }
               }}
             >
